@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Puzzle logique</title>
+    <link rel="stylesheet" type="text/css" href="puzzle.css">
+    <!-- Import des fichiers Javascript -->
+    <script src="puzzle_generator.js" defer=""></script>
+    <script src="puzzle.js" defer=""></script>
+</head>
+
+<body>
+    <!-- En-tête -->
+    <p>
+        Puzzle soumis par
+        <a href="https://fr.wikipedia.org/wiki/Lewis_Carroll#Travail_mathématique">Louis Carole</a></p>
+    <div id="images">
+        <img src="img/running.svg" alt="course" height="50" width="30"><img src="img/swimming.svg" alt="natation" height="50" width="30"><img src="img/rowing.svg" alt="aviron" height="50" width="30"></div>
+    <!-- Enoncé -->
+    <div>
+        <h3>Trois sportifs - Alain, Pierre et Maurice - ont été médaillés olympiques dans trois sports différents. Ils ont concouru à des périodes différentes et à eux tous ont remporté 102 médailles. À partir de ces informations et des indices donnés ci-dessous, déterminez le sport pratiqué par chacun, sa période de compétition, et s'il est celui qui a remporté le plus de médailles d'or, d'argent ou de bronze.</h3>
+    </div>
+    <!-- Aide-mémoire -->
+    <div id="aide">
+        <h3>Aide-mémoire</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="2" rowspan="2" class="invisible"></th>
+                    <th colspan="3">Sport</th>
+                    <th colspan="3">Période</th>
+                    <th colspan="3">Médailles</th>
+                </tr>
+                <tr class="vertical">
+                    <td>Course</td>
+                    <td>Natation</td>
+                    <td>Aviron</td>
+                    <td>1988-2000</td>
+                    <td>2004-2012</td>
+                    <td>2016-2020</td>
+                    <td>Or</td>
+                    <td>Argent</td>
+                    <td>Bronze</td>
+                </tr>
+                <tr>
+                    <th rowspan="3" class="vertical">Athlète</th>
+                    <td>Alain</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Pierre</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Maurice</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th rowspan="3" class="vertical">Médailles</th>
+                    <td>Or</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3" class="invisible"></td>
+                </tr>
+                <tr>
+                    <td>Argent</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3" class="invisible"></td>
+                </tr>
+                <tr>
+                    <td>Bronze</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3" class="invisible"></td>
+                </tr>
+                <tr>
+                    <th rowspan="3" class="vertical">Période</th>
+                    <td>1988-2000</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="6" class="invisible"></td>
+                </tr>
+                <tr>
+                    <td>2004-2012</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="6" class="invisible"></td>
+                </tr>
+                <tr>
+                    <td>2016-2020</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="6" class="invisible"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Formulaire -->
+    <form method="post" action="puzzle.php">
+        <!-- Indices -->
+        <div>
+            <h3>
+                <abbr title="A cocher quand l'indice est résolu">Les indices</abbr>
+            </h3>
+            <ol>
+                <li><input type="checkbox" name="indices[]" id="indice1" value="indice1"><label>Le nageur a concouru le plus longtemps et obtenu 31 des 102 médailles mais sans jamais remporter le bronze.</label></li>
+                <li><input type="checkbox" name="indices[]" id="indice2" value="indice2"><label>Alain a remporté 23 des 53 médailles d'or et 2 médailles de bronze de moins que le rameur.</label></li>
+                <li><input type="checkbox" name="indices[]" id="indice3" value="indice3"><label>Maurice a remporté 33 médailles, dont 15 d'argent et 3 de bronze pendant la période la plus courte.</label></li>
+                <li><input type="checkbox" name="indices[]" id="indice4" value="indice4"><label>Le coureur a remporté 8 médailles d'or de plus que chacun des deux autres concurrents.</label></li>
+            </ol>
+        </div>
+        <!-- Réponses -->
+        <div>
+            <fieldset>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Athlète</th>
+                            <th>Sport</th>
+                            <th>Période</th>
+                            <th>Médailles</th>
+                        </tr>
+                        <tr>
+                            <td>alain</td>
+                            <td><select name="alain_sport">
+                                    <option value="vide"></option>
+                                    <option value="course">course</option>
+                                    <option value="natation">natation</option>
+                                    <option value="aviron">aviron</option>
+                                </select></td>
+                            <td><select name="alain_période">
+                                    <option value="vide"></option>
+                                    <option value="1988">1988-2000</option>
+                                    <option value="2004">2004-2012</option>
+                                    <option value="2016">2016-2020</option>
+                                </select></td>
+                            <td><select name="alain_médailles">
+                                    <option value="vide"></option>
+                                    <option value="or">or</option>
+                                    <option value="argent">argent</option>
+                                    <option value="bronze">bronze</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td>pierre</td>
+                            <td><select name="pierre_sport">
+                                    <option value="vide"></option>
+                                    <option value="course">course</option>
+                                    <option value="natation">natation</option>
+                                    <option value="aviron">aviron</option>
+                                </select></td>
+                            <td><select name="pierre_période">
+                                    <option value="vide"></option>
+                                    <option value="1988">1988-2000</option>
+                                    <option value="2004">2004-2012</option>
+                                    <option value="2016">2016-2020</option>
+                                </select></td>
+                            <td><select name="pierre_médailles">
+                                    <option value="vide"></option>
+                                    <option value="or">or</option>
+                                    <option value="argent">argent</option>
+                                    <option value="bronze">bronze</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td>maurice</td>
+                            <td><select name="maurice_sport">
+                                    <option value="vide"></option>
+                                    <option value="course">course</option>
+                                    <option value="natation">natation</option>
+                                    <option value="aviron">aviron</option>
+                                </select></td>
+                            <td><select name="maurice_période">
+                                    <option value="vide"></option>
+                                    <option value="1988">1988-2000</option>
+                                    <option value="2004">2004-2012</option>
+                                    <option value="2016">2016-2020</option>
+                                </select></td>
+                            <td><select name="maurice_médailles">
+                                    <option value="vide"></option>
+                                    <option value="or">or</option>
+                                    <option value="argent">argent</option>
+                                    <option value="bronze">bronze</option>
+                                </select></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <label for="note">Notez le puzzle </label><input type="number" name="note" id="note" placeholder="... entre 0 et 20 ..." min="0" max="20" value="20" required="">
+                </p>
+                <p>
+                    <label>Le recommanderiez-vous ?</label><input type="radio" name="share" value="oui" checked="">Oui<input type="radio" name="share" value="non">Non
+                </p>
+                <p>
+                    <input type="submit" value="Vérifiez !">
+                </p>
+            </fieldset>
+        </div>
+    </form>
+
+
+    <div id="minuteur"></div>
+</body>
+
+</html>

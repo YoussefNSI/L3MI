@@ -1,0 +1,13 @@
+Prénom,Nom,Date de Naissance
+Ingrid,Saunier,01/02/03
+Claire,Galopin,14/11/94
+
+Capucine,Dufresne,31/03/2001
+Sylvia,Gachet,21/10/1987
+Peggy,Houdin,07/09/1995
+
+Jocelyne,Asselineau,09/07/95
+Ève,Aubert,14/07/2021
+Élise,Jeannin,1/02/02
+Aurore,Massé,05/12/2015/1
+Fanny,Pichard,35/12/90

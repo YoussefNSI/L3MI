@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Puzzle logique</title>
+    <link rel="stylesheet" type="text/css" href="puzzle.css">
+    <!-- Import des fichiers Javascript -->
+    <script src="puzzle_generator.js" defer></script>
+    <script src="puzzle.js" defer></script>
+</head>
+
+<body>
+    <!-- En-tête -->
+    <p>
+        Puzzle soumis par
+    </p>
+    <div id="images">
+    </div>
+    <!-- Enoncé -->
+    <div>
+        <h3>Enoncé</h3>
+    </div>
+    <!-- Aide-mémoire -->
+    <div id="aide">
+        <h3>Aide-mémoire</h3>
+        <table>
+            <tr>
+                <th colspan="2" rowspan="2" class="invisible"></th>
+                <th colspan="3"></th>
+                <th colspan="3"></th>
+                <th colspan="3"></th>
+            </tr>
+            <tr class="vertical">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th rowspan="3" class="vertical"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th rowspan="3" class="vertical"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="3" class="invisible"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="3" class="invisible"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="3" class="invisible"></td>
+            </tr>
+            <tr>
+                <th rowspan="3" class="vertical"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="6" class="invisible"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="6" class="invisible"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="6" class="invisible"></td>
+            </tr>
+        </table>
+    </div>
+    <!-- Formulaire -->
+    <form method="post" action="puzzle.php">
+        <!-- Indices -->
+        <div>
+            <h3>
+                <abbr title="A cocher quand l'indice est résolu">Les indices</abbr>
+            </h3>
+            <ol></ol>
+        </div>
+        <!-- Réponses -->
+        <div>
+            <fieldset>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <p>
+                    <label for="note">Notez le puzzle </label><input type="number" name="note" id="note" placeholder="... entre 0 et 20 ..." min="0" max="20" value="20" required />
+                </p>
+                <p>
+                    <label>Le recommanderiez-vous ?</label><input type="radio" name="share" value="oui" checked />Oui<input type="radio" name="share" value="non" />Non
+                </p>
+                <p>
+                    <input type="submit" value="Vérifiez !" />
+                </p>
+            </fieldset>
+        </div>
+    </form>
+
+    <div id="minuteur"></div>
+</body>
+
+</html>

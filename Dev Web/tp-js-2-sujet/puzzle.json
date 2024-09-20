@@ -1,0 +1,38 @@
+[{
+    "id": 1,
+    "auteur": "Louis Carole",
+    "url": "https://fr.wikipedia.org/wiki/Lewis_Carroll#Travail_mathématique",
+    "images": [{
+            "src": "running.svg",
+            "alt": "course"
+        },
+        {
+            "src": "swimming.svg",
+            "alt": "natation"
+        },
+        {
+            "src": "rowing.svg",
+            "alt": "aviron"
+        }
+    ],
+    "énoncé": "Trois sportifs - Alain, Pierre et Maurice - ont été médaillés olympiques dans trois sports différents. Ils ont concouru à des périodes différentes et à eux tous ont remporté 102 médailles. À partir de ces informations et des indices donnés ci-dessous, déterminez le sport pratiqué par chacun, sa période de compétition, et s'il est celui qui a remporté le plus de médailles d'or, d'argent ou de bronze.",
+    "indices": [
+        "Le nageur a concouru le plus longtemps et obtenu 31 des 102 médailles mais sans jamais remporter le bronze.",
+        "Alain a remporté 23 des 53 médailles d'or et 2 médailles de bronze de moins que le rameur.",
+        "Maurice a remporté 33 médailles, dont 15 d'argent et 3 de bronze pendant la période la plus courte.",
+        "Le coureur a remporté 8 médailles d'or de plus que chacun des deux autres concurrents."
+    ],
+    "facettes": [{
+        "nom": "athlète",
+        "valeurs": ["alain", "pierre", "maurice"]
+    }, {
+        "nom": "sport",
+        "valeurs": ["course", "natation", "aviron"]
+    }, {
+        "nom": "période",
+        "valeurs": ["1988-2000", "2004-2012", "2016-2020"]
+    }, {
+        "nom": "médailles",
+        "valeurs": ["or", "argent", "bronze"]
+    }]
+}]

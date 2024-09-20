@@ -1,0 +1,3 @@
+C'est un texte en ASCII.
+Ça c'est du latin1.
+Ceci est un texte Ã©crit en UTF8.
