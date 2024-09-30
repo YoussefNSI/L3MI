@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+:root {
+    --block_width: 600px;
+    --block_padding: 10px;
+}
+
+body {
+    margin: 0px;
+    padding: 10px;
+}
+
+/* GRILLE */
+.repère {
+    grid-area: repère;
+}
+
+.échantillonnage {
+    grid-area: échantillonnage;
+}
+
+.log {
+    grid-area: log;
+    align-self: end;
+}
+
+.fonctions {
+    grid-area: fonctions;
+}
+
+.courbes {
+    grid-area: courbes;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        'repère échantillonnage log'
+        'fonctions fonctions log'
+        'courbes courbes log';
+    width: var(--block_width);
+    gap: 10px;
+    padding: 10px;
+}
+
+fieldset {
+    background-color: #e8e6ee;
+}
+
+table {
+    width: 200px;
+    table-layout: auto;
+    border-collapse: collapse;
+    border: 1px solid;
+    text-align: left;
+    vertical-align: bottom;
+    font-size: 100%;
+}
+
+canvas {
+    background: white;
+}
+
+legend {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    font-size: 1em;
+}
+
+input[type="number"] {
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+}
+
+button {
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    background-color: white;
+    color: rgb(59, 146, 239);
+}
+
+fieldset.échantillonnage label {
+    width: 80px;
+}
+
+input[name="échantillon_n"] {
+    display: inline-block;
+    height: 10px;
+}
+
+input[name="échantillon_taille"] {
+    display: inline-block;
+    text-align: center;
+    width: 50px;
+}
+
+.fonctions {
+    font-weight: bold;
+}
+
+.fonctions label.paramètres {
+    display: inline-block;
+    width: 40px;
+    text-align: right;
+}
