@@ -1,0 +1,65 @@
+;;
+let rec npremiers = function li -> function n ->
+                                         if n < 0 then failwith "n négatif";
+                                         match (li, n) with
+                                         |([],_) -> failwith "n plus grand que la taille de la liste";
+                                         |(x::r,1) -> x;
+                                         |(x::r,_) -> x @ npremiers r (n-1);;
+
+npremiers [1;2;3;4;5] 3;;
+
+
+let rec met_a_plat = function li ->
+                           match li with
+                           |[] -> []
+                           |x::r -> x @ (met_a_plat r);;
+
+met_a_plat [[3;2];[5;8]];;
+;
+
+let rec paire_vers_liste = function (ln,ls) ->
+    			 match (ln,ls) with
+			 |([],[]) -> []
+			 |(x::a,y::b) -> [(x,y)] @ paire_vers_liste (a,b);
+			 | _ -> failwith "les deux listes doivent être de même longueur";;
+
+paire_vers_liste ([1;2;3], ['a';'b';'c']);;
+
+let rec liste_vers_paire = function ls ->
+    			match ls with
+			[] -> []
+			|(a,b)::r ->  # a faire
+
+list = [(1,'a'); (2,'b'); (3,'c')];
+liste_vers_paire list;;
+
+let rec supprime1 = function ls -> function e ->
+    		    match ls with
+		    [] -> []
+		    |x::r -> if x = e
+		    	     then [] @ r
+			     else x :: supprime1 r e;;
+
+supprime1 [5;3;7;9] 7;;
+
+let rec supprime2 = function ls -> function e ->
+    		    match ls with
+		    [] -> []
+		    |x::r -> if x = e
+		    	     then [] @ supprime2 r e
+			     else x :: supprime2 r e;;
+
+supprime2 [5;3;7;11;9;7;3;7] 7;;
+
+let min_liste = function ls ->
+    		  match ls with
+		  |[] -> failwith "liste vide"
+		  |x::r -> let rec recherche_min = function r -> function e ->
+		  	       	   match l with
+				   [] -> e
+				   | ->	if x < e
+				   	    then recherche_min r x
+				   	    else recherche_min r e;;
+
+min_liste [5;3;7;11;9;7;3;7];;
+			   	|
