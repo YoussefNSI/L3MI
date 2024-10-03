@@ -211,8 +211,8 @@ export class Traceur {
           `Les points P[${i}] et P[${i + 1}] ne sont pas ordonnés`
         );
       }
-      let uv = this.transformer(P[i].X, P[i].Y);
-      let uv2 = this.transformer(P[i + 1].X, P[i + 1].Y);
+      let uv = this.transformer(P[i], P[i]);
+      let uv2 = this.transformer(P[i + 1], P[i + 1]);
       if (
         uv.X !== false &&
         uv.Y !== false &&
