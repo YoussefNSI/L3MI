@@ -1,0 +1,303 @@
+let a = 20;;
+val a : int = 20
+# let a = 20;;
+val a : int = 20
+# let anneeBissextile = function annee -> 
+  if annee mod 4 = 0 then
+    if annee mod 100 = 0 then
+      if annee mod 400 = 0 then
+        true
+      else
+        false
+    else
+      true
+  else
+    false ;;
+
+anneeBissextile 2000 ;;
+val anneeBissextile : int -> bool = <fun>
+# - : bool = true
+# anneeBissextile 2010;;
+- : bool = false
+# anneebissextile 2014;;
+Line 1, characters 0-15:
+1 | anneebissextile 2014;;
+    ^^^^^^^^^^^^^^^
+Error: Unbound value anneebissextile
+Hint: Did you mean anneeBissextile?
+# anneeBissextile 2012;;
+- : bool = true
+# let suiteDeFibonacci = function n ->
+    let rec aux = function a -> function b -> function n ->
+      if n = 0 then
+        a
+      else
+        aux b (a + b) (n - 1)
+    in
+    aux 0 1 n ;;
+val suiteDeFibonacci : int -> int = <fun>
+# suiteDeFibonacci 5;;
+- : int = 5
+# suiteDeFibonacci 2
+
+;;
+- : int = 1
+# suiteDeFibonacci 15;;
+- : int = 610
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0
+                             |x::r -> 1 + longueur r
+longueur [1,5,3]
+;;
+Line 4, characters 42-50:
+4 |                              |x::r -> 1 + longueur r
+                                              ^^^^^^^^
+Error: This function has type 'a list -> int
+       It is applied to too many arguments; maybe you forgot a `;'.
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0;
+                             |x::r -> 1 + longueur r;;
+
+longueur [1,5,3];;  
+val longueur : 'a list -> int = <fun>
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0;
+                             |x::r -> 1 + longueur r;
+
+longueur [1,5,3];;
+Line 4, characters 38-52:
+4 |                              |x::r -> 1 + longueur r;
+                                          ^^^^^^^^^^^^^^
+Warning 10 [non-unit-statement]: this expression should have type unit.
+val longueur : (int * int * int) list -> int = <fun>
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0;
+                             |x::r -> 1 + longueur r;;
+
+longueur [1,5,3];;
+val longueur : 'a list -> int = <fun>
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0;
+                             |x::r -> 1 + longueur r;;
+
+longueur [1,5,3];;
+val longueur : 'a list -> int = <fun>
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0;
+                             |[x::r] -> 1 + longueur r;;
+
+longueur [1,5,3];; 
+Line 4, characters 53-54:
+4 |                              |[x::r] -> 1 + longueur r;;
+                                                         ^
+Error: This expression has type 'a list
+       but an expression was expected of type 'a list list
+       The type variable 'a occurs inside 'a list
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0;
+                             |x::r  -> 1+longueur r;;
+
+longueur [1,5,3];;  
+val longueur : 'a list -> int = <fun>
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0;
+                             |x::r -> 1 + longueur x;;
+
+longueur [1,5,3];;;
+Line 4, characters 51-52:
+4 |                              |x::r -> 1 + longueur x;;
+                                                       ^
+Error: This expression has type 'a but an expression was expected of type
+         'a list
+       The type variable 'a occurs inside 'a list
+# - : int = 1
+# ;;
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 1
+                             |x::r -> 1 + longueur x;;
+
+longueur [1,5,3];; 
+Line 4, characters 51-52:
+4 |                              |x::r -> 1 + longueur x;;
+                                                       ^
+Error: This expression has type 'a but an expression was expected of type
+         'a list
+       The type variable 'a occurs inside 'a list
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 1
+                             |x::r -> 1 + longueur r;;
+
+longueur [1,5,3];;
+val longueur : 'a list -> int = <fun>
+# - : int = 2
+# let rec longueur = function li ->
+                             li
+                             match li with
+                             |[] -> 0
+                             |x::r -> 1 + longueur r;;
+
+longueur [1,5,3];;
+Line 3, characters 29-34:
+3 |                              match li with
+                                 ^^^^^
+Error: Syntax error
+# - : int = 2
+# let rec longueur = function li ->
+                             match li with
+                             |[] -> 0
+                             |_::r -> 1 + longueur r;;
+longueur [1,5,3];;
+val longueur : 'a list -> int = <fun>
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             [] -> 0
+                             |_::r -> 1 + longueur r;;
+longueur [1,5,3];;;
+val longueur : 'a list -> int = <fun>
+# - : int = 1
+# let rec longueur = function li ->
+                             match li with
+                             [] -> 0
+                             |_::r -> 1 + longueur r;;
+longueur [1;5;3];;
+val longueur : 'a list -> int = <fun>
+# - : int = 3
+# let rec longueur = function li ->
+                             match li with
+                             [] -> 0
+                             |_::r -> 1 + longueur r;;
+
+let concat = function l1 -> function l2 ->
+                              l1 @ l2;;
+longueur [1;5;3];;
+concat [1;2] [3;4];;
+val longueur : 'a list -> int = <fun>
+# val concat : 'a list -> 'a list -> 'a list = <fun>
+# - : int = 3
+# - : int list = [1; 2; 3; 4]
+# let rec longueur = function li ->
+                             match li with
+                             [] -> 0
+                             |_::r -> 1 + longueur r;;
+
+let concat = function l1 -> function l2 ->
+                              l1 @ l2;;
+
+let rec nieme = function li -> function n ->
+                                         match (li, n) with
+                                         |([],_) -> failwith "Element introuvable ou liste vide"
+                                         |(x::r,1) -> x
+                                         |(x::r,_) -> nieme r (n-1);;
+longueur [1;5;3];;
+concat [1;2] [3;4];;
+nieme [1;2;3;4;5] 4;;
+val longueur : 'a list -> int = <fun>
+# val concat : 'a list -> 'a list -> 'a list = <fun>
+# val nieme : 'a list -> int -> 'a = <fun>
+# - : int = 3
+# - : int list = [1; 2; 3; 4]
+# - : int = 4
+# let npremiers = function li -> function n ->
+                                         if n < 0 then failwith "n négatif";
+                                         match (li, n) with
+                                         |([],_) -> failwith "n plus grand que la taille de la liste";
+                                         |(x::r,1) -> x;
+                                         |(x::r,_) -> x @ npremiers r (n-1);;
+
+npremiers [1;2;3;4;5] 3;;
+Line 6, characters 58-67:
+6 |                                          |(x::r,_) -> x @ npremiers r (n-1);;
+                                                              ^^^^^^^^^
+Error: Unbound value npremiers
+Hint: If this is a recursive definition,
+you should add the 'rec' keyword on line 1
+# Line 2, characters 0-9:
+2 | npremiers [1;2;3;4;5] 3;;
+    ^^^^^^^^^
+Error: Unbound value npremiers
+# let rec npremiers = function li -> function n ->
+                                         if n < 0 then failwith "n négatif";
+                                         match (li, n) with
+                                         |([],_) -> failwith "n plus grand que la taille de la liste";
+                                         |(x::r,1) -> x;
+                                         |(x::r,_) -> x @ npremiers r (n-1);;
+
+npremiers [1;2;3;4;5] 3;;
+val npremiers : 'a list list -> int -> 'a list = <fun>
+# Line 2, characters 11-12:
+2 | npremiers [1;2;3;4;5] 3;;
+               ^
+Error: This expression has type int but an expression was expected of type
+         'a list
+# [4] @ [6]
+	 ;;
+- : int list = [4; 6]
+# let rec met_a_plat = function li ->
+                               match li with
+                               |[] -> _
+                               |x::r -> let rec concat = function x ->
+                                                                   match x with
+                                                                   |[] -> _
+                                                                   |x::r -> x @ concat r;; + met_a_plat r;;
+
+met_a_plat [[3;2];[5;8]];;
+Line 3, characters 38-39:
+3 |                                |[] -> _
+                                          ^
+Error: Syntax error: wildcard "_" not expected.
+# Line 2, characters 0-10:
+2 | met_a_plat [[3;2];[5;8]];;
+    ^^^^^^^^^^
+Error: Unbound value met_a_plat
+# let rec met_a_plat = function li ->
+                               match li with
+                               |[] -> exit
+                               |x::r -> let rec concat = function x ->
+                                                                   match x with
+                                                                   |[] -> exit
+                                                                   |x::r -> x @ concat r;; + met_a_plat r;;
+
+met_a_plat [[3;2];[5;8]];;
+Line 7, characters 88-90:
+7 |                                                                    |x::r -> x @ concat r;; + met_a_plat r;;
+                                                                                            ^^
+Error: Syntax error
+# Line 2, characters 0-10:
+2 | met_a_plat [[3;2];[5;8]];;
+    ^^^^^^^^^^
+Error: Unbound value met_a_plat
+# let rec met_a_plat = function li ->
+                               match li with
+                               |[] -> exit
+                               |x::r ->  let rec concat = function x ->
+                                                                   match x with
+                                                                   |[] -> exit
+                                                                   |x::r -> x @ concat r;; @ met_a_plat r;;
+
+met_a_plat [[3;2];[5;8]];;
+Line 7, characters 88-90:
+7 |                                                                    |x::r -> x @ concat r;; @ met_a_plat r;;
+                                                                                            ^^
+Error: Syntax error
+# Line 2, characters 0-10:
+2 | met_a_plat [[3;2];[5;8]];;
+    ^^^^^^^^^^
+Error: Unbound value met_a_plat
+# 
