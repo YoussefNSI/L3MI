@@ -57,5 +57,5 @@ def lire(filename, compPerequation=[], compClassique=[]):
         
     return (dictIndemnites, factureClub)
     
-lire("officiels.csv")
+print(lire("officiels.csv"))
     
