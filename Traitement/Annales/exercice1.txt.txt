@@ -1,0 +1,11 @@
+U+0061 = 97 = 1100001 -> 01100001
+U+00B5 = 10110101 = 128+32+16+4+1 = 181 = 00010110101 = 11000010 et 10110101
+U+1030 = 1000000110000 = 4096 + 32 + 16 = 4144 = 000 = 11101000 10000110 10000000
+U+1FA9C = 11111101010011100 = /// = 11110111 10111010 10100111 10000000
+
+Rappel :
+
+Si la valeur tient sur 7 bits (de 0 à 127), c'est 1 octet.
+Si la valeur tient sur 11 bits (de 128 à 2047), c'est 2 octets.
+Si la valeur tient sur 16 bits (de 2048 à 65535), c'est 3 octets.
+Si la valeur tient sur 21 bits (de 65536 à 1114111), c'est 4 octets.

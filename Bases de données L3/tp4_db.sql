@@ -120,4 +120,4 @@ BEGIN
     IF NEW.adresse.ville = 'Angers' THEN
         SET NEW.elevage = 'volailles';
     END IF;
-END;
+END; 
