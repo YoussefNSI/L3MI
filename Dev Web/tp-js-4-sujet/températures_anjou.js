@@ -21,8 +21,26 @@ La température moyenne d'un mois sera la moyenne des températures moyennes
 quotidiennes relevées pour ce mois.
 */
 export const p_températures_anjou = new Promise((resolve) => {
-  var tempAnjou = p_températures_départementales[0];
+  var tempAnjou = p_températures_départementales.then((temperature) => {
+    let dictMois2022 = [[], [], [], [], [], [], [], [], [], [], [], []];
+    temperature[49].forEach((element) => {
+      if (element.date.getFullYear() == 2022) {
+        dictMois2022[element.date.getMonth()].push([
+          element.tmoy,
+          element.tmin,
+          element.tmax,
+        ]);
+      }
+    });
+    var map1 = dictMois2022.map((mois) => {
+      var tempMin = Math.min(...mois.map((jour) => jour[1]));
+      var tempMax = Math.max(...mois.map((jour) => jour[2]));
+      var tempMoy = parseFloat(
+        (mois.reduce((acc, jour) => acc + jour[0], 0) / mois.length).toFixed(1)
+      );
+      return { tmoy: tempMoy, tmin: tempMin, tmax: tempMax };
+    });
+    return map1;
+  });
   resolve(tempAnjou);
 });
-
-console.log(p_températures_départementales);
