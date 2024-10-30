@@ -84,4 +84,70 @@ let rec parcours_retour sommet_actuel sommet_fin graphe_marque =
 
 parcours_retour 5 1 (marquer_chemin [1;2;3;5;4] g1);;
 
+let generateur = Random.self_init ();;
+(* Fonction pour enlever aléatoirement des marques dans le graphe *)
+let enlever_marques n chemin graphe =
+  (* Fonction auxiliaire qui enlève la marque d’un sommet donné dans le graphe *)
+  let rec enlever_marque sommet graphe =
+    match graphe with
+    | [] -> []
+    | (s, m, successeurs) :: q ->
+        if s = sommet then
+          (s, 0, successeurs) :: q  (* Enlève la marque en mettant `m = 0` *)
+        else
+          (s, m, successeurs) :: enlever_marque sommet q
+  in
+  (* Parcourt le chemin et enlève des marques selon le pourcentage `n` *)
+  let rec aux premier sommet_liste graphe =
+    match sommet_liste with
+    | [] -> graphe  (* Si la liste est vide, retourner le graphe tel quel *)
+    | sommet :: q when sommet = premier -> aux premier q graphe
+    | sommet :: q ->
+        (* On décide aléatoirement de retirer la marque du sommet *)
+        let graphe =
+          if Random.int 100 < n then
+            enlever_marque sommet graphe
+          else
+            graphe
+        in
+        aux premier q graphe
+  in
+  match chemin with
+  | [] -> graphe
+  | premier :: reste -> aux premier reste graphe;;
+
+enlever_marques 100 [1;2;3;5;4] (marquer_chemin [1;2;3;5;4] g1);;
+
+let cherche_marque distance_min distance_max sommet_initial graphe =
+  let rec bfs file visitees distance =
+    match file with
+    | [] -> None  (* Si la file est vide, aucune marque trouvée *)
+    | (courant, chemin) :: reste ->
+        if List.mem courant visitees then
+          bfs reste visitees distance  (* Ignorer les sommets déjà visités *)
+        else if distance > distance_max then
+          None  (* On a dépassé la distance maximale, arrêter *)
+        else if distance >= distance_min && est_marque courant graphe then
+          Some (courant, List.rev chemin)  (* Sommet marqué trouvé dans la bonne plage de distance *)
+        else
+          (* Continuer à explorer les voisins du sommet actuel *)
+          let voisins = successeurs courant graphe in
+          let nouvelle_file = reste @ List.map (fun s -> (s, s :: chemin)) voisins in
+          bfs nouvelle_file (courant :: visitees) (distance + 1)
+  in
+  bfs [(sommet_initial, [sommet_initial])] [] 0;;
+
+
+let g1_marq3 = marquer_chemin [1; 4; 5; 10; 11; 8; 12; 16; 17; 18] g1;;
+let g1_marq3_bis = enlever_marques 50 [1; 4; 5; 10; 11; 8; 12; 16; 17; 18] g1_marq3;;
+
+let g1_marq3_bis = [(1, 1, [2; 4]); (2, 0, [1; 3]); (3, 0, [2; 5]); (4, 1, [1; 5; 6]);
+ (5, 0, [3; 4; 9; 10]); (6, 0, [4; 7; 8]); (7, 0, [6]);
+ (8, 1, [6; 11; 12]); (9, 0, [5; 13]); (10, 0, [5; 11]); (11, 1, [8;10]);
+ (12, 0, [8; 16]); (13, 0, [9; 14; 15]); (14, 0, [13; 15; 17]);
+ (15, 0, [13; 14]); (16, 1, [12; 17]); (17, 0, [14; 16; 18; 19]);
+ (18, 1, [17; 19]); (19, 0, [17; 18])];;
+
+cherche_marque 4 4 9 g1_marq3_bis;;
+
 
