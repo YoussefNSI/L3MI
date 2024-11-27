@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-4c107fa20ef2babbd1ba.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "TP2",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "TP2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TP2-Debug-d83f48b84f566349f55e.json",
+					"name" : "TP2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "grille::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-grille-Debug-4f05643fcdcad2cbadbc.json",
+					"name" : "grille",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_vector::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_vector-Debug-b02a714bb8f94897ae04.json",
+					"name" : "test_vector",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/radou/Documents/GitHub/L3MI/POO/TP2/build/Desktop-Debug",
+		"source" : "C:/Users/radou/Documents/GitHub/L3MI/POO/TP2"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

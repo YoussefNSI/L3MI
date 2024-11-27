@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-677da864d18c20fa38b5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "TP2_test",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "TP2_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-TP2_test-Debug-b8d2d0e4a27c9a9c9859.json",
+					"name" : "TP2_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sequence::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sequence-Debug-0e7cec3341ac8a70c69a.json",
+					"name" : "sequence",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sequence2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sequence2-Debug-f504b5845a2d115995a6.json",
+					"name" : "sequence2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tailleposition::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tailleposition-Debug-ccc7aa344ee8c305c6bf.json",
+					"name" : "tailleposition",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/radou/Documents/GitHub/L3MI/POO/TP2_test/build/Desktop-Debug",
+		"source" : "C:/Users/radou/Documents/GitHub/L3MI/POO/TP2_test"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

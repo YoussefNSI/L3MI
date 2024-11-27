@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT map (graph, labeling)>
+<!ELEMENT graph (size, arcs)>
+<!ELEMENT size EMPTY>
+<!ELEMENT arcs (arc*)>
+<!ELEMENT arc EMPTY>
+<!ELEMENT labeling (nodes, influence_domain, labels)>
+<!ELEMENT nodes (node*)>
+<!ELEMENT node (#PCDATA)>
+<!ELEMENT influence_domain EMPTY>
+<!ELEMENT labels (b_label* | int_label* | r_label* | s_label*)>
+<!ELEMENT b_label EMPTY>
+<!ELEMENT int_label EMPTY>
+<!ELEMENT r_label EMPTY>
+<!ELEMENT s_label EMPTY>
+
+<!ATTLIST map name CDATA #REQUIRED>
+
+<!ATTLIST size nodes CDATA #REQUIRED>
+<!ATTLIST size arcs CDATA #REQUIRED>
+
+<!ATTLIST arc id CDATA #REQUIRED>
+<!ATTLIST arc tail CDATA #REQUIRED>
+<!ATTLIST arc head CDATA #REQUIRED>
+
+
+<!ATTLIST node node CDATA #REQUIRED>
+
+<!ATTLIST influence_domain type (boolean|integer|rational|symbolic) #REQUIRED>
+
+<!ATTLIST b_label arc CDATA #REQUIRED>
+<!ATTLIST b_label value CDATA #REQUIRED>
+
+<!ATTLIST int_label arc CDATA #REQUIRED>
+<!ATTLIST int_label value CDATA #REQUIRED>
+
+<!ATTLIST r_label arc CDATA #REQUIRED>
+<!ATTLIST r_label numerator CDATA #REQUIRED>
+<!ATTLIST r_label denominator CDATA #REQUIRED>
+
+<!ATTLIST s_label arc CDATA #REQUIRED>
+<!ATTLIST s_label value CDATA #REQUIRED>

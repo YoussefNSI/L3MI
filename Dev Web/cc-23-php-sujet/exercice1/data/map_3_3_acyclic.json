@@ -1,0 +1,25 @@
+{
+    "name": "map_3_3_acyclic",
+    "digraph": {
+        "nrNodes": 3,
+        "nrArcs": 3,
+        "arcs": [
+            [1, 2],
+            [1, 3],
+            [2, 3]
+        ]
+    },
+    "labeling": {
+        "concepts": [
+            "c1",
+            "c2",
+            "c3"
+        ],
+        "influenceType": "symbolic",
+        "influences": [
+            "+",
+            "+",
+            "-"
+        ]
+    }
+}

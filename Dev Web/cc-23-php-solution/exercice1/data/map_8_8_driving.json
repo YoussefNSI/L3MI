@@ -1,0 +1,40 @@
+{
+    "name": "map_8_8_driving",
+    "digraph": {
+        "nrNodes": 8,
+        "nrArcs": 8,
+        "arcs": [
+            [1, 5],
+            [2, 5],
+            [2, 6],
+            [3, 7],
+            [4, 7],
+            [5, 8],
+            [6, 8],
+            [7, 8]
+        ]
+    },
+    "labeling": {
+        "concepts": [
+            "brouillard",
+            "pluie",
+            "autoroute",
+            "route_secondaire",
+            "mauvaise_visibilité",
+            "route_glisssante",
+            "route_sineuse",
+            "accident"
+        ],
+        "influenceType": "integer",
+        "influences": [
+            9,
+            5,
+            2,
+            -9,
+            7,
+            7,
+            8,
+            2
+        ]
+    }
+}
