@@ -39,15 +39,15 @@
             exit;
 
             // version 'tableau associatif'
-            insert_map("Map2",3,4);
-            insert_nodes(2,Array("A","B","C"));
-            $arcs = [
-                ['head'=>1, 'tail'=>1],
-                ['head'=>1, 'tail'=>2],
-                ['head'=>2, 'tail'=>3],
-                ['head'=>3, 'tail'=>3]
-            ];
-            insert_arcs($arcs);
+            //insert_map("Map2",3,4);
+            //insert_nodes(2,Array("A","B","C"));
+            //$arcs = [
+            //    ['head'=>1, 'tail'=>1],
+            //    ['head'=>1, 'tail'=>2],
+            //    ['head'=>2, 'tail'=>3],
+            //    ['head'=>3, 'tail'=>3]
+            //];
+            //insert_arcs($arcs);
 
         }
     ?>

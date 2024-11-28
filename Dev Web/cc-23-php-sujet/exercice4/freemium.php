@@ -7,7 +7,19 @@
      */
 
 
-    // A COMPLETER
+    $allow_map = false;
+    if(isset($_POST['SUBMIT'])){
+        $map_name = $_POST['map'];
+        if(isset($_COOKIE[$map_name])){
+            if($_COOKIE[$map_name] < 3){
+                $allow_map = true;
+                setcookie($map_name, $_COOKIE[$map_name]+1, time()+3600*24*30);
+            }
+        }else{
+            setcookie($map_name, 1, time()+3600*24*30);
+            $allow_map = true;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +44,9 @@
     </form>
 
     <?php
-        // A COMPLETER -- msg d'erreur
+        if (isset($_POST['map']) && ($allow_map == false)) {
+            echo "<p class='error'>Vous avez dépassé le nombre de visualisation autorisé pour cette carte cognitive</p>";
+        }
     ?>
 </body>
 </html>

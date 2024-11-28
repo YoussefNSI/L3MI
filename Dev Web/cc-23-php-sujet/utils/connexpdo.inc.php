@@ -7,7 +7,7 @@ function connexpdo(string $db)
     $host = "localhost";
     $port = 3306;
     $charset = "UTF8";
-    $user = "";
+    $user = "root";
     $pass = "";
 
     try {
