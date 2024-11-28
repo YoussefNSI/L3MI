@@ -275,6 +275,11 @@ class Digraph extends ADigraph {
         if(! $this->checkNodeId($nodeId)) {
             throw new InvalidArgumentException("The node id must be in range 1.." . $this->getNumberOfNodes());
         }
+
+        $arcs = array_filter($this->getArcs(), function($arc) use($nodeId) {
+            return $arc[1] == $nodeId;
+        });
+        return $arcs;
     }
 
     /**
@@ -288,7 +293,14 @@ class Digraph extends ADigraph {
      */
     public function getOutgoingArcs(int $nodeId) : array
     {
-        // A COMPLETER
+        if(! $this->checkNodeId($nodeId)) {
+            throw new InvalidArgumentException("The node id must be in range 1.." . $this->getNumberOfNodes());
+        }
+
+        $arcs = array_filter($this->getArcs(), function($arc) use($nodeId) {
+            return $arc[0] == $nodeId;
+        });
+        return $arcs;
     }
 
     /**
@@ -338,7 +350,17 @@ class Digraph extends ADigraph {
      */
     public function getReachableNodes(int $nodeId) : array
     {
-        // A COMPLETER
+        $noeuds = array_filter($this->getNodeIds(), function($node) use($nodeId) {
+            return $node != $nodeId;
+        });
+        $reachables = [];
+        foreach($noeuds as $noeud){
+            $paths = $this->getDipaths($nodeId, $noeud, false);
+            if($paths != []) {
+                $reachables[] = $noeud;
+            }
+        }
+        return $reachables;
     }
 
     /**
@@ -467,7 +489,16 @@ class Digraph extends ADigraph {
      */
     public function isCyclic() : bool
     {
-        // A COMPLETER
+        foreach($this->getNodeIds() as $i) {
+            foreach($this->getReachableNodes($i) as $j) {
+                if($i<$j) {
+                    if(in_array($i, $this->getReachableNodes($j), true)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**

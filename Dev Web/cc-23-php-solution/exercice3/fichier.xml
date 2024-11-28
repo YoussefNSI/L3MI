@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE map SYSTEM 'map.dtd'>
+<map name="map_driving">
+    <graph>
+        <!-- `size` attributes: -->
+        <!-- `nodes`: number of nodes (>=0) -->
+        <!-- `arcs`: number of arcs (>=0) -->
+        <size nodes="8" arcs="8"/>
+        <!-- nodes are implicitly identified in the range {1..nodes} -->
+        <!-- `arcs` includes one `arc` sub-element per arc -->
+        <arcs>
+            <!-- `arc` attributes: -->
+            <!-- `id`  : arc id (in range 1..size.arcs) -->
+            <!-- `tail`: tail node id (in range 1..size.nodes) -->
+            <!-- `head`: head node id (in range 1..size.nodes) -->
+            <arc id="1" tail="1" head="5"/>
+            <arc id="2" tail="2" head="5"/>
+            <arc id="3" tail="2" head="6"/>
+            <arc id="4" tail="3" head="7"/>
+            <arc id="5" tail="4" head="7"/>
+            <arc id="6" tail="5" head="8"/>
+            <arc id="7" tail="6" head="8"/>
+            <arc id="8" tail="7" head="8"/>
+        </arcs>
+    </graph>
+
+    <labeling>
+        <!-- `nodes` includes one `node` sub-element per node -->
+        <nodes>
+            <!-- `node` required attributes: -->
+            <!-- `node`: node num (in range 1..digraph.size.nodes) -->
+            <!-- text content: node name -->
+            <node node="1">brouillard</node>
+            <node node="2">pluie</node>
+            <node node="3">autoroute</node>
+            <node node="4">route secondaire</node>
+            <node node="5">mauvaise visibilité</node>
+            <node node="6">route glisssante</node>
+            <node node="7">route sineuse</node>
+            <node node="8">accident</node>
+        </nodes>
+        <!-- `influence_domain` required attributes: -->
+        <!-- `type`: value types for labeling arcs (integer or symbolic) -->
+        <influence_domain type="integer"/>
+        <!-- `arc`: the id of the labelled arc (in 1..digraph.size.arcs} -->
+        <!-- `int_label`     : attribute `value` (integer, possibly signed) -->
+        <!-- `symbolic_label`: attribute `value` (string) -->
+        <labels>
+            <int_label arc="1" value="9" />
+            <int_label arc="2" value="5" />
+            <int_label arc="3" value="2" />
+            <int_label arc="4" value="-9" />
+            <int_label arc="5" value="7" />
+            <int_label arc="6" value="7" />
+            <int_label arc="7" value="8" />
+            <int_label arc="8" value="2" />
+        </labels>
+    </labeling>
+</map>
