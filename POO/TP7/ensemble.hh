@@ -14,6 +14,7 @@ public:
     ensemble() {}
     ~ensemble() {};
     ensemble(const ensemble& e) : _elements(e._elements) {}
+    std::vector<T> get_tab() { return _elements; }
     bool empty() { return _elements.empty(); }
     bool find(const T e) {
         for (auto i : _elements) {
@@ -21,6 +22,7 @@ public:
                 return true;
             }
         }
+        return false;
     }
     void insert(const T e) {
         if (!find(e)) {

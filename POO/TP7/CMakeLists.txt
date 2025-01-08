@@ -9,13 +9,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     add_compile_options(-Wall -Wpedantic)
 endif()
 
-
-add_executable(TP7 main.cc
-    ensemble.hh
-    ensemble.cc)
+add_executable(TP7 main.cc ensemble.hh ensemble.cc)
+add_executable(TP7_2 main2.cc pacman.hh pacman.cc)
 
 include(GNUInstallDirs)
-install(TARGETS TP7
+install(TARGETS TP7 TP7_2
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
