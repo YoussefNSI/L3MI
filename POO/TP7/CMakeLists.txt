@@ -10,7 +10,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 endif()
 
 
-add_executable(TP7 main.cc)
+add_executable(TP7 main.cc
+    ensemble.hh
+    ensemble.cc)
 
 include(GNUInstallDirs)
 install(TARGETS TP7
