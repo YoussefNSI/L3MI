@@ -41,9 +41,18 @@ arrayint &arrayint::operator=(arrayint const &a)
 
 std::ostream &operator<<(std::ostream &os, arrayint const &a)
 {
-    for (int i = a._imin; i <= a._imax; ++i)
+    int imin = a.get_imin();
+    try
     {
-        os << a.at(i) << " ";
+        os << "[";
+        os << a.at(imin);
+        for (int i = imin + 1; i <= a.get_imax(); ++i)
+            os << ", " << a.at(i);
+        os << "]";
+    }
+    catch (exceptionarrayint const &e)
+    {
+        ;
     }
     return os;
 }
