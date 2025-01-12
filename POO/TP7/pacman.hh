@@ -37,6 +37,7 @@ private:
 };
 
 class taille{
+public:
     taille(unsigned int largeur, unsigned int hauteur)
         : _largeur(largeur), _hauteur(hauteur) {}
     unsigned int w() const { return _largeur; }
@@ -61,7 +62,7 @@ public:
     void setpos(position p){
         _pos = p;
     }
-    virtual char typeobjet() const { return _typeobjet; }
+    virtual char typeobjet() const;
 private:
     position _pos;
     taille _t;
@@ -71,9 +72,35 @@ private:
 class pacman : public element {
 public:
     pacman(position pos, direction d)
-        : element(pos, taille(13, 13)) {}
+        : element(pos, taille(13, 13)), _d(d), _invicibilite(0) {}
+    direction deplacement() const { return _d; }
+    void setdir(direction d) { _d = d; }
+    char typeobjet() const override { return 'P'; }
+    bool invincible() const { return _invicibilite > 0; }
+    void decrementerinvincible() { if (_invicibilite > 0) _invicibilite--; }
+    void devenirinvincible() { _invicibilite = 200; }
+
+private:
+    direction _d;
+    int _invicibilite;
 };
 
+class fantome : public element {
+public:
+    fantome(position pos, direction d)
+        : element(pos, taille(20, 20)), _d(d) {}
+    direction deplacement() const { return _d; }
+    void setdir(direction d) { _d = d; }
+    char typeobjet() const override { return 'F'; }
+private:
+    direction _d;
+};
+
+class mur : public element {
+public:
+    mur(position pos, taille t)
+        : element(pos, t) {}
+};
 
 
 
