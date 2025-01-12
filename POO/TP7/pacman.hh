@@ -59,11 +59,14 @@ public:
     element(position pos, taille t)
         : _pos(pos), _t(t) {}
     position pos() const { return _pos; }
-    taille t() const { return _t; }
+    taille tai() const { return _t; }
     void setpos(position p){
         _pos = p;
     }
     virtual char typeobjet() const;
+    virtual void flux(std::ostream& os) const {
+        os << "Position : " << _pos.to_string() << " Taille : " << _t.to_string();
+    }
 private:
     position _pos;
     taille _t;
@@ -105,6 +108,7 @@ public:
             throw std::invalid_argument("La largeur et la hauteur d'un mur doivent être toutes les deux supérieures ou égales à 10.");
         }
     }
+    char typeobjet() const override { return 'M'; }
 };
 
 
