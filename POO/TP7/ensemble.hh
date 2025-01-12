@@ -13,10 +13,10 @@ class ensemble {
 public:
     ensemble() {}
     ~ensemble() {};
-    ensemble(const ensemble& e) : _elements(e._elements) {}
+    ensemble(ensemble const& e) : _elements(e._elements) {}
     std::vector<T> get_tab() { return _elements; }
     bool empty() { return _elements.empty(); }
-    bool find(const T e) {
+    bool find( T const& e) {
         for (auto i : _elements) {
             if (i == e) {
                 return true;
@@ -24,7 +24,7 @@ public:
         }
         return false;
     }
-    void insert(const T e) {
+    void insert(T const& e) {
         if (!find(e)) {
             _elements.push_back(e);
         }
@@ -32,9 +32,13 @@ public:
             throw std::invalid_argument("Element already in the ensemble");
         }
     }
-    void unionwith(const ensemble& e) noexcept {
+    void unionwith(ensemble const& e) noexcept {
         for (auto i : e._elements){
-            insert(i);
+            try{
+                insert(i);
+            }
+            catch ( std::invalid_argument const&){
+            }
         }
     }
 private:
