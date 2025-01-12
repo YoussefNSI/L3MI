@@ -4,6 +4,7 @@
 #include <string>
 
 #endif // PACMAN_HH
+#include <stdexcept>
 
 enum class direction {
     stop,
@@ -99,7 +100,11 @@ private:
 class mur : public element {
 public:
     mur(position pos, taille t)
-        : element(pos, t) {}
+        : element(pos, t) {
+        if (t.w() < 10 || t.h() < 10) {
+            throw std::invalid_argument("La largeur et la hauteur d'un mur doivent être toutes les deux supérieures ou égales à 10.");
+        }
+    }
 };
 
 
