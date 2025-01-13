@@ -1,4 +1,5 @@
 #include "array.h"
+#include <iostream>
 
 int arrayint::at(int i) const
 {
