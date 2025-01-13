@@ -153,7 +153,13 @@ public:
     char typeobjet() const override { return 'M'; }
 };
 
-/* faire classe pacgomme ici */
+class pacgommes : public element
+{
+public:
+    pacgommes(position pos)
+        : element(pos, taille(3, 3)) {}
+    char typeobjet() const override { return 'G'; }
+};
 
 class exceptionjeu : public std::exception
 {
@@ -225,6 +231,15 @@ public:
             }
         }
     }
+    element* accespacman(){
+        for(auto e : _elements){
+            if(e->typeobjet() == 'P'){
+                return e;
+            }
+        }
+        return nullptr;
+    }
+
 private:
     std::vector<element *> _elements;
     etat _etat;
