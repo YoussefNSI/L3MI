@@ -170,7 +170,7 @@ public:
         _etat = jeu._etat;
         return *this;
     }
-    std::ostream afficher(std::ostream& os) const{
+    std::ostream& afficher(std::ostream& os) const{
         for (auto e : _elements)
         {
             os << *e << std::endl;
