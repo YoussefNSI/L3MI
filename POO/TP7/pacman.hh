@@ -152,6 +152,15 @@ public:
     char typeobjet() const override { return 'M'; }
 };
 
+class exceptionjeu : public std::exception
+{
+public:
+    exceptionjeu(std::string message) : _message(message) {}
+    const char *what() const noexcept override { return _message.c_str(); }
+private:
+    std::string _message;
+};
+
 enum class etat
 {
     encours,
@@ -189,10 +198,24 @@ public:
         }
         return os;
     }
+    void ajouter(element *e)
+    {
+        for (auto elem : _elements)
+        {
+            if (elem->intersection(*e))
+            {
+                throw exceptionjeu("L'élément à ajouter chevauche un autre élément.");
+            }
+        }
+        _elements.push_back(e);
+    }
 private:
     std::vector<element *> _elements;
     etat _etat;
 };
+
+
+
 
 
 
