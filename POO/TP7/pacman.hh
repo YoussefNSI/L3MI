@@ -153,6 +153,8 @@ public:
     char typeobjet() const override { return 'M'; }
 };
 
+/* faire classe pacgomme ici */
+
 class exceptionjeu : public std::exception
 {
 public:
