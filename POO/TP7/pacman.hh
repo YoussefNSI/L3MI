@@ -167,6 +167,7 @@ class exceptionjeu : public std::exception
 public:
     exceptionjeu(std::string message) : _message(message) {}
     const char *what() const noexcept override { return _message.c_str(); }
+
 private:
     std::string _message;
 };
@@ -181,7 +182,7 @@ enum class etat
 class jeu
 {
 public:
-    jeu(std::vector<element*> elements) : _elements(elements), _etat(etat::encours) {}
+    jeu(std::vector<element *> elements) : _elements(elements), _etat(etat::encours) {}
     jeu(const jeu &jeu) : _elements(jeu._elements), _etat(jeu._etat) {}
     jeu &operator=(const jeu &jeu)
     {
@@ -189,54 +190,61 @@ public:
         _etat = jeu._etat;
         return *this;
     }
-    std::ostream& afficher(std::ostream& os) const{
+    std::ostream &afficher(std::ostream &os) const
+    {
         for (auto e : _elements)
         {
             os << *e << std::endl;
         }
         switch (_etat)
         {
-            case etat::encours:
-                os << "Partie en cours" << std::endl;
-                break;
-            case etat::defaite:
-                os << "Partie perdue" << std::endl;
-                break;
-            case etat::victoire:
-                os << "Partie gagnée" << std::endl;
-                break;
+        case etat::encours:
+            os << "Partie en cours" << std::endl;
+            break;
+        case etat::defaite:
+            os << "Partie perdue" << std::endl;
+            break;
+        case etat::victoire:
+            os << "Partie gagnée" << std::endl;
+            break;
         }
         return os;
     }
     void ajouter(element *e)
     {
-        if ( std::any_of(_elements.begin(), _elements.end(), [e](element *element) {
-            return element->intersection(*e);
-            })) {
+        if (std::any_of(_elements.begin(), _elements.end(), [e](element *element)
+                        { return element->intersection(*e); }))
+        {
             throw exceptionjeu("L'élément à ajouter chevauche un autre élément.");
         }
         _elements.push_back(e);
     }
-    void ajouterfantome(int e){
+    void ajouterfantome(int e)
+    {
         int x = 0;
         int y = 0;
-        for(int i = 0; i < e; i++){
-            try{
+        for (int i = 0; i < e; i++)
+        {
+            try
+            {
                 x = rand() % 320;
                 y = rand() % 200;
-                fantome *f = new fantome(position(x,y), direction::stop);
+                fantome *f = new fantome(position(x, y), direction::stop);
                 ajouter(f);
             }
-            catch (exceptionjeu &e){
+            catch (exceptionjeu &e)
+            {
                 i--;
             }
         }
     }
-    element* accespacman(){
-        for(auto e : _elements){
-            if(e->typeobjet() == 'P'){
-                return e;
-            }
+    element *accespacman()
+    {
+        auto it = std::find_if(_elements.begin(), _elements.end(), [](element *e)
+                               { return e->typeobjet() == 'P'; });
+        if (it != _elements.end())
+        {
+            return *it;
         }
         return nullptr;
     }
@@ -245,21 +253,3 @@ private:
     std::vector<element *> _elements;
     etat _etat;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
