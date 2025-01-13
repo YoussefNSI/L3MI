@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #endif // PACMAN_HH
 #include <stdexcept>
