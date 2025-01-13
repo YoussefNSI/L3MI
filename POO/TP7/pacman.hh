@@ -8,6 +8,7 @@
 
 #endif // PACMAN_HH
 #include <stdexcept>
+#include <algorithm>
 
 enum class direction
 {
@@ -153,6 +154,8 @@ public:
     char typeobjet() const override { return 'M'; }
 };
 
+/* faire classe pacgomme ici */
+
 class exceptionjeu : public std::exception
 {
 public:
@@ -201,11 +204,27 @@ public:
     }
     void ajouter(element *e)
     {
-        if (std::any_of(_elements.begin(), _elements.end(), [e](element* elem) { return elem->intersection(*e); }))
-        {
+        if ( std::any_of(_elements.begin(), _elements.end(), [e](element *element) {
+            return element->intersection(*e);
+            })) {
             throw exceptionjeu("L'élément à ajouter chevauche un autre élément.");
         }
         _elements.push_back(e);
+    }
+    void ajouterfantome(int e){
+        int x = 0;
+        int y = 0;
+        for(int i = 0; i < e; i++){
+            try{
+                x = rand() % 320;
+                y = rand() % 200;
+                fantome *f = new fantome(position(x,y), direction::stop);
+                ajouter(f);
+            }
+            catch (exceptionjeu &e){
+                i--;
+            }
+        }
     }
 private:
     std::vector<element *> _elements;
