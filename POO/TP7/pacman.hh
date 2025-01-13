@@ -182,7 +182,7 @@ enum class etat
 class jeu
 {
 public:
-    jeu(std::vector<element *> elements) : _elements(elements), _etat(etat::encours) {}
+    jeu(std::vector<element *> elements) : _elements(elements), _etat(etat::encours), _pacman(nullptr) {}
     jeu(const jeu &jeu) : _elements(jeu._elements), _etat(jeu._etat) {}
     jeu &operator=(const jeu &jeu)
     {
@@ -238,18 +238,34 @@ public:
             }
         }
     }
-    element *accespacman()
+    pacman *accespacman()
     {
-        auto it = std::find_if(_elements.begin(), _elements.end(), [](element *e)
-                               { return e->typeobjet() == 'P'; });
-        if (it != _elements.end())
+        if(_pacman == nullptr)
         {
-            return *it;
+            auto it = std::find_if(_elements.begin(), _elements.end(), [](element *e)
+                                   { return e->typeobjet() == 'P'; });
+            if (it != _elements.end())
+            {
+                _pacman = dynamic_cast<pacman const*>(*it);
+                return *it;
+            }
+            throw exceptionjeu("Le pacman n'a pas été trouvé.");
         }
-        return nullptr;
+        else
+        {
+            return _pacman;
+        }
+    }
+    void directionjoueur(direction d){
+        try {
+            ;
+
+        } catch (...) {
+        }
     }
 
 private:
     std::vector<element *> _elements;
     etat _etat;
+    pacman* _pacman;
 };
