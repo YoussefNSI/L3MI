@@ -76,6 +76,7 @@ class element
 public:
     element(position pos, taille t)
         : _pos(pos), _t(t) {}
+    virtual ~element() {}
     position pos() const { return _pos; }
     taille tai() const { return _t; }
     void setpos(position p)
@@ -246,8 +247,8 @@ public:
                                    { return e->typeobjet() == 'P'; });
             if (it != _elements.end())
             {
-                _pacman = dynamic_cast<pacman const*>(*it);
-                return *it;
+                _pacman = dynamic_cast<pacman*>(*it);
+                return dynamic_cast<pacman*>(*it);
             }
             throw exceptionjeu("Le pacman n'a pas été trouvé.");
         }
@@ -258,9 +259,10 @@ public:
     }
     void directionjoueur(direction d){
         try {
-            ;
-
-        } catch (...) {
+            pacman *p = accespacman();
+            p->setdir(d);
+        } catch (exceptionjeu &e) {
+            std::cerr << e.what() << std::endl;
         }
     }
 
@@ -268,4 +270,48 @@ private:
     std::vector<element *> _elements;
     etat _etat;
     pacman* _pacman;
+
+    void appliquerdeplacementcollisionmur()
+    {
+        for (auto e : _elements)
+        {
+            if (e->typeobjet() == 'P' || e->typeobjet() == 'F')
+            {
+                int dx = 0;
+                int dy = 0;
+                direction d;
+                switch(e->typeobjet()){
+                case 'P':
+                    d = dynamic_cast<pacman*>(e)->deplacement();
+                case 'F':
+                    d = dynamic_cast<fantome*>(e)->deplacement();
+                }
+
+                switch (d)
+                {
+                case direction::haut:
+                    dy = -1;
+                    break;
+                case direction::bas:
+                    dy = 1;
+                    break;
+                case direction::gauche:
+                    dx = -1;
+                    break;
+                case direction::droite:
+                    dx = 1;
+                    break;
+                default:
+                    break;
+                }
+                element *e2 = new element(position(e->pos().x() + dx, e->pos().y() + dy), e->tai());
+                if (std::any_of(_elements.begin(), _elements.end(), [e2](element *element)
+                                { return element->intersection(*e2); }))
+                {
+                    dynamic_cast<element *>(e)->setpos(position(e->pos().x(), e->pos().y()));
+                }
+                delete e2;
+            }
+        }
+    }
 };
