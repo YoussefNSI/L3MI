@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #endif // PACMAN_HH
 #include <stdexcept>
@@ -200,12 +201,9 @@ public:
     }
     void ajouter(element *e)
     {
-        for (auto elem : _elements)
+        if (std::any_of(_elements.begin(), _elements.end(), [e](element* elem) { return elem->intersection(*e); }))
         {
-            if (elem->intersection(*e))
-            {
-                throw exceptionjeu("L'élément à ajouter chevauche un autre élément.");
-            }
+            throw exceptionjeu("L'élément à ajouter chevauche un autre élément.");
         }
         _elements.push_back(e);
     }
