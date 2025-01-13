@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 #endif // PACMAN_HH
 #include <stdexcept>
@@ -91,6 +92,11 @@ public:
                (_pos.x() + _t.w()) >= (e._pos.x() + e._t.w()) &&
                (_pos.y() + _t.h()) >= (e._pos.y() + e._t.h());
     }
+    bool intersection(const element &e) const
+    {
+        return _pos.x() < e._pos.x() + e._t.w() && _pos.x() + _t.w() > e._pos.x() &&
+               _pos.y() < e._pos.y() + e._t.h() && _pos.y() + _t.h() > e._pos.y();
+    }
 
 private:
     position _pos;
@@ -145,3 +151,60 @@ public:
     }
     char typeobjet() const override { return 'M'; }
 };
+
+enum class etat
+{
+    encours,
+    defaite,
+    victoire
+};
+
+class jeu
+{
+public:
+    jeu(std::vector<element*> elements) : _elements(elements), _etat(etat::encours) {}
+    jeu(const jeu &jeu) : _elements(jeu._elements), _etat(jeu._etat) {}
+    jeu &operator=(const jeu &jeu)
+    {
+        _elements = jeu._elements;
+        _etat = jeu._etat;
+        return *this;
+    }
+    std::ostream afficher(std::ostream& os) const{
+        for (auto e : _elements)
+        {
+            os << *e << std::endl;
+        }
+        switch (_etat)
+        {
+            case etat::encours:
+                os << "Partie en cours" << std::endl;
+                break;
+            case etat::defaite:
+                os << "Partie perdue" << std::endl;
+                break;
+            case etat::victoire:
+                os << "Partie gagnée" << std::endl;
+                break;
+        }
+        return os;
+    }
+private:
+    std::vector<element *> _elements;
+    etat _etat;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
