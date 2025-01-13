@@ -75,7 +75,7 @@ class element
 {
 public:
     element(position pos, taille t)
-        : _pos(pos), _t(t) {}
+        : _pos(pos), _t(t), _typeobjet('X') {}
     virtual ~element() {}
     position pos() const { return _pos; }
     taille tai() const { return _t; }
@@ -266,6 +266,28 @@ public:
         }
     }
 
+    void changerdirectionfantomes(){
+        std::vector<direction> dir = {direction::haut, direction::bas, direction::gauche, direction::droite, direction::stop};
+        std::for_each(_elements.begin(), _elements.end(), [&dir](element* e){
+            if(e->typeobjet() == 'F'){
+                fantome *f = dynamic_cast<fantome*>(e);
+                int x = rand() % 5;
+                f->setdir(dir[x]);
+            }
+        });
+    }
+
+    void tourdejeu(){
+        appliquerdeplacementcollisionmur();
+        appliquerdeplacementcontact();
+        appliquerdeplacementmanger();
+        changerdirectionfantomes();
+        if(!std::any_of(_elements.begin(), _elements.end(), [](element *element)
+                        { return element->typeobjet() == 'G'; })){
+            _etat = etat::victoire;
+        }
+    }
+
 private:
     std::vector<element *> _elements;
     etat _etat;
@@ -275,43 +297,69 @@ private:
     {
         for (auto e : _elements)
         {
-            if (e->typeobjet() == 'P' || e->typeobjet() == 'F')
-            {
-                int dx = 0;
-                int dy = 0;
-                direction d;
-                switch(e->typeobjet()){
-                case 'P':
-                    d = dynamic_cast<pacman*>(e)->deplacement();
-                case 'F':
-                    d = dynamic_cast<fantome*>(e)->deplacement();
+            if(e->typeobjet() == 'P' || e->typeobjet() == 'F'){
+                direction dir = direction::stop;
+                int x = 0;
+                int y = 0;
+                if(e->typeobjet() == 'P'){
+                    dir = dynamic_cast<pacman*>(e)->deplacement();
                 }
-
-                switch (d)
-                {
-                case direction::haut:
-                    dy = -1;
-                    break;
-                case direction::bas:
-                    dy = 1;
-                    break;
-                case direction::gauche:
-                    dx = -1;
-                    break;
-                case direction::droite:
-                    dx = 1;
-                    break;
-                default:
-                    break;
+                else{
+                    dir = dynamic_cast<fantome*>(e)->deplacement();
                 }
-                element *e2 = new element(position(e->pos().x() + dx, e->pos().y() + dy), e->tai());
-                if (std::any_of(_elements.begin(), _elements.end(), [e2](element *element)
-                                { return element->intersection(*e2); }))
-                {
-                    dynamic_cast<element *>(e)->setpos(position(e->pos().x(), e->pos().y()));
+                switch(dir){
+                    case direction::haut:
+                        y = -1;
+                        break;
+                    case direction::bas:
+                        y = 1;
+                        break;
+                    case direction::gauche:
+                        x = -1;;
+                        break;
+                    case direction::droite:
+                        x = 1;;
+                        break;
+                    case direction::stop:
+                        break;
                 }
-                delete e2;
+                if(x != 0 || y != 0){
+                    bool collision = false;
+                    element *e2 = new element(position(e->pos().x() + x, e->pos().y() + y), e->tai());
+                    if(std::any_of(_elements.begin(), _elements.end(), [e2](element *element)
+                        { return (element->typeobjet() == 'M' && element->intersection(*e2)); })){
+                        collision = true;
+                    }
+                    delete e2;
+                    if(!collision){
+                        e->setpos(position(e->pos().x() + x, e->pos().y() + y));
+                    }
+                }
             }
+        }
+    }
+
+    void appliquerdeplacementcontact(){
+        pacman *p = accespacman();
+        if(std::any_of(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'F' && element->intersection(*p)); })){
+            if(p->invincible()){
+                _elements.erase(std::remove_if(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'F' && element->intersection(*p)); }), _elements.end());
+            }
+            else{
+                _etat = etat::defaite;
+            }
+        }
+    }
+
+    void appliquerdeplacementmanger(){
+        pacman *p = accespacman();
+        if(std::any_of(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'G' && element->intersection(*p)); })){
+            _elements.erase(std::remove_if(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'G' && element->intersection(*p)); }), _elements.end());
+            p->devenirinvincible();
         }
     }
 };
