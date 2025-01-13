@@ -29,8 +29,9 @@ public:
     bool operator!=(const position& p) const {
         return !(*this == p);
     }
-    void flux(std::ostream& os) const {
-        os << to_string();
+    friend std::ostream& operator<<(std::ostream& os, const position& p) {
+        os << p.to_string();
+        return os;
     }
 private:
     unsigned int _x;
@@ -46,8 +47,9 @@ public:
     std::string to_string() const {
         return "(" + std::to_string(_largeur) + "," + std::to_string(_hauteur) + ")";
     }
-    void flux(std::ostream& os) const {
-        os << to_string();
+    friend std::ostream& operator<<(std::ostream& os, const taille& t) {
+        os << t.to_string();
+        return os;
     }
 private:
     unsigned int _largeur;
@@ -64,8 +66,9 @@ public:
         _pos = p;
     }
     virtual char typeobjet() const;
-    virtual void flux(std::ostream& os) const {
-        os << "Position : " << _pos.to_string() << " Taille : " << _t.to_string();
+    friend std::ostream& operator<<(std::ostream& os, const element& e) {
+        os << "Position : " << e._pos.to_string() << " Taille : " << e._t.to_string();
+        return os;
     }
 private:
     position _pos;
