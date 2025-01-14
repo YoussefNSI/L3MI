@@ -5,10 +5,10 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <stdexcept>
-#include <algorithm>
 
 #endif // PACMAN_HH
+#include <stdexcept>
+#include <algorithm>
 
 enum class direction
 {
@@ -193,18 +193,145 @@ public:
     }
     std::ostream &afficher(std::ostream &os) const;
     void ajouter(element *e);
-    void ajouterfantome(int e);
-    pacman *accespacman();
-    void directionjoueur(direction d);
-    void changerdirectionfantomes();
-    void tourdejeu();
+    void ajouterfantome(int e){
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < e; i++)
+        {
+            try
+            {
+                x = rand() % 320;
+                y = rand() % 200;
+                fantome *f = new fantome(position(x, y), direction::stop);
+                ajouter(f);
+            }
+            catch (exceptionjeu &e)
+            {
+                i--;
+            }
+        }
+    }
+    pacman *accespacman()
+    {
+        if(_pacman == nullptr)
+        {
+            auto it = std::find_if(_elements.begin(), _elements.end(), [](element *e)
+                                   { return e->typeobjet() == 'P'; });
+            if (it != _elements.end())
+            {
+                _pacman = dynamic_cast<pacman*>(*it);
+                return dynamic_cast<pacman*>(*it);
+            }
+            throw exceptionjeu("Le pacman n'a pas été trouvé.");
+        }
+        else
+        {
+            return _pacman;
+        }
+    }
+    void directionjoueur(direction d){
+        try {
+            pacman *p = accespacman();
+            p->setdir(d);
+        } catch (exceptionjeu &e) {
+            std::cerr << e.what() << std::endl;
+        }
+    }
+
+    void changerdirectionfantomes(){
+        std::vector<direction> dir = {direction::haut, direction::bas, direction::gauche, direction::droite, direction::stop};
+        std::for_each(_elements.begin(), _elements.end(), [&dir](element* e){
+            if(e->typeobjet() == 'F'){
+                fantome *f = dynamic_cast<fantome*>(e);
+                int x = rand() % 5;
+                f->setdir(dir[x]);
+            }
+        });
+    }
+
+    void tourdejeu(){
+        appliquerdeplacementcollisionmur();
+        appliquerdeplacementcontact();
+        appliquerdeplacementmanger();
+        changerdirectionfantomes();
+        if(!std::any_of(_elements.begin(), _elements.end(), [](element *element)
+                        { return element->typeobjet() == 'G'; })){
+            _etat = etat::victoire;
+        }
+    }
 
 private:
     std::vector<element *> _elements;
     etat _etat;
     pacman* _pacman;
 
-    void appliquerdeplacementcollisionmur();
-    void appliquerdeplacementcontact();
-    void appliquerdeplacementmanger();
+    void appliquerdeplacementcollisionmur()
+    {
+        for (auto e : _elements)
+        {
+            if(e->typeobjet() == 'P' || e->typeobjet() == 'F'){
+                direction dir = direction::stop;
+                int x = 0;
+                int y = 0;
+                if(e->typeobjet() == 'P'){
+                    dir = dynamic_cast<pacman*>(e)->deplacement();
+                }
+                else{
+                    dir = dynamic_cast<fantome*>(e)->deplacement();
+                }
+                switch(dir){
+                    case direction::haut:
+                        y = -1;
+                        break;
+                    case direction::bas:
+                        y = 1;
+                        break;
+                    case direction::gauche:
+                        x = -1;;
+                        break;
+                    case direction::droite:
+                        x = 1;;
+                        break;
+                    case direction::stop:
+                        break;
+                }
+                if(x != 0 || y != 0){
+                    bool collision = false;
+                    element *e2 = new element(position(e->pos().x() + x, e->pos().y() + y), e->tai());
+                    if(std::any_of(_elements.begin(), _elements.end(), [e2](element *element)
+                        { return (element->typeobjet() == 'M' && element->intersection(*e2)); })){
+                        collision = true;
+                    }
+                    delete e2;
+                    if(!collision){
+                        e->setpos(position(e->pos().x() + x, e->pos().y() + y));
+                    }
+                }
+            }
+        }
+    }
+
+    void appliquerdeplacementcontact(){
+        pacman *p = accespacman();
+        if(std::any_of(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'F' && element->intersection(*p)); })){
+            if(p->invincible()){
+                _elements.erase(std::remove_if(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'F' && element->intersection(*p)); }), _elements.end());
+            }
+            else{
+                _etat = etat::defaite;
+            }
+        }
+    }
+
+    void appliquerdeplacementmanger(){
+        pacman *p = accespacman();
+        if(std::any_of(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'G' && element->intersection(*p)); })){
+            _elements.erase(std::remove_if(_elements.begin(), _elements.end(), [p](element *element)
+                        { return (element->typeobjet() == 'G' && element->intersection(*p)); }), _elements.end());
+            p->devenirinvincible();
+        }
+    }
 };
