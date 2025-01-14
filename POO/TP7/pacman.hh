@@ -8,9 +8,9 @@
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
+#include <memory> // Ajout de l'inclusion pour les smart pointers
 
 #endif // PACMAN_HH
-
 
 enum class direction
 {
@@ -24,27 +24,13 @@ enum class direction
 class position
 {
 public:
-    position(unsigned int x, unsigned int y)
-        : _x(x), _y(y) {}
-    unsigned int x() const { return _x; }
-    unsigned int y() const { return _y; }
-    std::string to_string() const
-    {
-        return "(" + std::to_string(_x) + "," + std::to_string(_y) + ")";
-    }
-    bool operator==(const position &p) const
-    {
-        return _x == p._x && _y == p._y;
-    }
-    bool operator!=(const position &p) const
-    {
-        return !(*this == p);
-    }
-    friend std::ostream &operator<<(std::ostream &os, const position &p)
-    {
-        os << p.to_string();
-        return os;
-    }
+    position(unsigned int x, unsigned int y);
+    unsigned int x() const;
+    unsigned int y() const;
+    std::string to_string() const;
+    bool operator==(const position &p) const;
+    bool operator!=(const position &p) const;
+    friend std::ostream &operator<<(std::ostream &os, const position &p);
 
 private:
     unsigned int _x;
@@ -54,19 +40,11 @@ private:
 class taille
 {
 public:
-    taille(unsigned int largeur, unsigned int hauteur)
-        : _largeur(largeur), _hauteur(hauteur) {}
-    unsigned int w() const { return _largeur; }
-    unsigned int h() const { return _hauteur; }
-    std::string to_string() const
-    {
-        return "(" + std::to_string(_largeur) + "," + std::to_string(_hauteur) + ")";
-    }
-    friend std::ostream &operator<<(std::ostream &os, const taille &t)
-    {
-        os << t.to_string();
-        return os;
-    }
+    taille(unsigned int largeur, unsigned int hauteur);
+    unsigned int w() const;
+    unsigned int h() const;
+    std::string to_string() const;
+    friend std::ostream &operator<<(std::ostream &os, const taille &t);
 
 private:
     unsigned int _largeur;
@@ -76,32 +54,15 @@ private:
 class element
 {
 public:
-    element(position pos, taille t)
-        : _pos(pos), _t(t), _typeobjet('X') {}
-    virtual ~element() {}
-    position pos() const { return _pos; }
-    taille tai() const { return _t; }
-    void setpos(position p)
-    {
-        _pos = p;
-    }
-    virtual char typeobjet() const { return _typeobjet; }
-    friend std::ostream &operator<<(std::ostream &os, const element &e)
-    {
-        os << "Position : " << e._pos.to_string() << " Taille : " << e._t.to_string();
-        return os;
-    }
-    bool contient(const element &e) const
-    {
-        return _pos.x() <= e._pos.x() && _pos.y() <= e._pos.y() &&
-               (_pos.x() + _t.w()) >= (e._pos.x() + e._t.w()) &&
-               (_pos.y() + _t.h()) >= (e._pos.y() + e._t.h());
-    }
-    bool intersection(const element &e) const
-    {
-        return _pos.x() < e._pos.x() + e._t.w() && _pos.x() + _t.w() > e._pos.x() &&
-               _pos.y() < e._pos.y() + e._t.h() && _pos.y() + _t.h() > e._pos.y();
-    }
+    element(position pos, taille t);
+    virtual ~element();
+    position pos() const;
+    taille tai() const;
+    void setpos(position p);
+    virtual char typeobjet() const;
+    friend std::ostream &operator<<(std::ostream &os, const element &e);
+    bool contient(const element &e) const;
+    bool intersection(const element &e) const;
 
 private:
     position _pos;
@@ -112,18 +73,13 @@ private:
 class pacman : public element
 {
 public:
-    pacman(position pos, direction d)
-        : element(pos, taille(13, 13)), _d(d), _invicibilite(0) {}
-    direction deplacement() const { return _d; }
-    void setdir(direction d) { _d = d; }
-    char typeobjet() const override { return 'P'; }
-    bool invincible() const { return _invicibilite > 0; }
-    void decrementerinvincible()
-    {
-        if (_invicibilite > 0)
-            _invicibilite--;
-    }
-    void devenirinvincible() { _invicibilite = 200; }
+    pacman(position pos, direction d);
+    direction deplacement() const;
+    void setdir(direction d);
+    char typeobjet() const override;
+    bool invincible() const;
+    void decrementerinvincible();
+    void devenirinvincible();
 
 private:
     direction _d;
@@ -133,11 +89,10 @@ private:
 class fantome : public element
 {
 public:
-    fantome(position pos, direction d)
-        : element(pos, taille(20, 20)), _d(d) {}
-    direction deplacement() const { return _d; }
-    void setdir(direction d) { _d = d; }
-    char typeobjet() const override { return 'F'; }
+    fantome(position pos, direction d);
+    direction deplacement() const;
+    void setdir(direction d);
+    char typeobjet() const override;
 
 private:
     direction _d;
@@ -146,30 +101,22 @@ private:
 class mur : public element
 {
 public:
-    mur(position pos, taille t)
-        : element(pos, t)
-    {
-        if (t.w() < 10 || t.h() < 10)
-        {
-            throw std::invalid_argument("La largeur et la hauteur d'un mur doivent être toutes les deux supérieures ou égales à 10.");
-        }
-    }
-    char typeobjet() const override { return 'M'; }
+    mur(position pos, taille t);
+    char typeobjet() const override;
 };
 
 class pacgommes : public element
 {
 public:
-    pacgommes(position pos)
-        : element(pos, taille(3, 3)) {}
-    char typeobjet() const override { return 'G'; }
+    pacgommes(position pos);
+    char typeobjet() const override;
 };
 
 class exceptionjeu : public std::exception
 {
 public:
-    exceptionjeu(std::string message) : _message(message) {}
-    const char *what() const noexcept override { return _message.c_str(); }
+    exceptionjeu(std::string message);
+    const char *what() const noexcept override;
 
 private:
     std::string _message;
@@ -185,180 +132,23 @@ enum class etat
 class jeu
 {
 public:
-    jeu(std::vector<element *> elements) : _elements(elements), _etat(etat::encours), _pacman(nullptr) {}
-    jeu(const jeu &jeu) : _elements(jeu._elements), _etat(jeu._etat) {}
-    jeu &operator=(const jeu &jeu)
-    {
-        _elements = jeu._elements;
-        _etat = jeu._etat;
-        return *this;
-    }
-    std::ostream &afficher(std::ostream &os) const{
-        for (auto e : _elements)
-        {
-            os << *e << std::endl;
-        }
-        switch (_etat)
-        {
-        case etat::encours:
-            os << "Partie en cours" << std::endl;
-            break;
-        case etat::defaite:
-            os << "Partie perdue" << std::endl;
-            break;
-        case etat::victoire:
-            os << "Partie gagnée" << std::endl;
-            break;
-        }
-        return os;
-    }
-    void ajouter(element *e){
-        if (std::any_of(_elements.begin(), _elements.end(), [e](element *element)
-                        { return element->intersection(*e); }))
-        {
-            throw exceptionjeu("L'élément à ajouter chevauche un autre élément.");
-        }
-        _elements.push_back(e);
-    }
-    void ajouterfantome(int e){
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i < e; i++)
-        {
-            try
-            {
-                x = rand() % 320;
-                y = rand() % 200;
-                fantome *f = new fantome(position(x, y), direction::stop);
-                ajouter(f);
-            }
-            catch (exceptionjeu &e)
-            {
-                i--;
-            }
-        }
-    }
-    pacman *accespacman()
-    {
-        if(_pacman == nullptr)
-        {
-            auto it = std::find_if(_elements.begin(), _elements.end(), [](element *e)
-                                   { return e->typeobjet() == 'P'; });
-            if (it != _elements.end())
-            {
-                _pacman = dynamic_cast<pacman*>(*it);
-                return dynamic_cast<pacman*>(*it);
-            }
-            throw exceptionjeu("Le pacman n'a pas été trouvé.");
-        }
-        else
-        {
-            return _pacman;
-        }
-    }
-    void directionjoueur(direction d){
-        try {
-            pacman *p = accespacman();
-            p->setdir(d);
-        } catch (exceptionjeu &e) {
-            std::cerr << e.what() << std::endl;
-        }
-    }
-
-    void changerdirectionfantomes(){
-        std::vector<direction> dir = {direction::haut, direction::bas, direction::gauche, direction::droite, direction::stop};
-        std::for_each(_elements.begin(), _elements.end(), [&dir](element* e){
-            if(e->typeobjet() == 'F'){
-                fantome *f = dynamic_cast<fantome*>(e);
-                int x = rand() % 5;
-                f->setdir(dir[x]);
-            }
-        });
-    }
-
-    void tourdejeu(){
-        appliquerdeplacementcollisionmur();
-        appliquerdeplacementcontact();
-        appliquerdeplacementmanger();
-        changerdirectionfantomes();
-        if(!std::any_of(_elements.begin(), _elements.end(), [](element *element)
-                        { return element->typeobjet() == 'G'; })){
-            _etat = etat::victoire;
-        }
-    }
+    jeu(std::vector<std::shared_ptr<element>> elements);
+    jeu(const jeu &jeu);
+    jeu &operator=(const jeu &jeu);
+    std::ostream &afficher(std::ostream &os) const;
+    void ajouter(std::shared_ptr<element> e);
+    void ajouterfantome(int e);
+    std::shared_ptr<pacman> accespacman();
+    void directionjoueur(direction d);
+    void changerdirectionfantomes();
+    void tourdejeu();
 
 private:
-    std::vector<element *> _elements;
+    std::vector<std::shared_ptr<element>> _elements;
     etat _etat;
-    pacman* _pacman;
+    std::shared_ptr<pacman> _pacman;
 
-    void appliquerdeplacementcollisionmur()
-    {
-        for (auto e : _elements)
-        {
-            if(e->typeobjet() == 'P' || e->typeobjet() == 'F'){
-                direction dir = direction::stop;
-                int x = 0;
-                int y = 0;
-                if(e->typeobjet() == 'P'){
-                    dir = dynamic_cast<pacman*>(e)->deplacement();
-                }
-                else{
-                    dir = dynamic_cast<fantome*>(e)->deplacement();
-                }
-                switch(dir){
-                    case direction::haut:
-                        y = -1;
-                        break;
-                    case direction::bas:
-                        y = 1;
-                        break;
-                    case direction::gauche:
-                        x = -1;;
-                        break;
-                    case direction::droite:
-                        x = 1;;
-                        break;
-                    case direction::stop:
-                        break;
-                }
-                if(x != 0 || y != 0){
-                    bool collision = false;
-                    element *e2 = new element(position(e->pos().x() + x, e->pos().y() + y), e->tai());
-                    if(std::any_of(_elements.begin(), _elements.end(), [e2](element *element)
-                        { return (element->typeobjet() == 'M' && element->intersection(*e2)); })){
-                        collision = true;
-                    }
-                    delete e2;
-                    if(!collision){
-                        e->setpos(position(e->pos().x() + x, e->pos().y() + y));
-                    }
-                }
-            }
-        }
-    }
-
-    void appliquerdeplacementcontact(){
-        pacman *p = accespacman();
-        if(std::any_of(_elements.begin(), _elements.end(), [p](element *element)
-                        { return (element->typeobjet() == 'F' && element->intersection(*p)); })){
-            if(p->invincible()){
-                _elements.erase(std::remove_if(_elements.begin(), _elements.end(), [p](element *element)
-                        { return (element->typeobjet() == 'F' && element->intersection(*p)); }), _elements.end());
-            }
-            else{
-                _etat = etat::defaite;
-            }
-        }
-    }
-
-    void appliquerdeplacementmanger(){
-        pacman *p = accespacman();
-        if(std::any_of(_elements.begin(), _elements.end(), [p](element *element)
-                        { return (element->typeobjet() == 'G' && element->intersection(*p)); })){
-            _elements.erase(std::remove_if(_elements.begin(), _elements.end(), [p](element *element)
-                        { return (element->typeobjet() == 'G' && element->intersection(*p)); }), _elements.end());
-            p->devenirinvincible();
-        }
-    }
+    void appliquerdeplacementcollisionmur();
+    void appliquerdeplacementcontact();
+    void appliquerdeplacementmanger();
 };
