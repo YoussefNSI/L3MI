@@ -1,0 +1,20 @@
+# ninja log v6
+1395	1818	7586423412013106	tp8.exe	d43e8461211a42e7
+58	466	7586423401361986	tp8_autogen/timestamp	77b1eb2cc5a6f0e5
+477	606	7586423402832141	CMakeFiles/tp8.dir/tp8_autogen/mocs_compilation.cpp.obj	1beac673acd7d139
+489	1392	7586423402931299	CMakeFiles/tp8.dir/main.cc.obj	ddf43b029fbc745c
+58	466	7586423401361986	tp8_autogen/mocs_compilation.cpp	77b1eb2cc5a6f0e5
+58	466	7586423401361986	C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/tp8_autogen/timestamp	77b1eb2cc5a6f0e5
+3696	16425	7586425999175765	CMakeFiles/calculatrice.dir/calculatrice_autogen/mocs_compilation.cpp.obj	caf630993846e5ba
+58	466	7586423401361986	C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/tp8_autogen/mocs_compilation.cpp	77b1eb2cc5a6f0e5
+17	3678	7586425996577013	calculatrice_autogen/timestamp	7f453ce87625d39c
+17	3678	7586425996577013	calculatrice_autogen/mocs_compilation.cpp	7f453ce87625d39c
+17	3678	7586425996577013	C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/timestamp	7f453ce87625d39c
+17	3678	7586425996577013	C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/mocs_compilation.cpp	7f453ce87625d39c
+3705	16688	7586425999266506	CMakeFiles/calculatrice.dir/calculatrice.cc.obj	30f26db91363ac3b
+16689	17144	7586426129105298	calculatrice.exe	1d66d967c7653ff9
+17	1390	7586426525516359	build.ninja	bcf47c834da2aff9
+98	533	7586426528565337	calculatrice_autogen/timestamp	7f453ce87625d39c
+98	533	7586426528565337	calculatrice_autogen/mocs_compilation.cpp	7f453ce87625d39c
+98	533	7586426528565337	C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/timestamp	7f453ce87625d39c
+98	533	7586426528565337	C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/mocs_compilation.cpp	7f453ce87625d39c
