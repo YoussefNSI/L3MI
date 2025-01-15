@@ -1,10 +1,13 @@
-/*
+
 #include "pacman.hh"
+/*
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+*/
 #include <array>
 
-int main() {
+
+int main() {/*
 	sf::RenderWindow window(sf::VideoMode(640, 400), "PacMan");
 	window.setKeyRepeatEnabled(false);
 	window.setVerticalSyncEnabled(true);
@@ -95,8 +98,11 @@ int main() {
 		window.draw(spritespacman[ispritepacman]);
 		window.display();
 	}
-	j.afficher(std::cout);
+    j.afficher(std::cout);
+    */
+
+
 	return 0;
 }
 
-*/
+

@@ -52,7 +52,7 @@ public:
     virtual ~element();
     position pos() const;
     taille tai() const;
-    void setpos(position& p);
+    void setpos(position p);
     virtual char typeobjet() const;
     friend std::ostream &operator<<(std::ostream &os, const element &e);
     bool contient(const element &e) const;
@@ -61,7 +61,6 @@ public:
 private:
     position _pos;
     taille _t;
-    char _typeobjet;
 };
 
 class pacman : public element

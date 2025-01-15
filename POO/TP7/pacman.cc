@@ -41,7 +41,7 @@ std::ostream &operator<<(std::ostream &os, const taille &t)
 
 /* classe element */
 
-element::element(position pos, taille t) : _pos(pos), _t(t), _typeobjet('X') {}
+element::element(position pos, taille t) : _pos(pos), _t(t) {}
 element::~element() {}
 position element::pos() const { return _pos; }
 taille element::tai() const { return _t; }
@@ -49,7 +49,7 @@ void element::setpos(position p)
 {
     _pos = p;
 }
-char element::typeobjet() const { return _typeobjet; }
+char element::typeobjet() const { return 'X'; } // X = element non défini
 std::ostream &operator<<(std::ostream &os, const element &e)
 {
     os << "Position : " << e._pos.to_string() << " Taille : " << e._t.to_string();
