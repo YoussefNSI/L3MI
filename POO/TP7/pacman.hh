@@ -66,7 +66,7 @@ private:
 class pacman : public element
 {
 public:
-    pacman(position pos, direction d);
+    pacman(position pos, direction d=direction::stop);
     direction deplacement() const;
     void setdir(direction d);
     char typeobjet() const override;
@@ -96,6 +96,9 @@ class mur : public element
 public:
     mur(position pos, taille t);
     char typeobjet() const override;
+    static std::shared_ptr<mur> fabrique(position pos, taille t){
+        return std::make_shared<mur>(pos, t);
+    }
 };
 
 class pacgommes : public element
@@ -125,13 +128,16 @@ enum class etat
 class jeu
 {
 public:
-    jeu() = default;
+    jeu();
     jeu(std::vector<std::shared_ptr<element>> elements);
     jeu(const jeu &jeu);
     jeu &operator=(const jeu &jeu);
+    std::vector<std::shared_ptr<element>> objets() const { return _elements; }
     std::ostream &afficher(std::ostream &os) const;
+    etat etatjeu() const { return _etat;}
     void ajouter(std::shared_ptr<element> e);
-    void ajouterfantome(int e);
+    void ajouterfantomes(int e);
+    void ajouterpacgommes(int e);
     std::shared_ptr<pacman> accespacman();
     void directionjoueur(direction d);
     void changerdirectionfantomes();

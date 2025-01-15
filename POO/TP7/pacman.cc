@@ -98,6 +98,11 @@ mur::mur(position pos, taille t) : element(pos, t)
     }
 }
 char mur::typeobjet() const { return 'M'; }
+/*
+static std::shared_ptr<mur> fabrique(position pos, taille t){
+    return std::make_shared<mur>(pos, t);
+}
+*/
 
 /* classe pacgommes */
 
@@ -111,6 +116,7 @@ const char *exceptionjeu::what() const noexcept { return _message.c_str(); }
 
 /* classe jeu */
 
+jeu::jeu() : _etat(etat::encours), _pacman(nullptr) {}
 jeu::jeu(std::vector<std::shared_ptr<element>> elements) : _elements(elements), _etat(etat::encours), _pacman(nullptr) {}
 jeu::jeu(const jeu &jeu) : _elements(jeu._elements), _etat(jeu._etat), _pacman(jeu._pacman) {}
 jeu &jeu::operator=(const jeu &jeu)
@@ -149,7 +155,7 @@ void jeu::ajouter(std::shared_ptr<element> e)
     }
     _elements.push_back(e);
 }
-void jeu::ajouterfantome(int e)
+void jeu::ajouterfantomes(int e)
 {
     int x = 0;
     int y = 0;
@@ -161,6 +167,25 @@ void jeu::ajouterfantome(int e)
             y = rand() % 200;
             std::shared_ptr<fantome> f = std::make_shared<fantome>(position(x, y), direction::stop);
             ajouter(f);
+        }
+        catch (exceptionjeu &e)
+        {
+            i--;
+        }
+    }
+}
+void jeu::ajouterpacgommes(int e)
+{
+    int x = 0;
+    int y = 0;
+    for (int i = 0; i < e; i++)
+    {
+        try
+        {
+            x = rand() % 320;
+            y = rand() % 200;
+            std::shared_ptr<pacgommes> g = std::make_shared<pacgommes>(position(x, y));
+            ajouter(g);
         }
         catch (exceptionjeu &e)
         {

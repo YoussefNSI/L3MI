@@ -1,13 +1,11 @@
 
 #include "pacman.hh"
-/*
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-*/
 #include <array>
 
 
-int main() {/*
+int main() {
 	sf::RenderWindow window(sf::VideoMode(640, 400), "PacMan");
 	window.setKeyRepeatEnabled(false);
 	window.setVerticalSyncEnabled(true);
@@ -38,12 +36,12 @@ int main() {/*
 	j.ajouter(mur::fabrique(position(310,10), taille(10,180)));
 
 	j.ajouter(std::make_unique<pacman>(position(150,30)));
-	j.ajouterfantomes(4);
-	j.ajouterpacgommes(10);
+    j.ajouterfantomes(4);
+    j.ajouterpacgommes(10);
 	j.afficher(std::cout);
 
 	unsigned int decompte(0);
-	while (window.isOpen() && (j.etatjeu() == jeu::etat::encours)) {
+    while (window.isOpen() && (j.etatjeu() == etat::encours)) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
@@ -73,10 +71,10 @@ int main() {/*
 		auto pm(j.accespacman());
 		for (auto const & i : j.objets()) {
 			if (dynamic_cast<fantome const *>(i.get())) {
-				spritesfantome[pm.invincible() ? 1 : 0].setPosition(static_cast<float>(i->pos().x()*2), static_cast<float>(i->pos().y()*2));
-				window.draw(spritesfantome[pm.invincible() ? 1 : 0]);
+                spritesfantome[pm->invincible() ? 1 : 0].setPosition(static_cast<float>(i->pos().x()*2), static_cast<float>(i->pos().y()*2));
+                window.draw(spritesfantome[pm->invincible() ? 1 : 0]);
 			}
-			else if (dynamic_cast<mur const *>(i.get()) || dynamic_cast<pacgomme const *>(i.get())) {
+            else if (dynamic_cast<mur const *>(i.get()) || dynamic_cast<pacgommes const *>(i.get())) {
 				sf::RectangleShape smur(sf::Vector2f(static_cast<float>(i->tai().w()*2),static_cast<float>(i->tai().h()*2)));
 				if (dynamic_cast<mur const *>(i.get()))
 					smur.setFillColor(sf::Color::Blue);
@@ -87,22 +85,22 @@ int main() {/*
 			}
 		}
 		unsigned int ispritepacman;
-		switch (pm.deplacement()) {
+        switch (pm->deplacement()) {
 			case direction::stop: ispritepacman=0; break;
 			case direction::droite: ispritepacman=0; break;
 			case direction::gauche: ispritepacman=1; break;
 			case direction::haut: ispritepacman=2; break;
 			case direction::bas: ispritepacman=3; break;
 		}
-		spritespacman[ispritepacman].setPosition(static_cast<float>(pm.pos().x()*2), static_cast<float>(pm.pos().y()*2));
+        spritespacman[ispritepacman].setPosition(static_cast<float>(pm->pos().x()*2), static_cast<float>(pm->pos().y()*2));
 		window.draw(spritespacman[ispritepacman]);
 		window.display();
 	}
     j.afficher(std::cout);
-    */
 
 
-	return 0;
+
+    return 0;
 }
 
 
