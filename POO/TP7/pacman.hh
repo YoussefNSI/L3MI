@@ -1,16 +1,10 @@
-#ifndef PACMAN_HH
-#define PACMAN_HH
-
 #pragma once
 
 #include <string>
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <stdexcept>
-#include <memory> // Ajout de l'inclusion pour les smart pointers
+#include <memory>
 
-#endif // PACMAN_HH
 
 enum class direction
 {
@@ -30,7 +24,7 @@ public:
     std::string to_string() const;
     bool operator==(const position &p) const;
     bool operator!=(const position &p) const;
-    friend std::ostream &operator<<(std::ostream &os, const position &p);
+    friend std::ostream& operator<<(std::ostream &os, const position &p);
 
 private:
     unsigned int _x;
@@ -58,7 +52,7 @@ public:
     virtual ~element();
     position pos() const;
     taille tai() const;
-    void setpos(position p);
+    void setpos(position& p);
     virtual char typeobjet() const;
     friend std::ostream &operator<<(std::ostream &os, const element &e);
     bool contient(const element &e) const;
@@ -132,6 +126,7 @@ enum class etat
 class jeu
 {
 public:
+    jeu() = default;
     jeu(std::vector<std::shared_ptr<element>> elements);
     jeu(const jeu &jeu);
     jeu &operator=(const jeu &jeu);

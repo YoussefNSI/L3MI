@@ -1,4 +1,7 @@
 #include "pacman.hh"
+#include <algorithm>
+
+/* classe position */
 
 position::position(unsigned int x, unsigned int y) : _x(x), _y(y) {}
 unsigned int position::x() const { return _x; }
@@ -15,11 +18,13 @@ bool position::operator!=(const position &p) const
 {
     return !(*this == p);
 }
-std::ostream &operator<<(std::ostream &os, const position &p)
+std::ostream& operator<<(std::ostream &os, const position &p)
 {
     os << p.to_string();
     return os;
 }
+
+/* classe taille */
 
 taille::taille(unsigned int largeur, unsigned int hauteur) : _largeur(largeur), _hauteur(hauteur) {}
 unsigned int taille::w() const { return _largeur; }
@@ -33,6 +38,8 @@ std::ostream &operator<<(std::ostream &os, const taille &t)
     os << t.to_string();
     return os;
 }
+
+/* classe element */
 
 element::element(position pos, taille t) : _pos(pos), _t(t), _typeobjet('X') {}
 element::~element() {}
@@ -60,6 +67,8 @@ bool element::intersection(const element &e) const
            _pos.y() < e._pos.y() + e._t.h() && _pos.y() + _t.h() > e._pos.y();
 }
 
+/* classe pacman */
+
 pacman::pacman(position pos, direction d) : element(pos, taille(13, 13)), _d(d), _invicibilite(0) {}
 direction pacman::deplacement() const { return _d; }
 void pacman::setdir(direction d) { _d = d; }
@@ -72,10 +81,14 @@ void pacman::decrementerinvincible()
 }
 void pacman::devenirinvincible() { _invicibilite = 200; }
 
+/* classe fantome */
+
 fantome::fantome(position pos, direction d) : element(pos, taille(20, 20)), _d(d) {}
 direction fantome::deplacement() const { return _d; }
 void fantome::setdir(direction d) { _d = d; }
 char fantome::typeobjet() const { return 'F'; }
+
+/* classe mur */
 
 mur::mur(position pos, taille t) : element(pos, t)
 {
@@ -86,11 +99,17 @@ mur::mur(position pos, taille t) : element(pos, t)
 }
 char mur::typeobjet() const { return 'M'; }
 
+/* classe pacgommes */
+
 pacgommes::pacgommes(position pos) : element(pos, taille(3, 3)) {}
 char pacgommes::typeobjet() const { return 'G'; }
 
+/* classe exceptionjeu */
+
 exceptionjeu::exceptionjeu(std::string message) : _message(message) {}
 const char *exceptionjeu::what() const noexcept { return _message.c_str(); }
+
+/* classe jeu */
 
 jeu::jeu(std::vector<std::shared_ptr<element>> elements) : _elements(elements), _etat(etat::encours), _pacman(nullptr) {}
 jeu::jeu(const jeu &jeu) : _elements(jeu._elements), _etat(jeu._etat), _pacman(jeu._pacman) {}

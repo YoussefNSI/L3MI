@@ -12,10 +12,6 @@ endif()
 add_executable(TP7 main.cc ensemble.hh ensemble.cc)
 add_executable(TP7_2 main2.cc pacman.hh pacman.cc)
 
-find_package(SFML COMPONENTS graphics window system)
-target_link_libraries(TP7_2 PRIVATE sfml-graphics sfml-window sfml-system)
-target_compile_features(TP7_2 PRIVATE cxx_std_17)
-
 include(GNUInstallDirs)
 install(TARGETS TP7 TP7_2
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
