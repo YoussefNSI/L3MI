@@ -48,11 +48,11 @@ private:
 class element
 {
 public:
-    element(position pos, taille t);
-    virtual ~element();
+    element(const position &pos, const taille &t);
+    virtual ~element() =default;
     position pos() const;
     taille tai() const;
-    void setpos(position p);
+    void setpos(const position & p);
     virtual char typeobjet() const;
     friend std::ostream &operator<<(std::ostream &os, const element &e);
     bool contient(const element &e) const;
@@ -68,7 +68,7 @@ class pacman : public element
 public:
     pacman(position pos, direction d=direction::stop);
     direction deplacement() const;
-    void setdir(direction d);
+    void setdir(const direction &d);
     char typeobjet() const override;
     bool invincible() const;
     void decrementerinvincible();
@@ -82,9 +82,9 @@ private:
 class fantome : public element
 {
 public:
-    fantome(position pos, direction d);
+    fantome(const position& pos, const direction &d);
     direction deplacement() const;
-    void setdir(direction d);
+    void setdir(const direction &d);
     char typeobjet() const override;
 
 private:
@@ -94,9 +94,9 @@ private:
 class mur : public element
 {
 public:
-    mur(position pos, taille t);
+    mur(const position &pos, const taille &t);
     char typeobjet() const override;
-    static std::shared_ptr<mur> fabrique(position pos, taille t){
+    static std::shared_ptr<mur> fabrique(const position &pos, const taille &t){
         return std::make_shared<mur>(pos, t);
     }
 };
@@ -104,29 +104,30 @@ public:
 class pacgommes : public element
 {
 public:
-    pacgommes(position pos);
+    pacgommes(const position& pos);
     char typeobjet() const override;
 };
 
 class exceptionjeu : public std::exception
 {
 public:
-    exceptionjeu(std::string message);
+    exceptionjeu(const std::string  &message);
     const char *what() const noexcept override;
 
 private:
     std::string _message;
 };
 
-enum class etat
-{
-    encours,
-    defaite,
-    victoire
-};
 
 class jeu
 {
+public:
+    enum class etat
+    {
+        encours,
+        defaite,
+        victoire
+    };
 public:
     jeu();
     jeu(std::vector<std::shared_ptr<element>> elements);

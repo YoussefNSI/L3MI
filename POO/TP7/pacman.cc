@@ -41,11 +41,10 @@ std::ostream &operator<<(std::ostream &os, const taille &t)
 
 /* classe element */
 
-element::element(position pos, taille t) : _pos(pos), _t(t) {}
-element::~element() {}
+element::element(position const &pos, taille const & t) : _pos(pos), _t(t) {}
 position element::pos() const { return _pos; }
 taille element::tai() const { return _t; }
-void element::setpos(position p)
+void element::setpos(const position &p)
 {
     _pos = p;
 }
@@ -57,21 +56,21 @@ std::ostream &operator<<(std::ostream &os, const element &e)
 }
 bool element::contient(const element &e) const
 {
-    return _pos.x() <= e._pos.x() && _pos.y() <= e._pos.y() &&
-           (_pos.x() + _t.w()) >= (e._pos.x() + e._t.w()) &&
-           (_pos.y() + _t.h()) >= (e._pos.y() + e._t.h());
+    return pos().x() <= e.pos().x() && pos().y() <= e.pos().y() &&
+           (pos().x() + tai().w()) >= (e.pos().x() + e.tai().w()) &&
+           (pos().y() + tai().h()) >= (e.pos().y() + e.tai().h());
 }
 bool element::intersection(const element &e) const
 {
-    return _pos.x() < e._pos.x() + e._t.w() && _pos.x() + _t.w() > e._pos.x() &&
-           _pos.y() < e._pos.y() + e._t.h() && _pos.y() + _t.h() > e._pos.y();
+    return pos().x() < e.pos().x() + e.tai().w() && pos().x() + tai().w() > e.pos().x() &&
+           pos().y() < e.pos().y() + e.tai().h() && pos().y() + tai().h() > e.pos().y();
 }
 
 /* classe pacman */
 
 pacman::pacman(position pos, direction d) : element(pos, taille(13, 13)), _d(d), _invicibilite(0) {}
 direction pacman::deplacement() const { return _d; }
-void pacman::setdir(direction d) { _d = d; }
+void pacman::setdir(const direction &d) { _d = d; }
 char pacman::typeobjet() const { return 'P'; }
 bool pacman::invincible() const { return _invicibilite > 0; }
 void pacman::decrementerinvincible()
@@ -83,14 +82,14 @@ void pacman::devenirinvincible() { _invicibilite = 200; }
 
 /* classe fantome */
 
-fantome::fantome(position pos, direction d) : element(pos, taille(20, 20)), _d(d) {}
+fantome::fantome(const position &pos,const direction &d) : element(pos, taille(20, 20)), _d(d) {}
 direction fantome::deplacement() const { return _d; }
-void fantome::setdir(direction d) { _d = d; }
+void fantome::setdir(const direction &d) { _d = d; }
 char fantome::typeobjet() const { return 'F'; }
 
 /* classe mur */
 
-mur::mur(position pos, taille t) : element(pos, t)
+mur::mur(const position &pos, const taille &t) : element(pos, t)
 {
     if (t.w() < 10 || t.h() < 10)
     {
@@ -106,13 +105,13 @@ static std::shared_ptr<mur> fabrique(position pos, taille t){
 
 /* classe pacgommes */
 
-pacgommes::pacgommes(position pos) : element(pos, taille(3, 3)) {}
+pacgommes::pacgommes(position const &pos) : element(pos, taille(3, 3)) {}
 char pacgommes::typeobjet() const { return 'G'; }
 
 /* classe exceptionjeu */
 
-exceptionjeu::exceptionjeu(std::string message) : _message(message) {}
-const char *exceptionjeu::what() const noexcept { return _message.c_str(); }
+exceptionjeu::exceptionjeu(const std::string &message) : _message(message) {}
+const char *exceptionjeu::what() const noexcept  { return _message.c_str(); }
 
 /* classe jeu */
 

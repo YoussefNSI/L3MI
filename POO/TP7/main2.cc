@@ -41,7 +41,7 @@ int main() {
 	j.afficher(std::cout);
 
 	unsigned int decompte(0);
-    while (window.isOpen() && (j.etatjeu() == etat::encours)) {
+    while (window.isOpen() && (j.etatjeu() == jeu::etat::encours)) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
