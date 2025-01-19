@@ -97,11 +97,6 @@ mur::mur(const position &pos, const taille &t) : element(pos, t)
     }
 }
 char mur::typeobjet() const { return 'M'; }
-/*
-static std::shared_ptr<mur> fabrique(position pos, taille t){
-    return std::make_shared<mur>(pos, t);
-}
-*/
 
 /* classe pacgommes */
 
