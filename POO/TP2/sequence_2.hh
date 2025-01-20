@@ -28,3 +28,6 @@ class sequence {
 	private:
 	std::vector<couleur> _contenu;
 };
+
+std::ostream & operator<<(std::ostream & os, couleur c);
+std::ostream & operator<<(std::ostream & os, sequence const & s);
