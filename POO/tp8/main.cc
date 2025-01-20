@@ -5,7 +5,11 @@
 
 
 int main(int argc, char *argv[]) {
+    QTranslator qtTranslator;
+    if(!qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
+        return 1;
     QApplication app(argc, argv);
+    app.installTranslator(&qtTranslator);
     sequence s;
     s.ajouter(couleur::rouge);
     s.ajouter(couleur::bleu);
