@@ -1,9 +1,17 @@
-#include <iostream>
+#include "sequence.hh"
+#include "simon.hh"
+#include <qapplication.h>
 
-using namespace std;
 
-int main()
-{
-    cout << "Hello World!" << endl;
-    return 0;
+
+int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
+    sequence s;
+    s.ajouter(couleur::rouge);
+    s.ajouter(couleur::bleu);
+    s.ajouter(couleur::jaune);
+    s.ajouter(couleur::vert);
+    simon f(s);
+    f.show();
+    return app.exec();
 }

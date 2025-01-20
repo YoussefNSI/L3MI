@@ -1,6 +1,5 @@
 #include "calculatrice.hh"
 #include <QString>
-#include <iostream>
 
 calcul::calcul()
 	:QWidget(),

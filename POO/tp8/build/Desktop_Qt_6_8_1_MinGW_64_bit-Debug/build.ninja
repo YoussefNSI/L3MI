@@ -41,47 +41,63 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target calculatrice
+# Object build statements for EXECUTABLE target simon
 
 
 #############################################
-# Order-only phony target for calculatrice
+# Order-only phony target for simon
 
-build cmake_object_order_depends_target_calculatrice: phony || calculatrice_autogen calculatrice_autogen/mocs_compilation.cpp calculatrice_autogen/timestamp calculatrice_autogen_timestamp_deps
+build cmake_object_order_depends_target_simon: phony || simon_autogen simon_autogen/mocs_compilation.cpp simon_autogen/timestamp simon_autogen_timestamp_deps
 
-build CMakeFiles/calculatrice.dir/calculatrice_autogen/mocs_compilation.cpp.obj: CXX_COMPILER__calculatrice_unscanned_Debug C$:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/mocs_compilation.cpp || cmake_object_order_depends_target_calculatrice
+build CMakeFiles/simon.dir/simon_autogen/mocs_compilation.cpp.obj: CXX_COMPILER__simon_unscanned_Debug C$:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/simon_autogen/mocs_compilation.cpp || cmake_object_order_depends_target_simon
   DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
-  DEP_FILE = CMakeFiles\calculatrice.dir\calculatrice_autogen\mocs_compilation.cpp.obj.d
+  DEP_FILE = CMakeFiles\simon.dir\simon_autogen\mocs_compilation.cpp.obj.d
   FLAGS = -DQT_QML_DEBUG -g -std=c++17 -fdiagnostics-color=always -Wall -Wpedantic
-  INCLUDES = -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8 -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/include -isystem C:/Qt/6.8.1/mingw_64/include/QtWidgets -isystem C:/Qt/6.8.1/mingw_64/include -isystem C:/Qt/6.8.1/mingw_64/include/QtCore -isystem C:/Qt/6.8.1/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.8.1/mingw_64/include/QtGui
-  OBJECT_DIR = CMakeFiles\calculatrice.dir
-  OBJECT_FILE_DIR = CMakeFiles\calculatrice.dir\calculatrice_autogen
+  INCLUDES = -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8 -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/simon_autogen/include -isystem C:/Qt/6.8.1/mingw_64/include/QtWidgets -isystem C:/Qt/6.8.1/mingw_64/include -isystem C:/Qt/6.8.1/mingw_64/include/QtCore -isystem C:/Qt/6.8.1/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.8.1/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\simon.dir
+  OBJECT_FILE_DIR = CMakeFiles\simon.dir\simon_autogen
 
-build CMakeFiles/calculatrice.dir/calculatrice.cc.obj: CXX_COMPILER__calculatrice_unscanned_Debug C$:/Users/radou/Documents/GitHub/L3MI/POO/tp8/calculatrice.cc || cmake_object_order_depends_target_calculatrice
+build CMakeFiles/simon.dir/sequence.cc.obj: CXX_COMPILER__simon_unscanned_Debug C$:/Users/radou/Documents/GitHub/L3MI/POO/tp8/sequence.cc || cmake_object_order_depends_target_simon
   DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
-  DEP_FILE = CMakeFiles\calculatrice.dir\calculatrice.cc.obj.d
+  DEP_FILE = CMakeFiles\simon.dir\sequence.cc.obj.d
   FLAGS = -DQT_QML_DEBUG -g -std=c++17 -fdiagnostics-color=always -Wall -Wpedantic
-  INCLUDES = -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8 -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/include -isystem C:/Qt/6.8.1/mingw_64/include/QtWidgets -isystem C:/Qt/6.8.1/mingw_64/include -isystem C:/Qt/6.8.1/mingw_64/include/QtCore -isystem C:/Qt/6.8.1/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.8.1/mingw_64/include/QtGui
-  OBJECT_DIR = CMakeFiles\calculatrice.dir
-  OBJECT_FILE_DIR = CMakeFiles\calculatrice.dir
+  INCLUDES = -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8 -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/simon_autogen/include -isystem C:/Qt/6.8.1/mingw_64/include/QtWidgets -isystem C:/Qt/6.8.1/mingw_64/include -isystem C:/Qt/6.8.1/mingw_64/include/QtCore -isystem C:/Qt/6.8.1/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.8.1/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\simon.dir
+  OBJECT_FILE_DIR = CMakeFiles\simon.dir
+
+build CMakeFiles/simon.dir/main.cc.obj: CXX_COMPILER__simon_unscanned_Debug C$:/Users/radou/Documents/GitHub/L3MI/POO/tp8/main.cc || cmake_object_order_depends_target_simon
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\simon.dir\main.cc.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=c++17 -fdiagnostics-color=always -Wall -Wpedantic
+  INCLUDES = -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8 -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/simon_autogen/include -isystem C:/Qt/6.8.1/mingw_64/include/QtWidgets -isystem C:/Qt/6.8.1/mingw_64/include -isystem C:/Qt/6.8.1/mingw_64/include/QtCore -isystem C:/Qt/6.8.1/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.8.1/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\simon.dir
+  OBJECT_FILE_DIR = CMakeFiles\simon.dir
+
+build CMakeFiles/simon.dir/simon.cc.obj: CXX_COMPILER__simon_unscanned_Debug C$:/Users/radou/Documents/GitHub/L3MI/POO/tp8/simon.cc || cmake_object_order_depends_target_simon
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\simon.dir\simon.cc.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=c++17 -fdiagnostics-color=always -Wall -Wpedantic
+  INCLUDES = -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8 -IC:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/simon_autogen/include -isystem C:/Qt/6.8.1/mingw_64/include/QtWidgets -isystem C:/Qt/6.8.1/mingw_64/include -isystem C:/Qt/6.8.1/mingw_64/include/QtCore -isystem C:/Qt/6.8.1/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.8.1/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\simon.dir
+  OBJECT_FILE_DIR = CMakeFiles\simon.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target calculatrice
+# Link build statements for EXECUTABLE target simon
 
 
 #############################################
-# Link the executable calculatrice.exe
+# Link the executable simon.exe
 
-build calculatrice.exe: CXX_EXECUTABLE_LINKER__calculatrice_Debug CMakeFiles/calculatrice.dir/calculatrice_autogen/mocs_compilation.cpp.obj CMakeFiles/calculatrice.dir/calculatrice.cc.obj | C$:/Qt/6.8.1/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.8.1/mingw_64/lib/libQt6Gui.a C$:/Qt/6.8.1/mingw_64/lib/libQt6Core.a || calculatrice_autogen calculatrice_autogen_timestamp_deps
+build simon.exe: CXX_EXECUTABLE_LINKER__simon_Debug CMakeFiles/simon.dir/simon_autogen/mocs_compilation.cpp.obj CMakeFiles/simon.dir/sequence.cc.obj CMakeFiles/simon.dir/main.cc.obj CMakeFiles/simon.dir/simon.cc.obj | C$:/Qt/6.8.1/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.8.1/mingw_64/lib/libQt6Gui.a C$:/Qt/6.8.1/mingw_64/lib/libQt6Core.a || simon_autogen simon_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = C:/Qt/6.8.1/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.8.1/mingw_64/lib/libQt6Gui.a  C:/Qt/6.8.1/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -ld3d11  -ldxgi  -ldxguid  -ld3d12  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\calculatrice.dir
+  OBJECT_DIR = CMakeFiles\simon.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_FILE = calculatrice.exe
-  TARGET_IMPLIB = libcalculatrice.dll.a
-  TARGET_PDB = calculatrice.exe.dbg
+  TARGET_FILE = simon.exe
+  TARGET_IMPLIB = libsimon.dll.a
+  TARGET_PDB = simon.exe.dbg
 
 
 #############################################
@@ -109,37 +125,37 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 
 #############################################
-# Utility command for calculatrice_autogen_timestamp_deps
+# Utility command for simon_autogen_timestamp_deps
 
-build calculatrice_autogen_timestamp_deps: phony
-
-
-#############################################
-# Utility command for calculatrice_autogen
-
-build calculatrice_autogen: phony CMakeFiles/calculatrice_autogen calculatrice_autogen/timestamp calculatrice_autogen/mocs_compilation.cpp calculatrice_autogen_timestamp_deps
+build simon_autogen_timestamp_deps: phony
 
 
 #############################################
-# Custom command for calculatrice_autogen\timestamp
+# Utility command for simon_autogen
 
-build calculatrice_autogen/timestamp calculatrice_autogen/mocs_compilation.cpp | ${cmake_ninja_workdir}calculatrice_autogen/timestamp ${cmake_ninja_workdir}calculatrice_autogen/mocs_compilation.cpp: CUSTOM_COMMAND C$:/Qt/6.8.1/mingw_64/bin/moc.exe C$:/Qt/6.8.1/mingw_64/bin/uic.exe || calculatrice_autogen_timestamp_deps
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\radou\Documents\GitHub\L3MI\POO\tp8\build\Desktop_Qt_6_8_1_MinGW_64_bit-Debug && C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autogen C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/calculatrice_autogen.dir/AutogenInfo.json Debug && C:\Qt\Tools\CMake_64\bin\cmake.exe -E touch C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/timestamp && C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_transform_depfile Ninja gccdepfile C:/Users/radou/Documents/GitHub/L3MI/POO/tp8 C:/Users/radou/Documents/GitHub/L3MI/POO/tp8 C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/deps C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/d/6c170d4c18258db76d505e5f2a6011f63448003677a7a701c3408b24f003f79d.d"
-  DESC = Automatic MOC and UIC for target calculatrice
-  depfile = CMakeFiles\d\6c170d4c18258db76d505e5f2a6011f63448003677a7a701c3408b24f003f79d.d
+build simon_autogen: phony CMakeFiles/simon_autogen simon_autogen/timestamp simon_autogen/mocs_compilation.cpp simon_autogen_timestamp_deps
+
+
+#############################################
+# Custom command for simon_autogen\timestamp
+
+build simon_autogen/timestamp simon_autogen/mocs_compilation.cpp | ${cmake_ninja_workdir}simon_autogen/timestamp ${cmake_ninja_workdir}simon_autogen/mocs_compilation.cpp: CUSTOM_COMMAND C$:/Qt/6.8.1/mingw_64/bin/moc.exe C$:/Qt/6.8.1/mingw_64/bin/uic.exe || simon_autogen_timestamp_deps
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\radou\Documents\GitHub\L3MI\POO\tp8\build\Desktop_Qt_6_8_1_MinGW_64_bit-Debug && C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autogen C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/simon_autogen.dir/AutogenInfo.json Debug && C:\Qt\Tools\CMake_64\bin\cmake.exe -E touch C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/simon_autogen/timestamp && C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_transform_depfile Ninja gccdepfile C:/Users/radou/Documents/GitHub/L3MI/POO/tp8 C:/Users/radou/Documents/GitHub/L3MI/POO/tp8 C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/simon_autogen/deps C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/d/7f9d75bf9074d23ba18b4f4feb926b388cf8bf018b4944d82bab59cf6366df18.d"
+  DESC = Automatic MOC and UIC for target simon
+  depfile = CMakeFiles\d\7f9d75bf9074d23ba18b4f4feb926b388cf8bf018b4944d82bab59cf6366df18.d
   deps = gcc
   restat = 1
 
 
 #############################################
-# Phony custom command for CMakeFiles\calculatrice_autogen
+# Phony custom command for CMakeFiles\simon_autogen
 
-build CMakeFiles/calculatrice_autogen | ${cmake_ninja_workdir}CMakeFiles/calculatrice_autogen: phony calculatrice_autogen/timestamp || calculatrice_autogen_timestamp_deps
+build CMakeFiles/simon_autogen | ${cmake_ninja_workdir}CMakeFiles/simon_autogen: phony simon_autogen/timestamp || simon_autogen_timestamp_deps
 
 # =============================================================================
 # Target aliases.
 
-build calculatrice: phony calculatrice.exe
+build simon: phony simon.exe
 
 # =============================================================================
 # Folder targets.
@@ -149,7 +165,7 @@ build calculatrice: phony calculatrice.exe
 #############################################
 # Folder: C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug
 
-build all: phony calculatrice.exe
+build all: phony simon.exe
 
 # =============================================================================
 # Built-in targets

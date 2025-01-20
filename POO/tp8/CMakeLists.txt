@@ -14,5 +14,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         add_compile_options(-Wall -Wpedantic)
 endif()
 
-add_executable(calculatrice calculatrice.cc calculatrice.hh)
-target_link_libraries(calculatrice Qt6::Widgets)
+#add_executable(calculatrice calculatrice.cc calculatrice.hh)
+add_executable(simon sequence.cc
+    sequence.hh
+    main.cc
+    simon.hh
+    simon.cc)
+target_link_libraries(simon Qt6::Widgets)
