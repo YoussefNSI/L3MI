@@ -884,3 +884,6 @@ C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/calculatrice.hh
  mdp:C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/calculatrice_autogen/moc_predefs.h
  mdp:C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/calculatrice.hh
 C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/calculatrice.cc
+C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/sequence.hh
+C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/sequence.cc
+C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/main.cc

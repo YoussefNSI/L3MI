@@ -1075,7 +1075,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "tp8"
+			"value" : "tp8_1"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -6308,6 +6308,42 @@
 			],
 			"type" : "INTERNAL",
 			"value" : "C:/Program Files (x86)/tp8"
+		},
+		{
+			"name" : "tp8_1_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/radou/Documents/GitHub/L3MI/POO/tp8/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug"
+		},
+		{
+			"name" : "tp8_1_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "tp8_1_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/radou/Documents/GitHub/L3MI/POO/tp8"
 		},
 		{
 			"name" : "tp8_BINARY_DIR",

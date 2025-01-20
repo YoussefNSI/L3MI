@@ -6,8 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-51b71d217ff73b725928.json",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -30,7 +29,7 @@
 					[
 						0
 					],
-					"name" : "tp8",
+					"name" : "tp8_1",
 					"targetIndexes" : 
 					[
 						0,
@@ -43,23 +42,23 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "tp8::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-tp8-Debug-23e9391802f9f1236664.json",
-					"name" : "tp8",
+					"id" : "simon::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-simon-Debug-faacdcbfc050438a3ae1.json",
+					"name" : "simon",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
-					"id" : "tp8_autogen::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-tp8_autogen-Debug-8e0c25dbb5ba299b28bf.json",
-					"name" : "tp8_autogen",
+					"id" : "simon_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-simon_autogen-Debug-358e153c89ab37a9453d.json",
+					"name" : "simon_autogen",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
-					"id" : "tp8_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-tp8_autogen_timestamp_deps-Debug-533df8979b4beebf134a.json",
-					"name" : "tp8_autogen_timestamp_deps",
+					"id" : "simon_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-simon_autogen_timestamp_deps-Debug-0f8c561ac8db6e03ee5a.json",
+					"name" : "simon_autogen_timestamp_deps",
 					"projectIndex" : 0
 				}
 			]
