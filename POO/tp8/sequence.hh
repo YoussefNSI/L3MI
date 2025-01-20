@@ -3,41 +3,35 @@
 #include <iostream>
 
 enum class couleur {
-    rouge,
-    bleu,
-    jaune,
-    vert
-};
-
-using indicesequence = std::size_t;
-
-class sequence {
-public:
-    sequence() =default;
-    sequence(sequence const & s);
-    ~sequence() =default;
-    void ajouter(couleur c);
-    indicesequence taille() const;
-    void afficher(couleur c) const;
-    void afficher(couleur c, std::ostream & os) const;
-    void vider();
-    void afficher(std::ostream & os) const;
-    sequence & operator=(sequence const & s){
-        _contenu = s._contenu;
-        return *this;
-    }
-    bool operator==(sequence const & s) const {
-        return _contenu == s._contenu;
-    }
-    couleur operator[](indicesequence i) const {
-        return _contenu.at(i);
-    }
-private:
-    std::vector<couleur> _contenu;
+	rouge,
+	bleu,
+	jaune,
+	vert
 };
 
 std::ostream & operator<<(std::ostream & os, couleur c);
-std::ostream & operator<<(std::ostream & os, sequence const & s){
-    s.sequence::afficher(os);
-    return os;
-}
+
+class sequence {
+	public:
+		using indice = std::size_t;
+
+		sequence() =default;
+		sequence(sequence const & s) =default;
+		~sequence() =default;
+		sequence & operator=(sequence const & s) =default;
+
+		void ajouter(couleur c) {
+			_couleurs.push_back(c); }
+		indice taille() const {
+			return _couleurs.size(); }
+		void vider() {
+			_couleurs.clear(); }
+		couleur operator[](indice i) const {
+			return _couleurs.at(i); }
+		bool operator==(sequence const & s) const {
+			return _couleurs == s._couleurs; }
+
+	private:
+		std::vector<couleur> _couleurs;
+		friend std::ostream & operator<<(std::ostream & os, sequence const & s);
+};
