@@ -38,6 +38,6 @@ private:
 
 std::ostream & operator<<(std::ostream & os, couleur c);
 std::ostream & operator<<(std::ostream & os, sequence const & s){
-    s.afficher(os);
+    s.sequence::afficher(os);
     return os;
 }
