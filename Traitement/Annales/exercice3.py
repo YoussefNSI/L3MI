@@ -26,3 +26,37 @@ dictLabels = df["label_multivalued"].dropna().str.split(';').explode().value_cou
 print(dictLabels.keys())
 pprint(dictRegion)
 pprint(dictLabels)
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Chargement des données
+df = pd.read_csv("data.tsv", sep="\t")
+
+# Liste des pays présents dans les données
+pays_list = df["pays"].unique()
+
+# Création des figures
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Fonction pour tracer un boxplot avec Matplotlib
+def boxplot(ax, data, column, title, ylabel):
+    grouped_data = [data[data["pays"] == pays][column].dropna() for pays in pays_list]
+    ax.boxplot(grouped_data, labels=pays_list, patch_artist=True)
+    ax.set_title(title)
+    ax.set_xlabel("Pays")
+    ax.set_ylabel(ylabel)
+    ax.tick_params(axis='x', rotation=90)
+
+# Boxplot pour la répartition des âges
+boxplot(axes[0], df, "âge", "Répartition des âges par pays", "Âge")
+
+# Boxplot pour la répartition des tailles
+boxplot(axes[1], df, "taille", "Répartition des tailles par pays", "Taille (cm)")
+
+# Sauvegarde et affichage du graphique
+plt.tight_layout()
+plt.savefig("repartition_ages_tailles.png")
+plt.show()
+
