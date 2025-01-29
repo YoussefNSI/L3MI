@@ -50,3 +50,27 @@ dict_region <- dict_region[names(dict_region) != ""]
 print(names(dict_labels))
 print(dict_region)
 print(dict_labels)
+
+
+
+# Chargement des bibliothèques
+library(ggplot2)
+library(readr)
+
+# Lecture du fichier TSV
+df <- read_tsv("data.tsv")
+
+# Création des graphiques
+p1 <- ggplot(df, aes(x = pays, y = âge)) +
+  geom_boxplot() +
+  labs(title = "Répartition des âges par pays", x = "Pays", y = "Âge") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+p2 <- ggplot(df, aes(x = pays, y = taille)) +
+  geom_boxplot() +
+  labs(title = "Répartition des tailles par pays", x = "Pays", y = "Taille (cm)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# Sauvegarde en image
+ggsave("repartition_ages_tailles.png", arrangeGrob(p1, p2, ncol = 2), width = 14, height = 6)
+
