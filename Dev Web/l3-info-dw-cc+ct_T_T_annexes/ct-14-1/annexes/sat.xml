@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE revolution SYSTEM "sat.dtd">
+<revolution>
+<planete>
+  <nom>Mars</nom>
+  <rayon>3397</rayon>
+  <gravitation>3.69</gravitation>
+  <satellites>
+     <satellite nom="Phobos" rotation="0.32"/>
+     <satellite nom="Deimos" rotation="1.26"/>
+  </satellites>
+</planete>
+<planete>
+  <nom>Jupiter</nom>
+  <rayon>71492</rayon>
+  <gravitation>20.87</gravitation>
+  <satellites>
+     <satellite nom="Callisto" rotation="16.69" decouverte="07/01/1610"/>
+     <satellite nom="Europe" rotation="3.55"/>
+     <satellite nom="Io" rotation="1.77"/>
+  </satellites>
+</planete>
+<planete>
+  <nom>Terre</nom>
+  <rayon>6378</rayon>
+  <gravitation>9.76</gravitation>
+  <satellites>
+     <satellite nom="Lune" rotation="27.03"/>
+  </satellites>
+</planete>
+</revolution>

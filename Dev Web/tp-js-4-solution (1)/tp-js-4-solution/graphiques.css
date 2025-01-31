@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+:root {
+    --block_width: 1000px;
+}
+
+/***********************************/
+/* GRILLE */
+.températures_4D {
+    grid-area: t_D;
+}
+
+.températures_anjou {
+    grid-area: t_A;
+}
+
+.menu {
+    grid-area: menu;
+}
+
+.communes {
+    grid-area: com;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        't_D t_A'
+        'menu menu'
+        'com com';
+    width: var(--block_width);
+    gap: 10px;
+    padding: 10px;
+}
+
+.températures,
+.communes {
+    border: 1px dotted black;
+}
+
+.communes {
+    overflow-x: scroll;
+    overflow-y: scroll;
+}

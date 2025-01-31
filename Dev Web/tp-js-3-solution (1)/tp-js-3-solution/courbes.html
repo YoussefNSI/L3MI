@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tracé de courbes</title>
+    <link rel="stylesheet" type="text/css" href="courbes.css">
+    <!-- Import des modules Javascript -->
+    <script type="module" src="échantillonneur_proto.js"></script>
+    <script type="module" src="échantillonneur.js"></script>
+    <script type="module" src="traceur_proto.js"></script>
+    <script type="module" src="traceur.js"></script>
+    <script type="module" src="courbes.js"></script>
+</head>
+
+<body>
+    <div class="grid-container">
+        <fieldset class="repère">
+            <legend>Repère</legend>
+            <label>abscisse max</label>
+            <input class="paramètres" type="number" name="max_x" value="10" min="1" max="100" step="1" />
+            <br>
+            <label>ordonnée max</label>
+            <input class="paramètres" type="number" name="max_y" value="10" min="1" max="100" step="1" />
+            <br>
+            <label>grille (oui)</label>
+            <input class="paramètres" type="radio" name="grille" value="1" />
+            <br>
+            <label>grille (non)</label>
+            <input class="paramètres" type="radio" name="grille" value="0" checked />
+            <br>
+            <button type="submit">REGENERER</button>
+        </fieldset>
+        <fieldset class="échantillonnage">
+            <legend>Echantillonnage</legend>
+            <label>taille</label>
+            <input class="paramètres" type="range" name="échantillon_n" value="50" min="1" max="1000" />
+            <input class="paramètres" type="text" name="échantillon_taille" value="50" disabled />
+            <br>
+            <label title="En 10èmes de secondes&#10;Fréquence nulle = tracé immédiat">fréquence</label>
+            <input class="paramètres" type="number" name="échantillon_f" value="0" min="0" max="60" />
+        </fieldset>
+        <fieldset class="fonctions">
+            <legend>Fonctions</legend>
+            <label>ax+b</label>
+            <input class="fonction" type="checkbox" name="fonction[]" value="linéaire" />
+            <label class="paramètres">a</label>
+            <input class="paramètres" type="number" name="linéaire_a" value="1" min="-10" max="10" />
+            <label class="paramètres">b</label>
+            <input class="paramètres" type="number" name="linéaire_b" value="0" min="-10" max="10" step="1" />
+            <br>
+
+            <label>x<sup>n</sup></label>
+            <input class="fonction" type="checkbox" name="fonction[]" value="exponentiation" />
+            <label class="paramètres">n</label>
+            <input class="paramètres" type="number" name="exponentiation_n" value="2" min="-3" max="3" step="1" />
+            <br>
+
+            <label>x<sup>1/n</sup></label>
+            <input class="fonction" type="checkbox" name="fonction[]" value="racine" />
+            <label class="paramètres">n</label>
+            <input class="paramètres" type="number" name="racine_n" value="2" min="1" max="10" step="1" />
+            <br>
+
+            <label>e<sup>x</sup></label>
+            <input class="fonction" type="checkbox" name="fonction[]" value="e" />
+            <br>
+
+            <label>log<sub>b</sub>(x)</label>
+            <input class="fonction" type="checkbox" name="fonction[]" value="logarithme" />
+            <label class="paramètres">b</label>
+            <select class="paramètres" type="select" name="logarithme_b">
+                <option value="10">10</option>
+                <option value="e">e</option>
+                <option value="2">2</option>
+            </select>
+            <br>
+
+            <label>A sin(2&pi;x/n + &phi;)</label>
+            <input class="fonction" type="checkbox" name="fonction[]" value="sinus" />
+            <label class="paramètres">A</label>
+            <input class="paramètres" type="number" name="sinus_A" value="1" min="0" max="10" step="0.5" />
+            <label class="paramètres">n</label>
+            <input class="paramètres" type="number" name="sinus_n" value="12" min="0" max="100" />
+            <label class="paramètres">&phi;</label>
+            <input class="paramètres" type="number" name="sinus_phi" value="0" min="0" max="3.14" step="0.05" />
+            <br>
+        </fieldset>
+
+        <div class="courbes">
+            <canvas width="600" height="600"></canvas>
+        </div>
+        <div class="log">
+            <table>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+Array
+(
+    [textFields] => Array
+        (
+            [0] => Array
+                (
+                    [label] => Votre patronyme
+                    [value] => Dupont
+                    [points] => 1
+                )
+
+            [1] => Array
+                (
+                    [label] => Votre prénom
+                    [value] => 
+                    [points] => 0
+                )
+
+        )
+
+    [checkboxFields] => Array
+        (
+            [0] => Array
+                (
+                    [p] => Vos paradimes de programmation préférés
+                    [score] => 1 sur 2
+                    [points] => 0.5
+                )
+
+            [1] => Array
+                (
+                    [p] => Vos classes de complexité préférées
+                    [score] => 1 sur 1
+                    [points] => 1
+                )
+
+        )
+
+)

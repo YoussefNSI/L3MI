@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<database name="l3_cc_24_php_rush_hour">
+    <table name="DEFI">
+        <defi defi_id="1" nr_cases="6" nr_voitures="4" />
+        <defi defi_id="2" nr_cases="6" nr_voitures="6" />
+        <defi defi_id="3" nr_cases="6" nr_voitures="4" />
+    </table>
+    <table name="MOUVEMENT">
+        <mouvement mouvement_id="1" partie_id="1" voiture_id="5" decalage="1" />
+        <mouvement mouvement_id="2" partie_id="1" voiture_id="6" decalage="-1" />
+        <mouvement mouvement_id="3" partie_id="1" voiture_id="9" decalage="-1" />
+        <mouvement mouvement_id="4" partie_id="1" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="5" partie_id="1" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="6" partie_id="1" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="7" partie_id="1" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="8" partie_id="2" voiture_id="6" decalage="1" />
+        <mouvement mouvement_id="9" partie_id="2" voiture_id="6" decalage="1" />
+        <mouvement mouvement_id="10" partie_id="2" voiture_id="9" decalage="-1" />
+        <mouvement mouvement_id="11" partie_id="2" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="12" partie_id="2" voiture_id="5" decalage="1" />
+        <mouvement mouvement_id="13" partie_id="2" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="14" partie_id="2" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="15" partie_id="2" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="16" partie_id="3" voiture_id="5" decalage="1" />
+        <mouvement mouvement_id="17" partie_id="3" voiture_id="6" decalage="1" />
+        <mouvement mouvement_id="18" partie_id="3" voiture_id="6" decalage="1" />
+        <mouvement mouvement_id="19" partie_id="3" voiture_id="9" decalage="-1" />
+        <mouvement mouvement_id="20" partie_id="3" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="21" partie_id="3" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="22" partie_id="3" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="23" partie_id="3" voiture_id="1" decalage="-1" />
+        <mouvement mouvement_id="24" partie_id="3" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="25" partie_id="3" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="26" partie_id="4" voiture_id="5" decalage="1" />
+        <mouvement mouvement_id="27" partie_id="4" voiture_id="6" decalage="1" />
+        <mouvement mouvement_id="28" partie_id="4" voiture_id="6" decalage="-1" />
+        <mouvement mouvement_id="29" partie_id="4" voiture_id="6" decalage="-1" />
+        <mouvement mouvement_id="30" partie_id="4" voiture_id="6" decalage="-1" />
+        <mouvement mouvement_id="31" partie_id="4" voiture_id="9" decalage="-1" />
+        <mouvement mouvement_id="32" partie_id="4" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="33" partie_id="4" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="34" partie_id="4" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="35" partie_id="4" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="36" partie_id="5" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="37" partie_id="5" voiture_id="5" decalage="1" />
+        <mouvement mouvement_id="38" partie_id="5" voiture_id="2" decalage="1" />
+        <mouvement mouvement_id="39" partie_id="5" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="40" partie_id="5" voiture_id="5" decalage="-1" />
+        <mouvement mouvement_id="41" partie_id="5" voiture_id="5" decalage="-1" />
+        <mouvement mouvement_id="42" partie_id="5" voiture_id="2" decalage="-1" />
+        <mouvement mouvement_id="43" partie_id="5" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="44" partie_id="6" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="45" partie_id="6" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="46" partie_id="6" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="47" partie_id="7" voiture_id="5" decalage="1" />
+        <mouvement mouvement_id="48" partie_id="7" voiture_id="9" decalage="1" />
+        <mouvement mouvement_id="49" partie_id="7" voiture_id="6" decalage="1" />
+        <mouvement mouvement_id="50" partie_id="7" voiture_id="6" decalage="1" />
+        <mouvement mouvement_id="51" partie_id="7" voiture_id="9" decalage="-1" />
+        <mouvement mouvement_id="52" partie_id="7" voiture_id="9" decalage="-1" />
+        <mouvement mouvement_id="53" partie_id="7" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="54" partie_id="7" voiture_id="1" decalage="-1" />
+        <mouvement mouvement_id="55" partie_id="7" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="56" partie_id="7" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="57" partie_id="7" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="58" partie_id="7" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="59" partie_id="8" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="60" partie_id="8" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="61" partie_id="8" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="62" partie_id="9" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="63" partie_id="9" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="64" partie_id="9" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="65" partie_id="10" voiture_id="5" decalage="1" />
+        <mouvement mouvement_id="66" partie_id="10" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="67" partie_id="10" voiture_id="1" decalage="1" />
+        <mouvement mouvement_id="68" partie_id="10" voiture_id="1" decalage="1" />
+    </table>
+    <table name="PARTIE">
+        <partie partie_id="1" defi_id="3" debut="2024-11-27 08:15:37" fin="2024-11-27 08:15:47" />
+        <partie partie_id="2" defi_id="3" debut="2024-11-27 08:15:50" fin="2024-11-27 08:16:04" />
+        <partie partie_id="3" defi_id="3" debut="2024-11-27 08:16:06" fin="2024-11-27 08:16:17" />
+        <partie partie_id="4" defi_id="3" debut="2024-11-27 08:16:19" fin="2024-11-27 08:16:28" />
+        <partie partie_id="5" defi_id="1" debut="2024-11-27 08:16:30" fin="2024-11-27 08:16:41" />
+        <partie partie_id="6" defi_id="1" debut="2024-11-27 08:16:44" fin="2024-11-27 08:16:46" />
+        <partie partie_id="7" defi_id="3" debut="2024-11-27 14:53:29" fin="2024-11-27 14:54:27" />
+        <partie partie_id="8" defi_id="1" debut="2024-11-27 14:54:38" fin="2024-11-27 14:54:40" />
+        <partie partie_id="9" defi_id="1" debut="2024-11-27 14:54:44" fin="2024-11-27 14:54:48" />
+        <partie partie_id="10" defi_id="1" debut="2024-11-27 14:57:54" fin="2024-11-27 14:58:58" />
+    </table>
+    <table name="POSITION">
+        <position defi_id="1" voiture_id="1" position="14" />
+        <position defi_id="1" voiture_id="2" position="28" />
+        <position defi_id="1" voiture_id="5" position="21" />
+        <position defi_id="1" voiture_id="9" position="4" />
+        <position defi_id="2" voiture_id="1" position="12" />
+        <position defi_id="2" voiture_id="2" position="22" />
+        <position defi_id="2" voiture_id="3" position="26" />
+        <position defi_id="2" voiture_id="5" position="0" />
+        <position defi_id="2" voiture_id="7" position="5" />
+        <position defi_id="2" voiture_id="8" position="33" />
+        <position defi_id="3" voiture_id="1" position="13" />
+        <position defi_id="3" voiture_id="5" position="22" />
+        <position defi_id="3" voiture_id="6" position="3" />
+        <position defi_id="3" voiture_id="9" position="10" />
+    </table>
+    <table name="VOITURE">
+        <voiture voiture_id="1" couleur="red" taille="2" type="H" />
+        <voiture voiture_id="2" couleur="cyan" taille="2" type="H" />
+        <voiture voiture_id="3" couleur="cyan" taille="2" type="V" />
+        <voiture voiture_id="4" couleur="orange" taille="2" type="H" />
+        <voiture voiture_id="5" couleur="orange" taille="2" type="V" />
+        <voiture voiture_id="6" couleur="blue" taille="2" type="H" />
+        <voiture voiture_id="7" couleur="blue" taille="2" type="V" />
+        <voiture voiture_id="8" couleur="purple" taille="2" type="H" />
+        <voiture voiture_id="9" couleur="purple" taille="2" type="V" />
+        <voiture voiture_id="10" couleur="pink" taille="2" type="H" />
+        <voiture voiture_id="11" couleur="pink" taille="2" type="V" />
+        <voiture voiture_id="12" couleur="green" taille="2" type="H" />
+        <voiture voiture_id="13" couleur="green" taille="2" type="V" />
+        <voiture voiture_id="14" couleur="yellow" taille="3" type="H" />
+        <voiture voiture_id="15" couleur="yellow" taille="3" type="H" />
+        <voiture voiture_id="16" couleur="grey" taille="2" type="H" />
+        <voiture voiture_id="17" couleur="grey" taille="2" type="H" />
+        <voiture voiture_id="18" couleur="beige" taille="2" type="H" />
+        <voiture voiture_id="19" couleur="beige" taille="2" type="H" />
+    </table>
+</database>

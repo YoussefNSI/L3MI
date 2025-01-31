@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Tableau périodique des éléments chimiques</title>
+    <link href="mendeleiev.css" rel="stylesheet" type="text/css" />
+    <script src="mendeleiev.js" defer></script>
+</head>
+
+<body>
+    <form action="#">
+        <fieldset>
+            <input type="checkbox" name="groupes" value="Métal_alcalin" /><label class="Métal_alcalin">Métaux alcalins</label>
+            <input type="checkbox" name="groupes" value="Métal_alcalino_terreux" /><label class="Métal_alcalino_terreux">Alcalino-terreux</label>
+            <input type="checkbox" name="groupes" value="Lanthanide" /><label class="Lanthanide">Lanthanides</label>
+            <input type="checkbox" name="groupes" value="Actinide" selected /><label class="Actinide">Actinides</label>
+            <input type="checkbox" name="groupes" value="Métal_de_transition" /><label class="Métal_de_transition">Métaux de transition</label>
+            <br>
+            <input type="checkbox" name="groupes" value="Métal_pauvre" /><label class="Métal_pauvre">Métaux pauvres</label>
+            <input type="checkbox" name="groupes" value="Métalloïde" /><label class="Métalloïde">Métalloïdes</label>
+            <input type="checkbox" name="groupes" value="Non_métal" /><label class="Non_métal">Non-métaux</label>
+            <input type="checkbox" name="groupes" value="Halogène" /><label class="Halogène">Halogènes</label>
+            <input type="checkbox" name="groupes" value="Gaz_noble" /><label class="Gaz_noble">Gaz nobles</label>
+        </fieldset>
+        <fieldset>
+            <input type="radio" id="gaz" name="état" value="gaz" />
+            <label for="gaz">Gaz</label>
+            <input type="radio" id="liquide" name="état" value="liquide" />
+            <label for="liquide">Liquide</label>
+            <input type="radio" id="solide" name="état" value="solide" />
+            <label for="solide">Solide</label>
+        </fieldset>
+        <fieldset>
+            <label>Elément chimique</label><input type="text" name="élément" disabled />
+            <label>Numéro atomique</label><input type="text" name="numéro" disabled />
+            <label>Masse atomique relative</label><input type="text" name="masse" disabled />
+        </fieldset>
+    </form>
+    <table id="mendeleiev">
+        <tbody>
+            <tr>
+                <td class="Non_métal">
+                    <span class="numéro">1</span><br>
+                    <a title="Hydrogène">H</a><br>
+                    <span class="masse">1,00794(7)</span>
+                </td>
+                <td class="Gaz_noble">
+                    <span class="numéro">2</span><br>
+                    <a title="Hélium">He</a><br>
+                    <span class="masse">4,002602(2)</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="">
+                    <span class="numéro">3</span><br>
+                    <a title="Lithium">Li</a><br>
+                    <span class="masse">6,941(2)</span>
+                </td>
+                <td class="Métal_alcalino_terreux">
+                    <span class="numéro">4</span><br>
+                    <a title="Béryllium">Be</a><br>
+                    <span class="masse">9,012182(3)</span>
+                </td>
+                <td colspan="10"></td>
+                <td class="Métalloïde">
+                    <span class="numéro">5</span><br>
+                    <a title="Bore">B</a><br>
+                    <span class="masse">10,811(7)</span>
+                </td>
+                <td class="Non_métal">
+                    <span class="numéro">6</span><br>
+                    <a title="Carbone">C</a><br>
+                    <span class="masse">12,0107(8)</span>
+                </td>
+                <td class="Non_métal">
+                    <span class="numéro">7</span><br>
+                    <a title="Azote">N</a><br>
+                    <span class="masse">14,00674(7)</span>
+                </td>
+                <td class="Non_métal">
+                    <span class="numéro">8</span><br>
+                    <a title="Oxygène">O</a><br>
+                    <span class="masse">15,9994(3)</span>
+                </td>
+                <td class="Halogène">
+                    <span class="numéro">9</span><br>
+                    <a title="Fluor">F</a><br>
+                    <span class="masse">18,9984032(5)</span>
+                </td>
+                <td class="Gaz_noble">
+                    <span class="numéro">10</span><br>
+                    <a title="Néon">Ne</a><br>
+                    <span class="masse">20,1797(6)</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="">
+                    <span class="numéro">11</span><br>
+                    <a title="Sodium">Na</a><br>
+                    <span class="masse">22,98976928(2)</span>
+                </td>
+                <td class="Métal_alcalino_terreux">
+                    <span class="numéro">12</span><br>
+                    <a title="Magnésium">Mg</a><br>
+                    <span class="masse">24,3050(6)</span>
+                </td>
+                <td colspan="10"></td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">13</span><br>
+                    <a title="Aluminium">Al</a><br>
+                    <span class="masse">26,9815386(8)</span>
+                </td>
+                <td class="Métalloïde">
+                    <span class="numéro">14</span><br>
+                    <a title="Silicium">Si</a><br>
+                    <span class="masse">28,0855(3)</span>
+                </td>
+                <td class="Non_métal">
+                    <span class="numéro">15</span><br>
+                    <a title="Phosphore">P</a><br>
+                    <span class="masse">30,973762(2)</span>
+                </td>
+                <td class="Non_métal">
+                    <span class="numéro">16</span><br>
+                    <a title="Soufre">S</a><br>
+                    <span class="masse">32,066(6)</span>
+                </td>
+                <td class="Halogène">
+                    <span class="numéro">17</span><br>
+                    <a title="Chlore">Cl</a><br>
+                    <span class="masse">35,4527(9)</span>
+                </td>
+                <td class="Gaz_noble">
+                    <span class="numéro">18</span><br>
+                    <a title="Argon">Ar</a><br>
+                    <span class="masse">39,948(1)</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="">
+                    <span class="numéro">19</span><br>
+                    <a title="Potassium">K</a><br>
+                    <span class="masse">39,0983(1)</span>
+                </td>
+                <td class="Métal_alcalino_terreux">
+                    <span class="numéro">20</span><br>
+                    <a title="Calcium">Ca</a><br>
+                    <span class="masse">40,078(4)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">21</span><br>
+                    <a title="Scandium">Sc</a><br>
+                    <span class="masse">44,955912(6)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">22</span><br>
+                    <a title="Titane">Ti</a><br>
+                    <span class="masse">47,867(1)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">23</span><br>
+                    <a title="Vanadium">V</a><br>
+                    <span class="masse">50,9415(1)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">24</span><br>
+                    <a title="Chrome">Cr</a><br>
+                    <span class="masse">51,9961(6)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">25</span><br>
+                    <a title="Manganèse">Mn</a><br>
+                    <span class="masse">54,938045(5)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">26</span><br>
+                    <a title="Fer">Fe</a><br>
+                    <span class="masse">55,845(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">27</span><br>
+                    <a title="Cobalt">Co</a><br>
+                    <span class="masse">58,933195(5)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">28</span><br>
+                    <a title="Nickel">Ni</a><br>
+                    <span class="masse">58,6934(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">29</span><br>
+                    <a title="Cuivre">Cu</a><br>
+                    <span class="masse">63,546(3)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">30</span><br>
+                    <a title="Zinc">Zn</a><br>
+                    <span class="masse">65,39(2)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">31</span><br>
+                    <a title="Gallium">Ga</a><br>
+                    <span class="masse">69,723(1)</span>
+                </td>
+                <td class="Métalloïde">
+                    <span class="numéro">32</span><br>
+                    <a title="Germanium">Ge</a><br>
+                    <span class="masse">72,61(2)</span>
+                </td>
+                <td class="Métalloïde">
+                    <span class="numéro">33</span><br>
+                    <a title="Arsenic">As</a><br>
+                    <span class="masse">74,92160(2)</span>
+                </td>
+                <td class="Non_métal">
+                    <span class="numéro">34</span><br>
+                    <a title="Sélénium">Se</a><br>
+                    <span class="masse">78,96(3)</span>
+                </td>
+                <td class="Halogène">
+                    <span class="numéro">35</span><br>
+                    <a title="Brome">Br</a><br>
+                    <span class="masse">79,904(1)</span>
+                </td>
+                <td class="Gaz_noble">
+                    <span class="numéro">36</span><br>
+                    <a title="Krypton">Kr</a><br>
+                    <span class="masse">83,80(1)</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="">
+                    <span class="numéro">37</span><br>
+                    <a title="Rubidium">Rb</a><br>
+                    <span class="masse">85,4678(3)</span>
+                </td>
+                <td class="Métal_alcalino_terreux">
+                    <span class="numéro">38</span><br>
+                    <a title="Strontium">Sr</a><br>
+                    <span class="masse">87,62(1)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">39</span><br>
+                    <a title="Yttrium">Y</a><br>
+                    <span class="masse">88,90585(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">40</span><br>
+                    <a title="Zirconium">Zr</a><br>
+                    <span class="masse">91,224(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">41</span><br>
+                    <a title="Niobium">Nb</a><br>
+                    <span class="masse">92,90638(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">42</span><br>
+                    <a title="Molybdène">Mo</a><br>
+                    <span class="masse">95,94(1)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">43</span><br>
+                    <a title="Technétium">Tc</a><br>
+                    <span class="masse">[97,9072]</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">44</span><br>
+                    <a title="Ruthénium">Ru</a><br>
+                    <span class="masse">101,07(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">45</span><br>
+                    <a title="Rhodium">Rh</a><br>
+                    <span class="masse">102,90550(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">46</span><br>
+                    <a title="Palladium">Pd</a><br>
+                    <span class="masse">106,42(1)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">47</span><br>
+                    <a title="Argent">Ag</a><br>
+                    <span class="masse">107,8682(2)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">48</span><br>
+                    <a title="Cadmium">Cd</a><br>
+                    <span class="masse">112,411(8)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">49</span><br>
+                    <a title="Indium">In</a><br>
+                    <span class="masse">114,818(3)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">50</span><br>
+                    <a title="Étain">Sn</a><br>
+                    <span class="masse">118,710(7)</span>
+                </td>
+                <td class="Métalloïde">
+                    <span class="numéro">51</span><br>
+                    <a title="Antimoine">Sb</a><br>
+                    <span class="masse">121,760(1)</span>
+                </td>
+                <td class="Métalloïde">
+                    <span class="numéro">52</span><br>
+                    <a title="Tellure">Te</a><br>
+                    <span class="masse">127,60(3)</span>
+                </td>
+                <td class="Halogène">
+                    <span class="numéro">53</span><br>
+                    <a title="Iode">I</a><br>
+                    <span class="masse">126,90447(3)</span>
+                </td>
+                <td class="Gaz_noble">
+                    <span class="numéro">54</span><br>
+                    <a title="Xénon">Xe</a><br>
+                    <span class="masse">131,29(2)</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="">
+                    <span class="numéro">55</span><br>
+                    <a title="Césium">Cs</a><br>
+                    <span class="masse">132,9054519(2)</span>
+                </td>
+                <td class="Métal_alcalino_terreux">
+                    <span class="numéro">56</span><br>
+                    <a title="Baryum">Ba</a><br>
+                    <span class="masse">137,327(7)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">57-71</span><br>
+                    <a title="Lanthanides">*</a>
+                    <span class="masse"></span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">72</span><br>
+                    <a title="Hafnium">Hf</a><br>
+                    <span class="masse">178,49(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">73</span><br>
+                    <a title="Tantale (chimie)">Ta</a><br>
+                    <span class="masse">180,94788(2)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">74</span><br>
+                    <a title="Tungstène">W</a><br>
+                    <span class="masse">183,84(1)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">75</span><br>
+                    <a title="Rhénium">Re</a><br>
+                    <span class="masse">186,207(1)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">76</span><br>
+                    <a title="Osmium">Os</a><br>
+                    <span class="masse">190,23(3)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">77</span><br>
+                    <a title="Iridium">Ir</a><br>
+                    <span class="masse">192,217(3)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">78</span><br>
+                    <a title="Platine">Pt</a><br>
+                    <span class="masse">195,084(9)</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">79</span><br>
+                    <a title="Or">Au</a><br>
+                    <span class="masse">196,966569(4)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">80</span><br>
+                    <a title="Mercure (chimie)">Hg</a><br>
+                    <span class="masse">200,59(2)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">81</span><br>
+                    <a title="Thallium">Tl</a><br>
+                    <span class="masse">204,3833(2)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">82</span><br>
+                    <a title="Plomb">Pb</a><br>
+                    <span class="masse">207,2(1)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">83</span><br>
+                    <a title="Bismuth">Bi</a><br>
+                    <span class="masse">208,98040(1)</span>
+                </td>
+                <td class="Métal_pauvre">
+                    <span class="numéro">84</span><br>
+                    <a title="Polonium">Po</a><br>
+                    <span class="masse">[208,9824]</span>
+                </td>
+                <td class="Métalloïde">
+                    <span class="numéro">85</span><br>
+                    <a title="Astate">At</a><br>
+                    <span class="masse">[209,9871]</span>
+                </td>
+                <td class="Gaz_noble">
+                    <span class="numéro">86</span><br>
+                    <a title="Radon">Rn</a><br>
+                    <span class="masse">[222,0176]</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="">
+                    <span class="numéro">87</span><br>
+                    <a title="Francium">Fr</a><br>
+                    <span class="masse">[223,0197]</span>
+                </td>
+                <td class="Métal_alcalino_terreux">
+                    <span class="numéro">88</span><br>
+                    <a title="Radium">Ra</a><br>
+                    <span class="masse">[226,0254]</span>
+                </td>
+                <td class="Actinide">
+                    <span class="numéro">89-103</span><br>
+                    <a title="Actinides">**</a><br>
+                    <span class="masse"></span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">104</span><br>
+                    <a title="Rutherfordium">Rf</a><br>
+                    <span class="masse">[263,1125]</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">105</span><br>
+                    <a title="Dubnium">Db</a><br>
+                    <span class="masse">[262,1144]</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">106</span><br>
+                    <a title="Seaborgium">Sg</a><br>
+                    <span class="masse">[266,1219]</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">107</span><br>
+                    <a title="Bohrium">Bh</a><br>
+                    <span class="masse">[264,1247]</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">108</span><br>
+                    <a title="Hassium">Hs</a><br>
+                    <span class="masse">[269,1341]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">109</span><br>
+                    <a title="Meitnerium">Mt</a><br>
+                    <span class="masse">[268,1388]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">110</span><br>
+                    <a title="Darmstadtium">Ds</a><br>
+                    <span class="masse">[272,1463]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">111</span><br>
+                    <a title="Roentgenium">Rg</a><br>
+                    <span class="masse">[272,1535]</span>
+                </td>
+                <td class="Métal_de_transition">
+                    <span class="numéro">112</span><br>
+                    <a title="Copernicium">Cn</a><br>
+                    <span class="masse">[277]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">113</span><br>
+                    <a title="Nihonium">Nh</a><br>
+                    <span class="masse">[284]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">114</span><br>
+                    <a title="Flérovium">Fl</a><br>
+                    <span class="masse">[289]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">115</span><br>
+                    <a title="Moscovium">Mc</a><br>
+                    <span class="masse">[288]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">116</span><br>
+                    <a title="Livermorium">Lv</a><br>
+                    <span class="masse">[292]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">117</span><br>
+                    <a title="Tennesse">Ts</a><br>
+                    <span class="masse">[292]</span>
+                </td>
+                <td class="Non_classé ">
+                    <span class="numéro">118</span><br>
+                    <a title="Oganesson">Og</a><br>
+                    <span class="masse">[294]</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="20"></td>
+            </tr>
+            <tr>
+                <th colspan="2">*&nbsp;
+                    <a title="Lanthanide">Lanthanides</a>&nbsp;
+                </th>
+                <td class="Lanthanide">
+                    <span class="numéro">57</span><br>
+                    <a title="Lanthane">La</a><br>
+                    <span class="masse">138,90547(7)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">58</span><br>
+                    <a title="Cérium">Ce</a><br>
+                    <span class="masse">140,116(1)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">59</span><br>
+                    <a title="Praséodyme">Pr</a><br>
+                    <span class="masse">140,90765(2)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">60</span><br>
+                    <a title="Néodyme">Nd</a><br>
+                    <span class="masse">144,242(3)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">61</span><br>
+                    <a title="Prométhium">Pm</a><br>
+                    <span class="masse">[144,9127]</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">62</span><br>
+                    <a title="Samarium">Sm</a><br>
+                    <span class="masse">150,36(2)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">63</span><br>
+                    <a title="Europium">Eu</a><br>
+                    <span class="masse">151,964(1)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">64</span><br>
+                    <a title="Gadolinium">Gd</a><br>
+                    <span class="masse">157,25(3)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">65</span><br>
+                    <a title="Terbium">Tb</a><br>
+                    <span class="masse">158,92535(2)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">66</span><br>
+                    <a title="Dysprosium">Dy</a><br>
+                    <span class="masse">162,500(1)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">67</span><br>
+                    <a title="Holmium">Ho</a><br>
+                    <span class="masse">164,93032(2)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">68</span><br>
+                    <a title="Erbium">Er</a><br>
+                    <span class="masse">167,259(3)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">69</span><br>
+                    <a title="Thulium">Tm</a><br>
+                    <span class="masse">168,93421(2)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">70</span><br>
+                    <a title="Ytterbium">Yb</a><br>
+                    <span class="masse">173,04(3)</span>
+                </td>
+                <td class="Lanthanide">
+                    <span class="numéro">71</span><br>
+                    <a title="Lutécium">Lu</a><br>
+                    <span class="masse">174,967(1)</span>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">**&nbsp;
+                    <a title="Actinide">Actinides</a>&nbsp;
+                </th>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+                <td class="Actinide">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

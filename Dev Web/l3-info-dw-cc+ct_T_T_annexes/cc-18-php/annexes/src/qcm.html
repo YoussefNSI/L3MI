@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Accueil</title>
+<link rel="stylesheet" href="qcm.css">
+</head>
+<body>
+	<form method="get" action="generer-qcm.php">
+	<div id="gridContainer" >
+		<label class="lnom labels">Votre nom </label>
+		<input class="inom inputs" type="text" name="etudiant" value="" required="required" />
+		
+		<label class="lquestions labels">Nombre de questions</label>
+		<input class="iquestions inputs" type="number" name="questions" min="1" max="40" value="3"  required="required" />
+		
+		<label class="ltirage labels">Tirage aléatoire</label>
+		<input class="itirage inputs" type="checkbox" name="tirage" value="aleatoire" />
+		
+		<input class="ok" type="submit" value="Démarrer" />
+	</div>
+	</form>
+</body>
+</html>

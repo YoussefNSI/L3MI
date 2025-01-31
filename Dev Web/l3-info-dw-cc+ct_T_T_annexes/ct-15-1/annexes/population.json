@@ -1,0 +1,32 @@
+{
+	"Pays de la Loire": {
+		"villes": {
+			"Saumur": {
+				"population": 27486,
+				"prefecture": "false"
+			},
+			"Nantes": {
+				"population": 282047,
+				"prefecture": "true"
+			}
+		},
+		"densite": 109
+	},
+	"Provence-Alpes-Côte d'Azur": {
+		"villes": {
+			"Avignon": {
+				"population": 89592,
+				"prefecture": "true"
+			},
+			"Marseille": {
+				"population": 850602,
+				"prefecture": "true"
+			},
+			"Toulon": {
+				"population": 165514,
+				"prefecture": "true"
+			}
+		},
+		"densite": 155
+	}
+}

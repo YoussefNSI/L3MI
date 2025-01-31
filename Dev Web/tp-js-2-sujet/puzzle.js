@@ -80,38 +80,35 @@ fetch("puzzle.json", {
 
     facette = puzzle["facettes"];
     j = 0;
-    i = 1;
-    noms = false;
     facette.forEach((face) => {
         table.querySelectorAll("tr")[0].querySelectorAll("th")[j].innerHTML += face["nom"];
-        if(!noms){
-            let i=1;
-            face['valeurs'].forEach((valeur) => {
+        let i = 1;
+        face['valeurs'].forEach((valeur) => {
+            if (j === 0) {
                 table.querySelectorAll("tr")[i].querySelectorAll("td")[j].innerHTML = valeur;
-                i++;
-            });
-            noms = true;
-        }
-        else{
-            let i=1;
-            table.querySelectorAll("tr")[i].querySelectorAll("td")[j].innerHTML = "<select>";
-            face['valeurs'].forEach((valeur) => {
-                table.querySelectorAll("tr")[i].querySelectorAll("td")[j].innerHTML = "<option value=" +valeur+"</option>";
-                i++;
-            });
-            
-        }
-      j++;
+            } else {
+                let select = document.createElement("select");
+                face['valeurs'].forEach((val) => {
+                    let option = document.createElement("option");
+                    option.value = val;
+                    option.text = val;
+                    select.appendChild(option);
+                });
+                table.querySelectorAll("tr")[i].querySelectorAll("td")[j].appendChild(select);
+            }
+            i++;
+        });
+        j++;
     });
 
     // Q2.1 Clic sur cellules
-    // generator.handleClicks();
+     generator.handleClicks();
 
     // Q2.2 Cochage des indices
-    // generator.handleHints();
+     generator.handleHints();
 
     // Q3 Gestion du formulaire
-    // generator.handleDropDowns();
+     generator.handleDropDowns();
 
     return puzzle;
   })
@@ -120,3 +117,4 @@ fetch("puzzle.json", {
   });
 
 // Q4 Minuteur
+

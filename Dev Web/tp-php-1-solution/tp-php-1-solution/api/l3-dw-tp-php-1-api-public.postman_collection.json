@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "e202e3ee-ad0d-45bf-9d3a-09bc78e1085d",
+		"name": "l3-dw-tp-php-1-api-public",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14268377"
+	},
+	"item": [
+		{
+			"name": "continents-list-rewrite",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://leria-info.univ-angers.fr/~david.lesaint/esg/l3dw/tp-php-1-api/router.php?version=v2&controller=continents&method=list&format=csv",
+					"protocol": "https",
+					"host": [
+						"leria-info",
+						"univ-angers",
+						"fr"
+					],
+					"path": [
+						"~david.lesaint",
+						"esg",
+						"l3dw",
+						"tp-php-1-api",
+						"router.php"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "v2"
+						},
+						{
+							"key": "controller",
+							"value": "continents"
+						},
+						{
+							"key": "method",
+							"value": "list"
+						},
+						{
+							"key": "format",
+							"value": "csv"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "continents-read-rewrite",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://leria-info.univ-angers.fr/~david.lesaint/esg/l3dw/tp-php-1-api/router.php?version=v2&controller=continents&method=read&format=csv&ccode=EU",
+					"protocol": "https",
+					"host": [
+						"leria-info",
+						"univ-angers",
+						"fr"
+					],
+					"path": [
+						"~david.lesaint",
+						"esg",
+						"l3dw",
+						"tp-php-1-api",
+						"router.php"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "v2"
+						},
+						{
+							"key": "controller",
+							"value": "continents"
+						},
+						{
+							"key": "method",
+							"value": "read"
+						},
+						{
+							"key": "format",
+							"value": "csv"
+						},
+						{
+							"key": "ccode",
+							"value": "EU"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "continents-create-rewrite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "ccode",
+							"value": "AT",
+							"type": "text"
+						},
+						{
+							"key": "cname",
+							"value": "Atlantide",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://leria-info.univ-angers.fr/~david.lesaint/esg/l3dw/tp-php-1-api/router.php?version=v2&controller=continents&method=create&format=json",
+					"protocol": "https",
+					"host": [
+						"leria-info",
+						"univ-angers",
+						"fr"
+					],
+					"path": [
+						"~david.lesaint",
+						"esg",
+						"l3dw",
+						"tp-php-1-api",
+						"router.php"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "v2"
+						},
+						{
+							"key": "controller",
+							"value": "continents"
+						},
+						{
+							"key": "method",
+							"value": "create"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "continents-update-rewrite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "cname",
+							"value": "Eden",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://leria-info.univ-angers.fr/~david.lesaint/esg/l3dw/tp-php-1-api/router.php?version=v2&controller=continents&method=update&format=json&ccode=AT",
+					"protocol": "https",
+					"host": [
+						"leria-info",
+						"univ-angers",
+						"fr"
+					],
+					"path": [
+						"~david.lesaint",
+						"esg",
+						"l3dw",
+						"tp-php-1-api",
+						"router.php"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "v2"
+						},
+						{
+							"key": "controller",
+							"value": "continents"
+						},
+						{
+							"key": "method",
+							"value": "update"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "ccode",
+							"value": "AT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "continents-delete-rewrite",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://leria-info.univ-angers.fr/~david.lesaint/esg/l3dw/tp-php-1-api/router.php?version=v2&controller=continents&method=delete&format=json&ccode=AT",
+					"protocol": "https",
+					"host": [
+						"leria-info",
+						"univ-angers",
+						"fr"
+					],
+					"path": [
+						"~david.lesaint",
+						"esg",
+						"l3dw",
+						"tp-php-1-api",
+						"router.php"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "v2"
+						},
+						{
+							"key": "controller",
+							"value": "continents"
+						},
+						{
+							"key": "method",
+							"value": "delete"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "ccode",
+							"value": "AT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "continents-info-rewrite",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://leria-info.univ-angers.fr/~david.lesaint/esg/l3dw/tp-php-1-api/router.php?version=v2&controller=continents&method=info",
+					"protocol": "https",
+					"host": [
+						"leria-info",
+						"univ-angers",
+						"fr"
+					],
+					"path": [
+						"~david.lesaint",
+						"esg",
+						"l3dw",
+						"tp-php-1-api",
+						"router.php"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "v2"
+						},
+						{
+							"key": "controller",
+							"value": "continents"
+						},
+						{
+							"key": "method",
+							"value": "info"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "countries-redirect-v1-rewrite",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://leria-info.univ-angers.fr/~david.lesaint/esg/l3dw/tp-php-1-api/router.php?version=v1&controller=countries&method=info",
+					"protocol": "https",
+					"host": [
+						"leria-info",
+						"univ-angers",
+						"fr"
+					],
+					"path": [
+						"~david.lesaint",
+						"esg",
+						"l3dw",
+						"tp-php-1-api",
+						"router.php"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "v1"
+						},
+						{
+							"key": "controller",
+							"value": "countries"
+						},
+						{
+							"key": "method",
+							"value": "info"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE net SYSTEM "l3_rtp_1213.dtd">
+<net>
+<mots>
+        <mot>
+            <mot_val>france</mot_val>
+            <mot_count>2</mot_count>
+        </mot>
+        <mot>
+            <mot_val>tourisme</mot_val>
+            <mot_count>3</mot_count>
+        </mot>
+        <mot>
+            <mot_val>paris</mot_val>
+            <mot_count>3</mot_count>
+        </mot>
+        <mot>
+            <mot_val>barcelone</mot_val>
+            <mot_count>2</mot_count>
+        </mot>
+        <mot>
+            <mot_val>football</mot_val>
+            <mot_count>3</mot_count>
+        </mot>
+        <mot>
+            <mot_val>sportifs</mot_val>
+            <mot_count>2</mot_count>
+        </mot>
+        <mot>
+            <mot_val>salaire</mot_val>
+            <mot_count>2</mot_count>
+        </mot>
+        <mot>
+            <mot_val>impôt</mot_val>
+            <mot_count>2</mot_count>
+        </mot>
+        <mot>
+            <mot_val>fraude</mot_val>
+            <mot_count>3</mot_count>
+        </mot>
+        <mot>
+            <mot_val>fisc</mot_val>
+            <mot_count>1</mot_count>
+        </mot>
+        <mot>
+            <mot_val>évasion</mot_val>
+            <mot_count>3</mot_count>
+        </mot>
+     </mots>
+   <liens>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="france"/>
+            <lmot lmot_val="tourisme"/>
+	  </lmots>
+          <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="france"/>
+            <lmot lmot_val="paris"/>
+            <lien_compte>1</lien_compte>
+	  </lmots>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="tourisme"/>
+            <lmot lmot_val="évasion"/>
+            <lien_compte>1</lien_compte>
+	  </lmots>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="tourisme"/>
+            <lmot lmot_val="barcelone"/>
+            <lien_compte>1</lien_compte>
+	  </lmots>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="évasion"/>
+            <lmot lmot_val="fraude"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="barcelone"/>
+            <lmot lmot_val="football"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="fraude"/>
+            <lmot lmot_val="impôt"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="football"/>
+            <lmot lmot_val="sportifs"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="impôt"/>
+            <lmot lmot_val="salaire"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="paris"/>
+            <lmot lmot_val="football"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="paris"/>
+            <lmot lmot_val="évasion"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="fraude"/>
+            <lmot lmot_val="fisc"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+        <lien>
+	  <lmots>
+            <lmot lmot_val="sportifs"/>
+            <lmot lmot_val="salaire"/>
+	  </lmots>
+            <lien_compte>1</lien_compte>
+        </lien>
+</liens>
+</net>

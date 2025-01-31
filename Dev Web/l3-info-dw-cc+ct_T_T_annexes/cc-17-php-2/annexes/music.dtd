@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT music (disque+) >
+<!ELEMENT disque (titre, musiciens) >
+<!ELEMENT titre (#PCDATA) >
+<!ELEMENT musiciens (musicien+) >
+<!ELEMENT musicien EMPTY >
+<!ATTLIST disque annee CDATA #REQUIRED >
+<!ATTLIST disque rang CDATA #REQUIRED >
+<!ATTLIST musicien nom CDATA #REQUIRED >
+<!ATTLIST musicien adn CDATA #REQUIRED >

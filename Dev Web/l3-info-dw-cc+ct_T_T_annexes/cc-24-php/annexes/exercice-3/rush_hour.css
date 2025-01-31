@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+.conteneur {
+    display:grid;
+    width:100%;
+    grid-template-areas: 
+    "defi stats"
+    "partie partie"
+    "log log";
+    grid-template-rows: 1fr auto auto;
+    grid-template-columns: auto auto;
+    row-gap:5px;
+    column-gap:10px;
+    align-items:start;
+    justify-items:start;
+    background-color:snow;
+}
+
+/* DEFI */
+.c_defi {
+    grid-area:defi;
+    width:100%;
+    margin:auto;
+}
+
+.c_defi fieldset {
+    display:grid;
+    grid-template-areas: 
+    "labelTP valueTP"
+    "labelNV valueNV"
+    "boutonJ boutonJ"
+    "menuS menuS"
+    ;
+    grid-template-rows: auto auto;
+    grid-template-columns: 100px 40px;
+    row-gap:10px;
+    column-gap:10px;
+    align-items:start;
+    justify-items:start;
+    background-color: white;
+}
+label[for="nr_cases"] {
+    grid-area:labelTP;
+}
+input[id="nr_cases"] {
+    grid-area:valueTP;
+}
+label[for="nr_voitures"] {
+    grid-area:labelNV;
+}
+input[id="nr_voitures"] {
+    grid-area:valueNV;
+}
+button {
+    grid-area:boutonJ;
+    margin-left: 0px;
+}
+select {
+    grid-area:menuS;
+}
+
+/* STATS */
+.c_stats {
+    grid-area:stats;
+    display:grid;
+    width:90%;
+    margin:auto;
+    grid-template-areas: 
+    "labelNCP valueNCP"
+    "labelTP valueTP"
+    "labelNCD valueNCD"
+    "labelTD valueTD";
+    row-gap:10px;
+    column-gap:10px;
+    align-items:start;
+    justify-items:start;
+    background-color: white;
+}
+label[for="coups-partie"] {
+    grid-area:labelNCP;
+}
+input[id="coups-partie"] {
+    grid-area:valueNCP;
+}
+label[for="temps-partie"] {
+    grid-area:labelTP;
+}
+input[id="temps-partie"] {
+    grid-area:valueTP;
+}
+label[for="coups-defi"] {
+    grid-area:labelNCD;
+}
+input[id="coups-defi"] {
+    grid-area:valueNCD;
+}
+label[for="temps-defi"] {
+    grid-area:labelTD;
+}
+input[id="temps-defi"] {
+    grid-area:valueTD;
+}
+
+/* PARTIE */
+.c_partie {
+    grid-area:partie;
+    margin:auto;
+    background-color: white;
+}
+
+/* LOG */
+.c_log {
+    grid-area:log;
+    margin:auto;
+    background-color: white;
+}
+
+/* POLICES - COULEURS */
+* {
+    font-family: Arial, monospace;
+    font-size: small;
+}
+
+legend {
+    text-transform: capitalize;
+    text-align: left;
+    font-weight: bold;
+    color: tomato;
+}
+
+/* TAILLE - POSITIONNEMENT */
+label, input, button, select {
+    display: inline-block;
+    /* width: 20px; */
+    text-align: left;
+}
+
+table {
+    table-layout: fixed;
+    /* width: 100%; */
+    border-collapse: collapse;
+    border: 1px solid;
+    vertical-align: bottom;
+    font-size: 100%;
+}
+
+td {
+    width: 40px;
+    height: 40px;
+    border-collapse: collapse;
+    border: 1px solid;
+    text-align: center;
+}

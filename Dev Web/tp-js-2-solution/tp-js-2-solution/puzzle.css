@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+/* Centrage des 3 images */
+#images {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ecriture verticale de libellés de colonnes */
+.vertical {
+    writing-mode: sideways-lr;
+}
+
+/* Eléments non-cliquables */
+.invisible {
+    pointer-events: none;
+}
+
+* {
+    font-family: "AppleGothic", sans-serif;
+}
+
+body>p {
+    margin-left: 40%;
+    color: grey;
+    font-weight: bold;
+}
+
+body>div:nth-child(3) {
+    text-align: justify;
+}
+
+div {
+    padding: 5px;
+}
+
+#aide>table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    border: solid black 2px;
+    text-align: center;
+}
+
+#aide td,
+#aide th {
+    border-collapse: collapse;
+    border-style: solid;
+    border-width: 1px;
+    /* cellules de largeur fixe */
+    display: table-cell;
+    width: 60px;
+}
+
+th {
+    font-style: italic;
+}
+
+fieldset {
+    background-color: lightgray;
+}
+
+#minuteur {
+    background-color: orange;
+    text-align: center;
+    width: 5%;
+    height: 5%;
+    position: fixed;
+    top: 5px;
+    right: 5px;
+}

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>CT JS/PHP : Partie 2 - JS</title>
+<style type="text/css">
+table, th, td {
+	border: 1px solid black;
+	text-align: center
+}
+</style>
+</head>
+<body>
+
+	<h1>Afficher les joueurs et leurs indices de performance</h1>
+	<input type="checkbox" id="DIVISION1" name="division1" 
+         checked>
+  	<label for="DIVISION1">Division 1</label>
+  	<input type="checkbox" id="DIVISION2" name="division2"
+         checked>
+  	<label for="DIVISION2">Division 2</label>
+  	<input type="checkbox" id="DIVISION3" name="division3"
+         checked>
+  	<label for="DIVISION3">Division 3</label>
+	<h2>DIVISION 1</h2>
+	<div>
+	<h3>ANGERS</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>CRISTIANO TORRES</td>
+				<td>1.87</td>
+			</tr>
+			<tr>
+				<td>NIKOLA KARABATIC</td>
+				<td>7.5</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3>BARCELONE</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>ROGER DJOKOVIC</td>
+				<td>3</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3>LONDRES</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>DIDIER DESCHAMPS</td>
+				<td>11.11</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<h2>DIVISION 2</h2>
+	<div>
+	<h3>UNIV</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>CHUCK NORRIS</td>
+				<td>18</td>
+			</tr>
+			<tr>
+				<td>BERNARD LAMA</td>
+				<td>4.5</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3>MARSEILLE</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>FABIEN BARTHEZ</td>
+				<td>13.33</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3>PARIS</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>LUC ABALO</td>
+				<td>9.14</td>
+			</tr>
+			<tr>
+				<td>THIERRY OMEYER</td>
+				<td>1.71</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<h2>DIVISION 3</h2>
+	<div>
+	<h3>MILAN</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>MICHEL BLANC</td>
+				<td>2.4</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3>BERLIN</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>CARLES PUYOL</td>
+				<td>14</td>
+			</tr>
+			<tr>
+				<td>MIKE TYSON</td>
+				<td>30</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3>MOSCOU</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Joueur</th>
+				<th>Indice de performance</th>
+			</tr>
+		</thead>
+		<tr>
+		<tbody>
+			<tr>
+				<td>STEPHEN CURRY</td>
+				<td>30</td>
+			</tr>
+			<tr>
+				<td>LEBRON JAMES</td>
+				<td>15</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="joueurs.js"></script>
+</html>

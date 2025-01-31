@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<championnats>
+	<championnat>
+	<id>1</id>
+	<nom>DIVISION 1</nom>
+	<difficulte>5</difficulte>
+	</championnat>
+	<championnat>
+	<id>2</id>
+	<nom>DIVISION 2</nom>
+	<difficulte>4</difficulte>
+	</championnat>
+	<championnat>
+	<id>3</id>
+	<nom>DIVISION 3</nom>
+	<difficulte>3</difficulte>
+	</championnat>
+</championnats>

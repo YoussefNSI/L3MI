@@ -1,0 +1,23 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "^10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Acme\\": "src/"
+        }
+    },
+    "archive": {
+        "exclude": [
+            ".*",
+            "!.gitignore",
+            "node_modules/",
+            "vendor/",
+            "www/",
+            "composer/",
+            "*.lst",
+            "*.yml"
+        ]
+    },
+    "minimum-stability": "stable"
+}

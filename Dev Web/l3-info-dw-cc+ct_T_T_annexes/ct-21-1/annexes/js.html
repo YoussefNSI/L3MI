@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>EDT</title>
+    <style>
+      body {
+        background-color: white;
+      }
+      .blue {
+        background-color: lightblue;
+      }
+      .green {
+        background-color: lightgreen;
+      }
+      table,
+      fieldset {
+        margin: auto;
+      }
+      td {
+        border-collapse: border-collapse;
+        border: 1px solid black;
+      }
+      select,
+      label,
+      input {
+        display: inline-block;
+        margin: auto;
+        width: 90px;
+        height: 20px;
+      }
+    </style>
+  <script src="js.js" defer></script>
+  </head>
+  <body>
+    <form action="#">
+      <fieldset>
+        <input type="radio" name="forme" value="minuscules" checked="" />
+        <label>minuscules</label>
+        <input type="radio" name="forme" value="majuscules" />
+        <label>majuscules</label>
+        <button id="top">Haut ou Bas !</button>
+      </fieldset>
+    </form>
+    <table>
+      <tbody>
+        <tr>
+          <td class="course green" rowspan="4">English</td>
+          <td class="part green" title="8" rowspan="3">English-Les</td>
+          <td class="group green" title="30">English-Les-1</td>
+        </tr>
+        <tr>
+          <td class="group green" title="30">English-Les-2</td>
+        </tr>
+        <tr>
+          <td class="group green" title="30">English-Les-3</td>
+        </tr>
+        <tr>
+          <td class="part green" title="1" rowspan="1">English-Eval</td>
+          <td class="group green" title="20">English-Eval-1</td>
+        </tr>
+        <tr>
+          <td class="course blue" rowspan="9">Databases</td>
+          <td class="part blue" title="8" rowspan="1">Databases-Lec</td>
+          <td class="group blue" title="80">Databases-Lec-1</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="9" rowspan="2">Databases-Tut</td>
+          <td class="group blue" title="40">Databases-Tut-1</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="40">Databases-Tut-2</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="7" rowspan="3">Databases-Lab</td>
+          <td class="group blue" title="20">Databases-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="20">Databases-Lab-2</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="20">Databases-Lab-3</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="1" rowspan="3">Databases-LabEval</td>
+          <td class="group blue" title="20">Databases-LabEval-1</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="20">Databases-LabEval-2</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="20">Databases-LabEval-3</td>
+        </tr>
+        <tr>
+          <td class="course green" rowspan="7">Web-Development</td>
+          <td class="part green" title="12" rowspan="1">Web-Development-Lec</td>
+          <td class="group green" title="80">Web-Development-Lec-1</td>
+        </tr>
+        <tr>
+          <td class="part green" title="8" rowspan="3">Web-Development-Lab</td>
+          <td class="group green" title="25">Web-Development-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="group green" title="28">Web-Development-Lab-2</td>
+        </tr>
+        <tr>
+          <td class="group green" title="25">Web-Development-Lab-3</td>
+        </tr>
+        <tr>
+          <td class="part green" title="1" rowspan="3">
+            Web-Development-LabEval
+          </td>
+          <td class="group green" title="40">Web-Development-LabEval-1</td>
+        </tr>
+        <tr>
+          <td class="group green" title="40">Web-Development-LabEval-2</td>
+        </tr>
+        <tr>
+          <td class="group green" title="40">Web-Development-LabEval-3</td>
+        </tr>
+        <tr>
+          <td class="course blue" rowspan="2">Computer-Generated-Images</td>
+          <td class="part blue" title="3" rowspan="1">
+            Computer-Generated-Images-Lec
+          </td>
+          <td class="group blue" title="80">Computer-Generated-Images-Lec-1</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="8" rowspan="1">
+            Computer-Generated-Images-Lab
+          </td>
+          <td class="group blue" title="40">Computer-Generated-Images-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="course green" rowspan="3">Python</td>
+          <td class="part green" title="5" rowspan="1">Python-Les</td>
+          <td class="group green" title="40">Python-Les-1</td>
+        </tr>
+        <tr>
+          <td class="part green" title="4" rowspan="2">Python-Lab</td>
+          <td class="group green" title="20">Python-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="group green" title="20">Python-Lab-2</td>
+        </tr>
+        <tr>
+          <td class="course blue" rowspan="5">Intelligent-Algorithms</td>
+          <td class="part blue" title="2" rowspan="1">
+            Intelligent-Algorithms-Lec
+          </td>
+          <td class="group blue" title="80">Intelligent-Algorithms-Lec-1</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="2" rowspan="1">
+            Intelligent-Algorithms-Tut
+          </td>
+          <td class="group blue" title="40">Intelligent-Algorithms-Tut-1</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="10" rowspan="3">
+            Intelligent-Algorithms-Lab
+          </td>
+          <td class="group blue" title="20">Intelligent-Algorithms-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="20">Intelligent-Algorithms-Lab-2</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="20">Intelligent-Algorithms-Lab-3</td>
+        </tr>
+        <tr>
+          <td class="course green" rowspan="3">Qt</td>
+          <td class="part green" title="4" rowspan="1">Qt-Lec</td>
+          <td class="group green" title="80">Qt-Lec-1</td>
+        </tr>
+        <tr>
+          <td class="part green" title="7" rowspan="2">Qt-Lab</td>
+          <td class="group green" title="20">Qt-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="group green" title="20">Qt-Lab-2</td>
+        </tr>
+        <tr>
+          <td class="course blue" rowspan="6">Functional-programming</td>
+          <td class="part blue" title="7" rowspan="1">
+            Functional-programming-Lec
+          </td>
+          <td class="group blue" title="80">Functional-programming-Lec-1</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="4" rowspan="2">
+            Functional-programming-Tut
+          </td>
+          <td class="group blue" title="40">Functional-programming-Tut-1</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="40">Functional-programming-Tut-2</td>
+        </tr>
+        <tr>
+          <td class="part blue" title="4" rowspan="3">
+            Functional-programming-Lab
+          </td>
+          <td class="group blue" title="20">Functional-programming-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="20">Functional-programming-Lab-2</td>
+        </tr>
+        <tr>
+          <td class="group blue" title="25">Functional-programming-Lab-3</td>
+        </tr>
+        <tr>
+          <td class="course green" rowspan="6">Logic-programming</td>
+          <td class="part green" title="6" rowspan="1">
+            Logic-programming-Lec
+          </td>
+          <td class="group green" title="80">Logic-programming-Lec-1</td>
+        </tr>
+        <tr>
+          <td class="part green" title="3" rowspan="2">
+            Logic-programming-Tut
+          </td>
+          <td class="group green" title="40">Logic-programming-Tut-1</td>
+        </tr>
+        <tr>
+          <td class="group green" title="40">Logic-programming-Tut-2</td>
+        </tr>
+        <tr>
+          <td class="part green" title="4" rowspan="3">
+            Logic-programming-Lab
+          </td>
+          <td class="group green" title="20">Logic-programming-Lab-1</td>
+        </tr>
+        <tr>
+          <td class="group green" title="20">Logic-programming-Lab-2</td>
+        </tr>
+        <tr>
+          <td class="group green" title="20">Logic-programming-Lab-3</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

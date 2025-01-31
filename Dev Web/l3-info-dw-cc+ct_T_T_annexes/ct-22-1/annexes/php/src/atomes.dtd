@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT atomes (atome+) >
+<!ELEMENT atome (nom, numero, symbole, masse_atomique, annee_decouverte, pays_decouverte, radioactif, groupe, periode) >
+<!ELEMENT nom (#PCDATA) >
+<!ELEMENT numero (#PCDATA) >
+<!ELEMENT symbole (#PCDATA) >
+<!ELEMENT masse_atomique (#PCDATA) >
+<!ELEMENT annee_decouverte (#PCDATA) >
+<!ELEMENT pays_decouverte (pays*) >
+<!ELEMENT pays (nom_pays)> 
+<!ELEMENT nom_pays (#PCDATA) >
+<!ELEMENT radioactif (#PCDATA) >
+<!ELEMENT groupe (#PCDATA) >
+<!ELEMENT periode (#PCDATA) >

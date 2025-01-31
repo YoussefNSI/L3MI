@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT BigMacIndex (country+) >
+<!ELEMENT country (name, localPrice, exchangeRates) >
+<!ELEMENT name (#PCDATA) >
+<!ELEMENT localPrice (#PCDATA) >
+<!ELEMENT exchangeRates (dollarOfficial, dollarBMI) >
+<!ELEMENT dollarOfficial (#PCDATA) >
+<!ELEMENT dollarBMI (#PCDATA) >
+<!ATTLIST country code CDATA #REQUIRED>

@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<!DOCTYPE timetabling SYSTEM "./../../../schema/fichier_dtd/usp_valnameator_v0_2.dtd">
+<courses>
+    <course name="English">
+        <part name="English-Les" nrSessions="8" label="LESSON">
+            <groups>
+                <group name="English-Les-1" maxHeadCount="30"/>
+                <group name="English-Les-2" maxHeadCount="30"/>
+                <group name="English-Les-3" maxHeadCount="30"/>
+            </groups>
+        </part>
+        <part name="English-Eval" nrSessions="1" label="EVAL">
+            <groups>
+                <group name="English-Eval-1" maxHeadCount="20"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Databases">
+        <part name="Databases-Lec" nrSessions="8" label="LECTURE">
+            <groups>
+                <group name="Databases-Lec-1" maxHeadCount="80"/>
+            </groups>
+        </part>
+        <part name="Databases-Tut" nrSessions="9" label="TUTORIAL">
+            <groups>
+                <group name="Databases-Tut-1" maxHeadCount="40" parent="Databases-Lec-1"/>
+                <group name="Databases-Tut-2" maxHeadCount="40" parent="Databases-Lec-1"/>
+            </groups>
+        </part>
+        <part name="Databases-Lab" nrSessions="7" label="LAB">
+            <groups>
+                <group name="Databases-Lab-1" maxHeadCount="20" parent="Databases-Tut-1"/>
+                <group name="Databases-Lab-2" maxHeadCount="20" parent="Databases-Tut-2"/>
+                <group name="Databases-Lab-3" maxHeadCount="20" parent="Databases-Tut-1"/>
+            </groups>
+        </part>
+        <part name="Databases-LabEval" nrSessions="1" label="LAB,EVAL">
+            <groups>
+                <group name="Databases-LabEval-1" maxHeadCount="20" parent="Databases-Lab-1"/>
+                <group name="Databases-LabEval-2" maxHeadCount="20" parent="Databases-Lab-2"/>
+                <group name="Databases-LabEval-3" maxHeadCount="20" parent="Databases-Lab-3"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Web-Development">
+        <part name="Web-Development-Lec" nrSessions="12" label="LECTURE">
+            <groups>
+                <group name="Web-Development-Lec-1" maxHeadCount="80"/>
+            </groups>
+        </part>
+        <part name="Web-Development-Lab" nrSessions="8" label="LAB">
+            <groups>
+                <group name="Web-Development-Lab-1" maxHeadCount="25" parent="Web-Development-Lec-1"/>
+                <group name="Web-Development-Lab-2" maxHeadCount="28" parent="Web-Development-Lec-1"/>
+                <group name="Web-Development-Lab-3" maxHeadCount="25" parent="Web-Development-Lec-1"/>
+            </groups>
+        </part>
+        <part name="Web-Development-LabEval" nrSessions="1" label="LAB,EVAL">
+            <groups>
+                <group name="Web-Development-LabEval-1" maxHeadCount="40" parent="Web-Development-Lab-1"/>
+                <group name="Web-Development-LabEval-2" maxHeadCount="40" parent="Web-Development-Lab-2"/>
+                <group name="Web-Development-LabEval-3" maxHeadCount="40" parent="Web-Development-Lab-3"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Computer-Generated-Images" label="OPT">
+        <part name="Computer-Generated-Images-Lec" nrSessions="3" label="LECTURE">
+            <groups>
+                <group name="Computer-Generated-Images-Lec-1" maxHeadCount="80"/>
+            </groups>
+        </part>
+        <part name="Computer-Generated-Images-Lab" nrSessions="8" label="LAB">
+            <groups>
+                <group name="Computer-Generated-Images-Lab-1" maxHeadCount="40" parent="Computer-Generated-Images-Lec-1"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Python" label="OPT">
+        <part name="Python-Les" nrSessions="5" label="LESSON">
+            <groups>
+                <group name="Python-Les-1" maxHeadCount="40"/>
+            </groups>
+        </part>
+        <part name="Python-Lab" nrSessions="4" label="LAB">
+            <groups>
+                <group name="Python-Lab-1" maxHeadCount="20" parent="Python-Les-1"/>
+                <group name="Python-Lab-2" maxHeadCount="20" parent="Python-Les-1"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Intelligent-Algorithms" label="OPT">
+        <part name="Intelligent-Algorithms-Lec" nrSessions="2" label="LECTURE">
+            <groups>
+                <group name="Intelligent-Algorithms-Lec-1" maxHeadCount="80"/>
+            </groups>
+        </part>
+        <part name="Intelligent-Algorithms-Tut" nrSessions="2" label="TUTORIAL">
+            <groups>
+                <group name="Intelligent-Algorithms-Tut-1" maxHeadCount="40" parent="Intelligent-Algorithms-Lec-1"/>
+            </groups>
+        </part>
+        <part name="Intelligent-Algorithms-Lab" nrSessions="10" label="LAB">
+            <groups>
+                <group name="Intelligent-Algorithms-Lab-1" maxHeadCount="20" parent="Intelligent-Algorithms-Tut-1"/>
+                <group name="Intelligent-Algorithms-Lab-2" maxHeadCount="20" parent="Intelligent-Algorithms-Tut-1"/>
+                <group name="Intelligent-Algorithms-Lab-3" maxHeadCount="20" parent="Intelligent-Algorithms-Tut-1"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Qt" label="OPT">
+        <part name="Qt-Lec" nrSessions="4" label="LECTURE">
+            <groups>
+                <group name="Qt-Lec-1" maxHeadCount="80"/>
+            </groups>
+        </part>
+        <part name="Qt-Lab" nrSessions="7" label="LAB">
+            <groups>
+                <group name="Qt-Lab-1" maxHeadCount="20" parent="Qt-Lec-1"/>
+                <group name="Qt-Lab-2" maxHeadCount="20" parent="Qt-Lec-1"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Functional-programming">
+        <part name="Functional-programming-Lec" nrSessions="7" label="LECTURE">
+            <groups>
+                <group name="Functional-programming-Lec-1" maxHeadCount="80"/>
+            </groups>
+        </part>
+        <part name="Functional-programming-Tut" nrSessions="4" label="TUTORIAL">
+            <groups>
+                <group name="Functional-programming-Tut-1" maxHeadCount="40" parent="Functional-programming-Lec-1"/>
+                <group name="Functional-programming-Tut-2" maxHeadCount="40" parent="Functional-programming-Lec-1"/>
+            </groups>
+        </part>
+        <part name="Functional-programming-Lab" nrSessions="4" label="LAB">
+            <groups>
+                <group name="Functional-programming-Lab-1" maxHeadCount="20" parent="Functional-programming-Tut-1"/>
+                <group name="Functional-programming-Lab-2" maxHeadCount="20" parent="Functional-programming-Tut-2"/>
+                <group name="Functional-programming-Lab-3" maxHeadCount="25" parent="Functional-programming-Tut-1"/>
+            </groups>
+        </part>
+    </course>
+    <course name="Logic-programming">
+        <part name="Logic-programming-Lec" nrSessions="6" label="LECTURE">
+            <groups>
+                <group name="Logic-programming-Lec-1" maxHeadCount="80"/>
+            </groups>
+        </part>
+        <part name="Logic-programming-Tut" nrSessions="3" label="TUTORIAL">
+            <groups>
+                <group name="Logic-programming-Tut-1" maxHeadCount="40" parent="Logic-programming-Lec-1"/>
+                <group name="Logic-programming-Tut-2" maxHeadCount="40" parent="Logic-programming-Lec-1"/>
+            </groups>
+        </part>
+        <part name="Logic-programming-Lab" nrSessions="4" label="LAB">
+            <groups>
+                <group name="Logic-programming-Lab-1" maxHeadCount="20" parent="Logic-programming-Tut-1"/>
+                <group name="Logic-programming-Lab-2" maxHeadCount="20" parent="Logic-programming-Tut-2"/>
+                <group name="Logic-programming-Lab-3" maxHeadCount="20" parent="Logic-programming-Tut-1"/>
+            </groups>
+        </part>
+    </course>
+</courses>
