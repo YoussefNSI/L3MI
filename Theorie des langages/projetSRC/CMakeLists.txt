@@ -1,5 +1,5 @@
 project(projet)
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.1.0)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
@@ -8,9 +8,8 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     add_compile_options(-Wall -Wpedantic)
 endif()
 
-find_package(BISON REQUIRED)
-find_package(FLEX REQUIRED)
-include_directories("C:/msys64/usr/include")
+find_package(BISON)
+find_package(FLEX)
 
 
 include_directories(parser expressions ${CMAKE_CURRENT_BINARY_DIR})
