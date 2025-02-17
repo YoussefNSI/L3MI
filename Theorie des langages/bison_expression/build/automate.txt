@@ -1,0 +1,374 @@
+Grammaire
+
+    0 $accept: programme $end
+
+    1 programme: instruction NL programme
+    2          | END NL
+
+    3 instruction: expression
+    4            | affectation
+
+    5 expression: operation
+
+    6 affectation: IDENT '=' operation
+
+    7 operation: NUMBER
+    8          | IDENT
+    9          | '(' operation ')'
+   10          | operation '+' operation
+   11          | operation '-' operation
+   12          | operation '*' operation
+   13          | operation '/' operation
+   14          | '-' operation
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+    $end (0) 0
+    '(' (40) 9
+    ')' (41) 9
+    '*' (42) 12
+    '+' (43) 10
+    '-' (45) 11 14
+    '/' (47) 13
+    '=' (61) 6
+    error (256)
+    NL (258) 1 2
+    END (259) 2
+    NUMBER <double> (260) 7
+    IDENT <std::string> (261) 6 8
+    NEG (262)
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+    $accept (15)
+        à gauche: 0
+    programme (16)
+        à gauche: 1 2
+        à droite: 0 1
+    instruction (17)
+        à gauche: 3 4
+        à droite: 1
+    expression (18)
+        à gauche: 5
+        à droite: 3
+    affectation (19)
+        à gauche: 6
+        à droite: 4
+    operation <ExpressionPtr> (20)
+        à gauche: 7 8 9 10 11 12 13 14
+        à droite: 5 6 9 10 11 12 13 14
+
+
+État 0
+
+    0 $accept: • programme $end
+
+    END     décalage et aller à l'état 1
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 3
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    programme    aller à l'état 6
+    instruction  aller à l'état 7
+    expression   aller à l'état 8
+    affectation  aller à l'état 9
+    operation    aller à l'état 10
+
+
+État 1
+
+    2 programme: END • NL
+
+    NL  décalage et aller à l'état 11
+
+
+État 2
+
+    7 operation: NUMBER •
+
+    $défaut  réduction par utilisation de la règle 7 (operation)
+
+
+État 3
+
+    6 affectation: IDENT • '=' operation
+    8 operation: IDENT •
+
+    '='  décalage et aller à l'état 12
+
+    $défaut  réduction par utilisation de la règle 8 (operation)
+
+
+État 4
+
+   14 operation: '-' • operation
+
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 13
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    operation  aller à l'état 14
+
+
+État 5
+
+    9 operation: '(' • operation ')'
+
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 13
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    operation  aller à l'état 15
+
+
+État 6
+
+    0 $accept: programme • $end
+
+    $end  décalage et aller à l'état 16
+
+
+État 7
+
+    1 programme: instruction • NL programme
+
+    NL  décalage et aller à l'état 17
+
+
+État 8
+
+    3 instruction: expression •
+
+    $défaut  réduction par utilisation de la règle 3 (instruction)
+
+
+État 9
+
+    4 instruction: affectation •
+
+    $défaut  réduction par utilisation de la règle 4 (instruction)
+
+
+État 10
+
+    5 expression: operation •
+   10 operation: operation • '+' operation
+   11          | operation • '-' operation
+   12          | operation • '*' operation
+   13          | operation • '/' operation
+
+    '-'  décalage et aller à l'état 18
+    '+'  décalage et aller à l'état 19
+    '*'  décalage et aller à l'état 20
+    '/'  décalage et aller à l'état 21
+
+    $défaut  réduction par utilisation de la règle 5 (expression)
+
+
+État 11
+
+    2 programme: END NL •
+
+    $défaut  réduction par utilisation de la règle 2 (programme)
+
+
+État 12
+
+    6 affectation: IDENT '=' • operation
+
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 13
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    operation  aller à l'état 22
+
+
+État 13
+
+    8 operation: IDENT •
+
+    $défaut  réduction par utilisation de la règle 8 (operation)
+
+
+État 14
+
+   10 operation: operation • '+' operation
+   11          | operation • '-' operation
+   12          | operation • '*' operation
+   13          | operation • '/' operation
+   14          | '-' operation •
+
+    $défaut  réduction par utilisation de la règle 14 (operation)
+
+
+État 15
+
+    9 operation: '(' operation • ')'
+   10          | operation • '+' operation
+   11          | operation • '-' operation
+   12          | operation • '*' operation
+   13          | operation • '/' operation
+
+    '-'  décalage et aller à l'état 18
+    '+'  décalage et aller à l'état 19
+    '*'  décalage et aller à l'état 20
+    '/'  décalage et aller à l'état 21
+    ')'  décalage et aller à l'état 23
+
+
+État 16
+
+    0 $accept: programme $end •
+
+    $défaut  accepter
+
+
+État 17
+
+    1 programme: instruction NL • programme
+
+    END     décalage et aller à l'état 1
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 3
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    programme    aller à l'état 24
+    instruction  aller à l'état 7
+    expression   aller à l'état 8
+    affectation  aller à l'état 9
+    operation    aller à l'état 10
+
+
+État 18
+
+   11 operation: operation '-' • operation
+
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 13
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    operation  aller à l'état 25
+
+
+État 19
+
+   10 operation: operation '+' • operation
+
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 13
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    operation  aller à l'état 26
+
+
+État 20
+
+   12 operation: operation '*' • operation
+
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 13
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    operation  aller à l'état 27
+
+
+État 21
+
+   13 operation: operation '/' • operation
+
+    NUMBER  décalage et aller à l'état 2
+    IDENT   décalage et aller à l'état 13
+    '-'     décalage et aller à l'état 4
+    '('     décalage et aller à l'état 5
+
+    operation  aller à l'état 28
+
+
+État 22
+
+    6 affectation: IDENT '=' operation •
+   10 operation: operation • '+' operation
+   11          | operation • '-' operation
+   12          | operation • '*' operation
+   13          | operation • '/' operation
+
+    '-'  décalage et aller à l'état 18
+    '+'  décalage et aller à l'état 19
+    '*'  décalage et aller à l'état 20
+    '/'  décalage et aller à l'état 21
+
+    $défaut  réduction par utilisation de la règle 6 (affectation)
+
+
+État 23
+
+    9 operation: '(' operation ')' •
+
+    $défaut  réduction par utilisation de la règle 9 (operation)
+
+
+État 24
+
+    1 programme: instruction NL programme •
+
+    $défaut  réduction par utilisation de la règle 1 (programme)
+
+
+État 25
+
+   10 operation: operation • '+' operation
+   11          | operation • '-' operation
+   11          | operation '-' operation •
+   12          | operation • '*' operation
+   13          | operation • '/' operation
+
+    '*'  décalage et aller à l'état 20
+    '/'  décalage et aller à l'état 21
+
+    $défaut  réduction par utilisation de la règle 11 (operation)
+
+
+État 26
+
+   10 operation: operation • '+' operation
+   10          | operation '+' operation •
+   11          | operation • '-' operation
+   12          | operation • '*' operation
+   13          | operation • '/' operation
+
+    '*'  décalage et aller à l'état 20
+    '/'  décalage et aller à l'état 21
+
+    $défaut  réduction par utilisation de la règle 10 (operation)
+
+
+État 27
+
+   10 operation: operation • '+' operation
+   11          | operation • '-' operation
+   12          | operation • '*' operation
+   12          | operation '*' operation •
+   13          | operation • '/' operation
+
+    $défaut  réduction par utilisation de la règle 12 (operation)
+
+
+État 28
+
+   10 operation: operation • '+' operation
+   11          | operation • '-' operation
+   12          | operation • '*' operation
+   13          | operation • '/' operation
+   13          | operation '/' operation •
+
+    $défaut  réduction par utilisation de la règle 13 (operation)

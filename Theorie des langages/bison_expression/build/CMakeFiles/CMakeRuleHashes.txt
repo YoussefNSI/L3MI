@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+300f951f554ca61840cdeb12ba855602 automate.txt
+3e98543dfc5fe8a8127f7ceee62855de parser.cpp
+aebfe8d7ad6278b127f833b68b9e0503 scanner.cpp
