@@ -1,12 +1,13 @@
 # ninja log v6
-16	367	7611935211935393	CMakeFiles/expressions.dir/expressions/variable.cc.obj	d9139751c146d810
-6	384	7611935211844951	CMakeFiles/expressions.dir/expressions/expressionBinaire.cc.obj	761aa9b30aab0594
+25	391	7611938145823409	CMakeFiles/expressions.dir/expressions/variable.cc.obj	13fa7d32af435cad
+14	391	7611938145581699	CMakeFiles/expressions.dir/expressions/expressionBinaire.cc.obj	a25c29d8958e55fa
+495	1020	7611938150514098	CMakeFiles/projet.dir/parser/main.cc.obj	2bddb1f903bfcc79
 639	836	7611935220022103	parser.hpp	5867c988116ea122
-12	371	7611935211912082	CMakeFiles/expressions.dir/expressions/constante.cc.obj	74024f261e7cca70
-9	384	7611935211856500	CMakeFiles/expressions.dir/expressions/expressionUnaire.cc.obj	16aa76ad730ded45
-2	416	7611935211776420	CMakeFiles/expressions.dir/expressions/contexte.cc.obj	3267ea9004885706
+21	381	7611938145795146	CMakeFiles/expressions.dir/expressions/constante.cc.obj	5700b4b724c78300
+18	414	7611938145746440	CMakeFiles/expressions.dir/expressions/expressionUnaire.cc.obj	9a39d8127cc585de
+11	403	7611938145581699	CMakeFiles/expressions.dir/expressions/contexte.cc.obj	5994d9700c99bce0
 645	766	7611935219409831	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/scanner.cpp	e6e31be9a9521693
-416	639	7611935215957077	libexpressions.a	fb70a94e0072c7f6
+414	495	7611938149718142	libexpressions.a	fb70a94e0072c7f6
 645	766	7611935219409831	scanner.cpp	e6e31be9a9521693
 639	836	7611935220022103	parser.cpp	5867c988116ea122
 639	836	7611935220022103	parser.output	5867c988116ea122
@@ -14,16 +15,29 @@
 639	836	7611935220022103	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/parser.output	5867c988116ea122
 836	867	7611935220399469	automate.txt	8c89ec57b79d6d08
 639	836	7611935220022103	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/parser.hpp	5867c988116ea122
-836	867	7611935220399469	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/automate.txt	8c89ec57b79d6d08
-871	1291	7611935220497122	CMakeFiles/projet.dir/parser/driver.cc.obj	741114fb82f04dfc
-21	381	7611938145795146	CMakeFiles/expressions.dir/expressions/constante.cc.obj	5700b4b724c78300
-25	391	7611938145823409	CMakeFiles/expressions.dir/expressions/variable.cc.obj	13fa7d32af435cad
-14	391	7611938145581699	CMakeFiles/expressions.dir/expressions/expressionBinaire.cc.obj	a25c29d8958e55fa
-11	403	7611938145581699	CMakeFiles/expressions.dir/expressions/contexte.cc.obj	5994d9700c99bce0
-18	414	7611938145746440	CMakeFiles/expressions.dir/expressions/expressionUnaire.cc.obj	9a39d8127cc585de
-414	495	7611938149718142	libexpressions.a	fb70a94e0072c7f6
-498	912	7611938150560904	CMakeFiles/projet.dir/parser/driver.cc.obj	2a5ae30c7f8692ad
-495	1020	7611938150514098	CMakeFiles/projet.dir/parser/main.cc.obj	2bddb1f903bfcc79
-505	1074	7611938150620051	CMakeFiles/projet.dir/scanner.cpp.obj	521dc5ec6e8a0800
 501	1128	7611938150582265	CMakeFiles/projet.dir/parser.cpp.obj	980d88fb8bf1b351
+836	867	7611935220399469	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/automate.txt	8c89ec57b79d6d08
+498	912	7611938150560904	CMakeFiles/projet.dir/parser/driver.cc.obj	2a5ae30c7f8692ad
+505	1074	7611938150620051	CMakeFiles/projet.dir/scanner.cpp.obj	521dc5ec6e8a0800
 1128	1286	7611938156859553	projet.exe	26f4dd752ca49445
+35	758	7615146426778061	CMakeFiles/expressions.dir/expressions/variable.cc.obj	13fa7d32af435cad
+26	763	7615146426678050	CMakeFiles/expressions.dir/expressions/expressionUnaire.cc.obj	9a39d8127cc585de
+22	766	7615146426638068	CMakeFiles/expressions.dir/expressions/expressionBinaire.cc.obj	a25c29d8958e55fa
+30	766	7615146426728047	CMakeFiles/expressions.dir/expressions/constante.cc.obj	5700b4b724c78300
+17	777	7615146426598055	CMakeFiles/expressions.dir/expressions/contexte.cc.obj	5994d9700c99bce0
+777	1002	7615146434198045	libexpressions.a	fb70a94e0072c7f6
+1008	1135	7615146437718032	scanner.cpp	e6e31be9a9521693
+1008	1135	7615146437718032	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/scanner.cpp	e6e31be9a9521693
+1002	1277	7615146439138063	parser.cpp	5867c988116ea122
+1002	1277	7615146439138063	parser.output	5867c988116ea122
+1002	1277	7615146439138063	parser.hpp	5867c988116ea122
+1002	1277	7615146439138063	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/parser.cpp	5867c988116ea122
+1002	1277	7615146439138063	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/parser.output	5867c988116ea122
+1002	1277	7615146439138063	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/parser.hpp	5867c988116ea122
+1277	1311	7615146439468080	automate.txt	8c89ec57b79d6d08
+1277	1311	7615146439468080	C:/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/Desktop-Debug/automate.txt	8c89ec57b79d6d08
+1315	1784	7615146439568035	CMakeFiles/projet.dir/parser/driver.cc.obj	2a5ae30c7f8692ad
+1311	1892	7615146439538043	CMakeFiles/projet.dir/parser/main.cc.obj	2bddb1f903bfcc79
+1323	1951	7615146439658052	CMakeFiles/projet.dir/scanner.cpp.obj	521dc5ec6e8a0800
+1318	2016	7615146439608042	CMakeFiles/projet.dir/parser.cpp.obj	980d88fb8bf1b351
+2016	2507	7615146446578044	projet.exe	26f4dd752ca49445
