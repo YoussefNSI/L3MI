@@ -1,328 +1,833 @@
+Terminals unused in grammar
+
+    SI
+    SINON
+    FINSI
+    POUR
+    FINI
+    POINT_VIRGULE
+
+
+Rules useless in parser due to conflicts
+
+   30 hauteur: ATTRIBUT
+
+   31 couleurTexte: ATTRIBUT
+
+   32 couleurFond: ATTRIBUT
+
+   33 opacite: ATTRIBUT
+
+
+State 34 conflicts: 4 reduce/reduce
+
+
 Grammar
 
     0 $accept: programme $end
 
-    1 programme: instruction NL programme
-    2          | END NL
+    1 programme: elements
 
-    3 instruction: expression
-    4            | affectation
+    2 elements: element elements
+    3         | ε
 
-    5 expression: operation
+    4 element: titre
+    5        | sous_titre
+    6        | paragraphe
+    7        | image
+    8        | define
+    9        | style
+   10        | titrepage
+   11        | variable
 
-    6 affectation: '='
+   12 titre: TITRE attributs CHAINE
+   13      | TITRE CHAINE
 
-    7 operation: NUMBER
-    8          | '(' operation ')'
-    9          | operation '+' operation
-   10          | operation '-' operation
-   11          | operation '*' operation
-   12          | operation '/' operation
-   13          | '-' operation
+   14 sous_titre: SOUS_TITRE attributs CHAINE
+   15           | SOUS_TITRE CHAINE
+
+   16 paragraphe: PARAGRAPHE attributs CHAINE
+   17           | PARAGRAPHE CHAINE
+
+   18 image: IMAGE CHAINE
+
+   19 attributs: CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
+
+   20 liste_attributs: attribut
+   21                | attribut VIRGULE liste_attributs
+   22                | attribut NEWLINE liste_attributs
+
+   23 attribut: nomattribut DEUX_POINTS valeur
+
+   24 nomattribut: largeur
+   25            | hauteur
+   26            | couleurTexte
+   27            | couleurFond
+   28            | opacite
+
+   29 largeur: ATTRIBUT
+
+   30 hauteur: ATTRIBUT
+
+   31 couleurTexte: ATTRIBUT
+
+   32 couleurFond: ATTRIBUT
+
+   33 opacite: ATTRIBUT
+
+   34 valeur: ENTIER
+   35       | HEX_COULEUR
+   36       | RGB_COULEUR
+   37       | CHAINE
+
+   38 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
+
+   39 titrepage: TITREPAGE CHAINE
+
+   40 variable: IDENTIFIANT EGAL valeurvar
+
+   41 valeurvar: ENTIER
+   42          | HEX_COULEUR
+   43          | RGB_COULEUR
+   44          | element
+
+   45 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
-    '(' (40) 8
-    ')' (41) 8
-    '*' (42) 11
-    '+' (43) 9
-    '-' (45) 10 13
-    '/' (47) 12
-    '=' (61) 6
     error (256)
-    NL (258) 1 2
-    END (259) 2
-    NUMBER <int> (260) 7
-    NEG (261)
+    NEWLINE (258) 22
+    TITRE <TitreInfo> (259) 12 13
+    SOUS_TITRE <TitreInfo> (260) 14 15
+    PARAGRAPHE <std::string*> (261) 16 17
+    IMAGE <std::string*> (262) 18
+    DEFINE <std::string*> (263) 38
+    TITREPAGE <std::string*> (264) 39
+    STYLE <std::string*> (265) 45
+    ATTRIBUT <std::string*> (266) 29 30 31 32 33
+    PROPRIETE <std::string*> (267) 38
+    SI <std::string*> (268)
+    SINON <std::string*> (269)
+    FINSI <std::string*> (270)
+    POUR <std::string*> (271)
+    FINI <std::string*> (272)
+    IDENTIFIANT <std::string*> (273) 40 45
+    ENTIER <int> (274) 34 41
+    CHAINE <std::string*> (275) 12 13 14 15 16 17 18 37 39
+    HEX_COULEUR <std::string*> (276) 35 42
+    RGB_COULEUR <std::string*> (277) 36 43
+    EGAL <std::string*> (278) 40
+    CROCHET_FERMANT <std::string*> (279) 19
+    CROCHET_OUVRANT <std::string*> (280) 19
+    DEUX_POINTS <std::string*> (281) 23
+    VIRGULE <std::string*> (282) 21
+    POINT_VIRGULE <std::string*> (283)
+    PARENTHESE_OUVRANTE <std::string*> (284) 38 45
+    PARENTHESE_FERMANTE <std::string*> (285) 38 45
+    ACCOLADE_OUVRANTE <std::string*> (286) 38 45
+    ACCOLADE_FERMANTE <std::string*> (287) 38 45
 
 
 Nonterminals, with rules where they appear
 
-    $accept (14)
+    $accept (33)
         on left: 0
-    programme (15)
-        on left: 1 2
-        on right: 0 1
-    instruction (16)
-        on left: 3 4
-        on right: 1
-    expression (17)
-        on left: 5
-        on right: 3
-    affectation (18)
-        on left: 6
+    programme (34)
+        on left: 1
+        on right: 0
+    elements (35)
+        on left: 2 3
+        on right: 1 2
+    element <std::unique_ptr<Bloc>> (36)
+        on left: 4 5 6 7 8 9 10 11
+        on right: 2 44
+    titre <std::unique_ptr<Titre>> (37)
+        on left: 12 13
         on right: 4
-    operation <int> (19)
-        on left: 7 8 9 10 11 12 13
-        on right: 5 8 9 10 11 12 13
+    sous_titre <std::unique_ptr<Titre>> (38)
+        on left: 14 15
+        on right: 5
+    paragraphe <std::unique_ptr<Bloc>> (39)
+        on left: 16 17
+        on right: 6
+    image <std::unique_ptr<Image>> (40)
+        on left: 18
+        on right: 7
+    attributs <std::map<std::string, std::map<std::string, std::string>>> (41)
+        on left: 19
+        on right: 12 14 16 45
+    liste_attributs <std::map<std::string, std::string>> (42)
+        on left: 20 21 22
+        on right: 19 21 22
+    attribut <std::map<std::string, std::string>> (43)
+        on left: 23
+        on right: 20 21 22
+    nomattribut <std::string*> (44)
+        on left: 24 25 26 27 28
+        on right: 23
+    largeur <std::string*> (45)
+        on left: 29
+        on right: 24
+    hauteur <std::string*> (46)
+        on left: 30
+        on right: 25
+    couleurTexte <std::string*> (47)
+        on left: 31
+        on right: 26
+    couleurFond <std::string*> (48)
+        on left: 32
+        on right: 27
+    opacite <std::string*> (49)
+        on left: 33
+        on right: 28
+    valeur <std::string*> (50)
+        on left: 34 35 36 37
+        on right: 23 38
+    define (51)
+        on left: 38
+        on right: 8
+    titrepage <sd::unique_ptr<TitrePage>> (52)
+        on left: 39
+        on right: 10
+    variable (53)
+        on left: 40
+        on right: 11
+    valeurvar <std::variant<int, std::string, std::unique_ptr<Bloc>>> (54)
+        on left: 41 42 43 44
+        on right: 40
+    style (55)
+        on left: 45
+        on right: 9
 
 
 State 0
 
     0 $accept: • programme $end
 
-    END     shift, and go to state 1
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '='     shift, and go to state 4
-    '('     shift, and go to state 5
+    TITRE        shift, and go to state 1
+    SOUS_TITRE   shift, and go to state 2
+    PARAGRAPHE   shift, and go to state 3
+    IMAGE        shift, and go to state 4
+    DEFINE       shift, and go to state 5
+    TITREPAGE    shift, and go to state 6
+    STYLE        shift, and go to state 7
+    IDENTIFIANT  shift, and go to state 8
 
-    programme    go to state 6
-    instruction  go to state 7
-    expression   go to state 8
-    affectation  go to state 9
-    operation    go to state 10
+    $default  reduce using rule 3 (elements)
+
+    programme   go to state 9
+    elements    go to state 10
+    element     go to state 11
+    titre       go to state 12
+    sous_titre  go to state 13
+    paragraphe  go to state 14
+    image       go to state 15
+    define      go to state 16
+    titrepage   go to state 17
+    variable    go to state 18
+    style       go to state 19
 
 
 State 1
 
-    2 programme: END • NL
+   12 titre: TITRE • attributs CHAINE
+   13      | TITRE • CHAINE
 
-    NL  shift, and go to state 11
+    CHAINE           shift, and go to state 20
+    CROCHET_OUVRANT  shift, and go to state 21
+
+    attributs  go to state 22
 
 
 State 2
 
-    7 operation: NUMBER •
+   14 sous_titre: SOUS_TITRE • attributs CHAINE
+   15           | SOUS_TITRE • CHAINE
 
-    $default  reduce using rule 7 (operation)
+    CHAINE           shift, and go to state 23
+    CROCHET_OUVRANT  shift, and go to state 21
+
+    attributs  go to state 24
 
 
 State 3
 
-   13 operation: '-' • operation
+   16 paragraphe: PARAGRAPHE • attributs CHAINE
+   17           | PARAGRAPHE • CHAINE
 
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '('     shift, and go to state 5
+    CHAINE           shift, and go to state 25
+    CROCHET_OUVRANT  shift, and go to state 21
 
-    operation  go to state 12
+    attributs  go to state 26
 
 
 State 4
 
-    6 affectation: '=' •
+   18 image: IMAGE • CHAINE
 
-    $default  reduce using rule 6 (affectation)
+    CHAINE  shift, and go to state 27
 
 
 State 5
 
-    8 operation: '(' • operation ')'
+   38 define: DEFINE • PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
 
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '('     shift, and go to state 5
-
-    operation  go to state 13
+    PARENTHESE_OUVRANTE  shift, and go to state 28
 
 
 State 6
 
-    0 $accept: programme • $end
+   39 titrepage: TITREPAGE • CHAINE
 
-    $end  shift, and go to state 14
+    CHAINE  shift, and go to state 29
 
 
 State 7
 
-    1 programme: instruction • NL programme
+   45 style: STYLE • PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
 
-    NL  shift, and go to state 15
+    PARENTHESE_OUVRANTE  shift, and go to state 30
 
 
 State 8
 
-    3 instruction: expression •
+   40 variable: IDENTIFIANT • EGAL valeurvar
 
-    $default  reduce using rule 3 (instruction)
+    EGAL  shift, and go to state 31
 
 
 State 9
 
-    4 instruction: affectation •
+    0 $accept: programme • $end
 
-    $default  reduce using rule 4 (instruction)
+    $end  shift, and go to state 32
 
 
 State 10
 
-    5 expression: operation •
-    9 operation: operation • '+' operation
-   10          | operation • '-' operation
-   11          | operation • '*' operation
-   12          | operation • '/' operation
+    1 programme: elements •
 
-    '-'  shift, and go to state 16
-    '+'  shift, and go to state 17
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-
-    $default  reduce using rule 5 (expression)
+    $default  reduce using rule 1 (programme)
 
 
 State 11
 
-    2 programme: END NL •
+    2 elements: element • elements
 
-    $default  reduce using rule 2 (programme)
+    TITRE        shift, and go to state 1
+    SOUS_TITRE   shift, and go to state 2
+    PARAGRAPHE   shift, and go to state 3
+    IMAGE        shift, and go to state 4
+    DEFINE       shift, and go to state 5
+    TITREPAGE    shift, and go to state 6
+    STYLE        shift, and go to state 7
+    IDENTIFIANT  shift, and go to state 8
+
+    $default  reduce using rule 3 (elements)
+
+    elements    go to state 33
+    element     go to state 11
+    titre       go to state 12
+    sous_titre  go to state 13
+    paragraphe  go to state 14
+    image       go to state 15
+    define      go to state 16
+    titrepage   go to state 17
+    variable    go to state 18
+    style       go to state 19
 
 
 State 12
 
-    9 operation: operation • '+' operation
-   10          | operation • '-' operation
-   11          | operation • '*' operation
-   12          | operation • '/' operation
-   13          | '-' operation •
+    4 element: titre •
 
-    $default  reduce using rule 13 (operation)
+    $default  reduce using rule 4 (element)
 
 
 State 13
 
-    8 operation: '(' operation • ')'
-    9          | operation • '+' operation
-   10          | operation • '-' operation
-   11          | operation • '*' operation
-   12          | operation • '/' operation
+    5 element: sous_titre •
 
-    '-'  shift, and go to state 16
-    '+'  shift, and go to state 17
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-    ')'  shift, and go to state 20
+    $default  reduce using rule 5 (element)
 
 
 State 14
+
+    6 element: paragraphe •
+
+    $default  reduce using rule 6 (element)
+
+
+State 15
+
+    7 element: image •
+
+    $default  reduce using rule 7 (element)
+
+
+State 16
+
+    8 element: define •
+
+    $default  reduce using rule 8 (element)
+
+
+State 17
+
+   10 element: titrepage •
+
+    $default  reduce using rule 10 (element)
+
+
+State 18
+
+   11 element: variable •
+
+    $default  reduce using rule 11 (element)
+
+
+State 19
+
+    9 element: style •
+
+    $default  reduce using rule 9 (element)
+
+
+State 20
+
+   13 titre: TITRE CHAINE •
+
+    $default  reduce using rule 13 (titre)
+
+
+State 21
+
+   19 attributs: CROCHET_OUVRANT • liste_attributs CROCHET_FERMANT
+
+    ATTRIBUT  shift, and go to state 34
+
+    liste_attributs  go to state 35
+    attribut         go to state 36
+    nomattribut      go to state 37
+    largeur          go to state 38
+    hauteur          go to state 39
+    couleurTexte     go to state 40
+    couleurFond      go to state 41
+    opacite          go to state 42
+
+
+State 22
+
+   12 titre: TITRE attributs • CHAINE
+
+    CHAINE  shift, and go to state 43
+
+
+State 23
+
+   15 sous_titre: SOUS_TITRE CHAINE •
+
+    $default  reduce using rule 15 (sous_titre)
+
+
+State 24
+
+   14 sous_titre: SOUS_TITRE attributs • CHAINE
+
+    CHAINE  shift, and go to state 44
+
+
+State 25
+
+   17 paragraphe: PARAGRAPHE CHAINE •
+
+    $default  reduce using rule 17 (paragraphe)
+
+
+State 26
+
+   16 paragraphe: PARAGRAPHE attributs • CHAINE
+
+    CHAINE  shift, and go to state 45
+
+
+State 27
+
+   18 image: IMAGE CHAINE •
+
+    $default  reduce using rule 18 (image)
+
+
+State 28
+
+   38 define: DEFINE PARENTHESE_OUVRANTE • PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
+
+    PROPRIETE  shift, and go to state 46
+
+
+State 29
+
+   39 titrepage: TITREPAGE CHAINE •
+
+    $default  reduce using rule 39 (titrepage)
+
+
+State 30
+
+   45 style: STYLE PARENTHESE_OUVRANTE • IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+
+    IDENTIFIANT  shift, and go to state 47
+
+
+State 31
+
+   40 variable: IDENTIFIANT EGAL • valeurvar
+
+    TITRE        shift, and go to state 1
+    SOUS_TITRE   shift, and go to state 2
+    PARAGRAPHE   shift, and go to state 3
+    IMAGE        shift, and go to state 4
+    DEFINE       shift, and go to state 5
+    TITREPAGE    shift, and go to state 6
+    STYLE        shift, and go to state 7
+    IDENTIFIANT  shift, and go to state 8
+    ENTIER       shift, and go to state 48
+    HEX_COULEUR  shift, and go to state 49
+    RGB_COULEUR  shift, and go to state 50
+
+    element     go to state 51
+    titre       go to state 12
+    sous_titre  go to state 13
+    paragraphe  go to state 14
+    image       go to state 15
+    define      go to state 16
+    titrepage   go to state 17
+    variable    go to state 18
+    valeurvar   go to state 52
+    style       go to state 19
+
+
+State 32
 
     0 $accept: programme $end •
 
     $default  accept
 
 
-State 15
+State 33
 
-    1 programme: instruction NL • programme
+    2 elements: element elements •
 
-    END     shift, and go to state 1
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '='     shift, and go to state 4
-    '('     shift, and go to state 5
-
-    programme    go to state 21
-    instruction  go to state 7
-    expression   go to state 8
-    affectation  go to state 9
-    operation    go to state 10
+    $default  reduce using rule 2 (elements)
 
 
-State 16
+State 34
 
-   10 operation: operation '-' • operation
+   29 largeur: ATTRIBUT •
+   30 hauteur: ATTRIBUT •
+   31 couleurTexte: ATTRIBUT •
+   32 couleurFond: ATTRIBUT •
+   33 opacite: ATTRIBUT •
 
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '('     shift, and go to state 5
-
-    operation  go to state 22
-
-
-State 17
-
-    9 operation: operation '+' • operation
-
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '('     shift, and go to state 5
-
-    operation  go to state 23
+    DEUX_POINTS  reduce using rule 29 (largeur)
+    DEUX_POINTS  [reduce using rule 30 (hauteur)]
+    DEUX_POINTS  [reduce using rule 31 (couleurTexte)]
+    DEUX_POINTS  [reduce using rule 32 (couleurFond)]
+    DEUX_POINTS  [reduce using rule 33 (opacite)]
+    $default     reduce using rule 29 (largeur)
 
 
-State 18
+State 35
 
-   11 operation: operation '*' • operation
+   19 attributs: CROCHET_OUVRANT liste_attributs • CROCHET_FERMANT
 
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '('     shift, and go to state 5
-
-    operation  go to state 24
+    CROCHET_FERMANT  shift, and go to state 53
 
 
-State 19
+State 36
 
-   12 operation: operation '/' • operation
+   20 liste_attributs: attribut •
+   21                | attribut • VIRGULE liste_attributs
+   22                | attribut • NEWLINE liste_attributs
 
-    NUMBER  shift, and go to state 2
-    '-'     shift, and go to state 3
-    '('     shift, and go to state 5
+    NEWLINE  shift, and go to state 54
+    VIRGULE  shift, and go to state 55
 
-    operation  go to state 25
-
-
-State 20
-
-    8 operation: '(' operation ')' •
-
-    $default  reduce using rule 8 (operation)
+    $default  reduce using rule 20 (liste_attributs)
 
 
-State 21
+State 37
 
-    1 programme: instruction NL programme •
+   23 attribut: nomattribut • DEUX_POINTS valeur
 
-    $default  reduce using rule 1 (programme)
-
-
-State 22
-
-    9 operation: operation • '+' operation
-   10          | operation • '-' operation
-   10          | operation '-' operation •
-   11          | operation • '*' operation
-   12          | operation • '/' operation
-
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-
-    $default  reduce using rule 10 (operation)
+    DEUX_POINTS  shift, and go to state 56
 
 
-State 23
+State 38
 
-    9 operation: operation • '+' operation
-    9          | operation '+' operation •
-   10          | operation • '-' operation
-   11          | operation • '*' operation
-   12          | operation • '/' operation
+   24 nomattribut: largeur •
 
-    '*'  shift, and go to state 18
-    '/'  shift, and go to state 19
-
-    $default  reduce using rule 9 (operation)
+    $default  reduce using rule 24 (nomattribut)
 
 
-State 24
+State 39
 
-    9 operation: operation • '+' operation
-   10          | operation • '-' operation
-   11          | operation • '*' operation
-   11          | operation '*' operation •
-   12          | operation • '/' operation
+   25 nomattribut: hauteur •
 
-    $default  reduce using rule 11 (operation)
+    $default  reduce using rule 25 (nomattribut)
 
 
-State 25
+State 40
 
-    9 operation: operation • '+' operation
-   10          | operation • '-' operation
-   11          | operation • '*' operation
-   12          | operation • '/' operation
-   12          | operation '/' operation •
+   26 nomattribut: couleurTexte •
 
-    $default  reduce using rule 12 (operation)
+    $default  reduce using rule 26 (nomattribut)
+
+
+State 41
+
+   27 nomattribut: couleurFond •
+
+    $default  reduce using rule 27 (nomattribut)
+
+
+State 42
+
+   28 nomattribut: opacite •
+
+    $default  reduce using rule 28 (nomattribut)
+
+
+State 43
+
+   12 titre: TITRE attributs CHAINE •
+
+    $default  reduce using rule 12 (titre)
+
+
+State 44
+
+   14 sous_titre: SOUS_TITRE attributs CHAINE •
+
+    $default  reduce using rule 14 (sous_titre)
+
+
+State 45
+
+   16 paragraphe: PARAGRAPHE attributs CHAINE •
+
+    $default  reduce using rule 16 (paragraphe)
+
+
+State 46
+
+   38 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE • PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
+
+    PARENTHESE_FERMANTE  shift, and go to state 57
+
+
+State 47
+
+   45 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT • PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+
+    PARENTHESE_FERMANTE  shift, and go to state 58
+
+
+State 48
+
+   41 valeurvar: ENTIER •
+
+    $default  reduce using rule 41 (valeurvar)
+
+
+State 49
+
+   42 valeurvar: HEX_COULEUR •
+
+    $default  reduce using rule 42 (valeurvar)
+
+
+State 50
+
+   43 valeurvar: RGB_COULEUR •
+
+    $default  reduce using rule 43 (valeurvar)
+
+
+State 51
+
+   44 valeurvar: element •
+
+    $default  reduce using rule 44 (valeurvar)
+
+
+State 52
+
+   40 variable: IDENTIFIANT EGAL valeurvar •
+
+    $default  reduce using rule 40 (variable)
+
+
+State 53
+
+   19 attributs: CROCHET_OUVRANT liste_attributs CROCHET_FERMANT •
+
+    $default  reduce using rule 19 (attributs)
+
+
+State 54
+
+   22 liste_attributs: attribut NEWLINE • liste_attributs
+
+    ATTRIBUT  shift, and go to state 34
+
+    liste_attributs  go to state 59
+    attribut         go to state 36
+    nomattribut      go to state 37
+    largeur          go to state 38
+    hauteur          go to state 39
+    couleurTexte     go to state 40
+    couleurFond      go to state 41
+    opacite          go to state 42
+
+
+State 55
+
+   21 liste_attributs: attribut VIRGULE • liste_attributs
+
+    ATTRIBUT  shift, and go to state 34
+
+    liste_attributs  go to state 60
+    attribut         go to state 36
+    nomattribut      go to state 37
+    largeur          go to state 38
+    hauteur          go to state 39
+    couleurTexte     go to state 40
+    couleurFond      go to state 41
+    opacite          go to state 42
+
+
+State 56
+
+   23 attribut: nomattribut DEUX_POINTS • valeur
+
+    ENTIER       shift, and go to state 61
+    CHAINE       shift, and go to state 62
+    HEX_COULEUR  shift, and go to state 63
+    RGB_COULEUR  shift, and go to state 64
+
+    valeur  go to state 65
+
+
+State 57
+
+   38 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
+
+    ACCOLADE_OUVRANTE  shift, and go to state 66
+
+
+State 58
+
+   45 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+
+    ACCOLADE_OUVRANTE  shift, and go to state 67
+
+
+State 59
+
+   22 liste_attributs: attribut NEWLINE liste_attributs •
+
+    $default  reduce using rule 22 (liste_attributs)
+
+
+State 60
+
+   21 liste_attributs: attribut VIRGULE liste_attributs •
+
+    $default  reduce using rule 21 (liste_attributs)
+
+
+State 61
+
+   34 valeur: ENTIER •
+
+    $default  reduce using rule 34 (valeur)
+
+
+State 62
+
+   37 valeur: CHAINE •
+
+    $default  reduce using rule 37 (valeur)
+
+
+State 63
+
+   35 valeur: HEX_COULEUR •
+
+    $default  reduce using rule 35 (valeur)
+
+
+State 64
+
+   36 valeur: RGB_COULEUR •
+
+    $default  reduce using rule 36 (valeur)
+
+
+State 65
+
+   23 attribut: nomattribut DEUX_POINTS valeur •
+
+    $default  reduce using rule 23 (attribut)
+
+
+State 66
+
+   38 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • valeur ACCOLADE_FERMANTE
+
+    ENTIER       shift, and go to state 61
+    CHAINE       shift, and go to state 62
+    HEX_COULEUR  shift, and go to state 63
+    RGB_COULEUR  shift, and go to state 64
+
+    valeur  go to state 68
+
+
+State 67
+
+   45 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • attributs ACCOLADE_FERMANTE
+
+    CROCHET_OUVRANT  shift, and go to state 21
+
+    attributs  go to state 69
+
+
+State 68
+
+   38 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur • ACCOLADE_FERMANTE
+
+    ACCOLADE_FERMANTE  shift, and go to state 70
+
+
+State 69
+
+   45 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs • ACCOLADE_FERMANTE
+
+    ACCOLADE_FERMANTE  shift, and go to state 71
+
+
+State 70
+
+   38 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE •
+
+    $default  reduce using rule 38 (define)
+
+
+State 71
+
+   45 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE •
+
+    $default  reduce using rule 45 (style)

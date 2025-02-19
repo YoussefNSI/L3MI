@@ -5,7 +5,6 @@
 %define api.parser.class { Parser }
 %define api.value.type variant
 %define parse.assert
-%define api.variant.type {int, std::string}
 
 %locations
 
@@ -51,28 +50,22 @@
 
 %token                 NEWLINE
 %token <TitreInfo>     TITRE SOUS_TITRE
-%token <std::string*>   PARAGRAPHE IMAGE
-%token <std::string*>   DEFINE TITREPAGE STYLE
-%token <std::string*>   ATTRIBUT PROPRIETE
-%token <std::string*>   SI SINON FINSI POUR FINI IDENTIFIANT
+%token <std::string>   PARAGRAPHE IMAGE
+%token <std::string>   DEFINE TITREPAGE STYLE
+%token <std::string>   ATTRIBUT PROPRIETE
+%token <std::string>   SI SINON FINSI POUR FINI IDENTIFIANT
 %token <int>           ENTIER
-%token <std::string*>   CHAINE
-%token <std::string*>   HEX_COULEUR RGB_COULEUR
-%token <std::string*>   EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE
-%token <std::string*>   PARENTHESE_OUVRANTE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE ACCOLADE_FERMANTE
+%token <std::string>   CHAINE
+%token <std::string>   HEX_COULEUR RGB_COULEUR
+%token <std::string>   EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE
+%token <std::string>   PARENTHESE_OUVRANTE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE ACCOLADE_FERMANTE
 
 
 %type <std::unique_ptr<Titre>> titre sous_titre
 %type <std::unique_ptr<Bloc>> paragraphe element
-%type <std::unique_ptr<Image>> image
-%type <sd::unique_ptr<TitrePage>> titrepage
-%type <std::map<std::string, std::map<std::string, std::string>>> attributs
-%type <std::map<std::string, std::string>> liste_attributs
-%type <std::map<std::string, std::string>> attribut
-%type <std::string*> nomattribut
-%type <std::string*> largeur hauteur couleurTexte couleurFond opacite
-%type <std::string*> valeur
-%type <std::variant<int, std::string, std::unique_ptr<Bloc>>> valeurvar
+%type std::map<std::string, std::map<std::string, std::string>> attributs
+%type std::map<std::string, std::string> liste_attributs
+%type <std::string> valeur
 
 %%
 
@@ -131,7 +124,8 @@ paragraphe:
 
 image:
     IMAGE CHAINE { 
-        doc->addBloc(std::move(std::make_unique<Image>($2)));
+        $$ = std::make_unique<Image>($2);
+        doc->addBloc(std::move($$));
     }
 ;
 
@@ -143,7 +137,7 @@ attributs:
 
 liste_attributs:
     attribut {
-        $$ = $1; 
+        $$ = $1;
     }
     | attribut VIRGULE liste_attributs {
         $$ = $1;
@@ -153,6 +147,7 @@ liste_attributs:
         $$ = $1;
         $$.insert($3.begin(), $3.end());
     }
+    |
 ;
 
 attribut:
@@ -190,10 +185,10 @@ opacite:
     ;
 
 valeur:
-    ENTIER { $$ = $1; }
-    | HEX_COULEUR { $$ = *$1; }
-    | RGB_COULEUR { $$ = *$1; }
-    | CHAINE { $$ = *$1; }
+    ENTIER
+    | HEX_COULEUR
+    | RGB_COULEUR
+    | CHAINE
     ;
 
 define:
@@ -212,21 +207,15 @@ titrepage:
 
 variable:
     IDENTIFIANT EGAL valeurvar { 
-        if (std::holds_alternative<std::unique_ptr<Bloc>>($3)) {
-            doc->setVariable($1, std::move(std::get<std::unique_ptr<Bloc>>($3)));
-        } else if (std::holds_alternative<int>($3)) {
-            doc->setVariable($1, std::get<int>($3));
-        } else if (std::holds_alternative<std::string>($3)) {
-            doc->setVariable($1, std::get<std::string>($3));
-        }
+        driver.storeVariable($1, std::move($3));
     }
 ;
 
 valeurvar:
-    ENTIER { $$ = $1; }
-    | HEX_COULEUR { $$ = *$1; }
-    | RGB_COULEUR { $$ = *$1; }
-    | element { $$ = std::move($1); }
+    ENTIER
+    | HEX_COULEUR
+    | RGB_COULEUR
+    | element
 ;
 
 style:

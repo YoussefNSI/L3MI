@@ -1,3 +1,29 @@
+Terminals unused in grammar
+
+    TITRE
+    SOUS_TITRE
+    PARAGRAPHE
+    IMAGE
+    DEFINE
+    TITREPAGE
+    STYLE
+    COMMENTAIRE_LIGNE
+    COMMENTAIRE_BLOC
+    ATTRIBUT
+    SI
+    SINON
+    FINSI
+    POUR
+    FINI
+    ENTIER
+    CHAINE
+    EGAL
+    CROCHET_OUVRANT
+    CROCHET_FERMANT
+    VIRGULE
+    DEUX_POINTS
+
+
 Grammar
 
     0 $accept: programme $end
@@ -35,26 +61,48 @@ Terminals, with rules where they appear
     NL (258) 1 2
     END (259) 2
     NUMBER <int> (260) 7
-    NEG (261)
+    TITRE <std::string*> (261)
+    SOUS_TITRE <std::string*> (262)
+    PARAGRAPHE <std::string*> (263)
+    IMAGE <std::string*> (264)
+    DEFINE <std::string*> (265)
+    TITREPAGE <std::string*> (266)
+    STYLE <std::string*> (267)
+    COMMENTAIRE_LIGNE <std::string*> (268)
+    COMMENTAIRE_BLOC <std::string*> (269)
+    ATTRIBUT <std::string*> (270)
+    SI <std::string*> (271)
+    SINON <std::string*> (272)
+    FINSI <std::string*> (273)
+    POUR <std::string*> (274)
+    FINI <std::string*> (275)
+    ENTIER <std::string*> (276)
+    CHAINE <std::string*> (277)
+    EGAL (278)
+    CROCHET_OUVRANT (279)
+    CROCHET_FERMANT (280)
+    VIRGULE (281)
+    DEUX_POINTS (282)
+    NEG (283)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (14)
+    $accept (36)
         on left: 0
-    programme (15)
+    programme (37)
         on left: 1 2
         on right: 0 1
-    instruction (16)
+    instruction (38)
         on left: 3 4
         on right: 1
-    expression (17)
+    expression (39)
         on left: 5
         on right: 3
-    affectation (18)
+    affectation (40)
         on left: 6
         on right: 4
-    operation <int> (19)
+    operation <int> (41)
         on left: 7 8 9 10 11 12 13
         on right: 5 8 9 10 11 12 13
 
