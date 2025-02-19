@@ -52,6 +52,16 @@ VariableType Document::getVariable(const std::string &nom) const
     throw std::runtime_error("Variable " + nom + " introuvable");
 }
 
+std::map<std::string, std::string> Document::getStyle(const std::string &nom) const
+{
+    auto it = mapStyles.find(nom);
+    if (it != mapStyles.end())
+    {
+        return it->second;
+    }
+    throw std::runtime_error("Style " + nom + " introuvable");
+}
+
 std::string Document::toHTML() const
 {
     std::string html;

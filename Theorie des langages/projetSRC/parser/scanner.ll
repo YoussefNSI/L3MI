@@ -55,6 +55,12 @@ rgb\(([0-9]+),([0-9]+),([0-9]+)\) {
 }
 #[0-9a-fA-F]{6} return token::HEX_COULEUR;
 
+couleurTexte   return token::COULEUR_TEXTE;
+couleurFond    return token::COULEUR_FOND;
+opacite       return token::OPACITE;
+largeur       return token::LARGEUR;
+hauteur       return token::HAUTEUR;
+
 "!"             return token::ATTRIBUT;
 
 \%\%[^/n]*      ; // commentaire ligne

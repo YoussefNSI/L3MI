@@ -83,8 +83,13 @@ public:
     {
         variables[nom] = std::move(valeur);
     }
+    void setStyle(const std::string &nom, std::map<std::string, std::string> valeur)
+    {
+        mapStyles[nom] = std::move(valeur);
+    }
     std::string getPropriete(const std::string &nom) const;
     VariableType getVariable(const std::string &nom) const;
+    std::map<std::string, std::string> getStyle(const std::string &nom) const;
     std::string toHTML() const;
 
 private:

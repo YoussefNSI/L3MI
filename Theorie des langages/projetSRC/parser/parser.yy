@@ -5,7 +5,7 @@
 %define api.parser.class { Parser }
 %define api.value.type variant
 %define parse.assert
-%define api.variant.type {int, std::string}
+
 
 %locations
 
@@ -36,6 +36,7 @@
     #include <string>
     #include <memory>
     #include <map>
+    #include <variant>
     
     #include "scanner.hh"
     #include "driver.hh"
@@ -60,24 +61,21 @@
 %token <std::string*>   HEX_COULEUR RGB_COULEUR
 %token <std::string*>   EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE
 %token <std::string*>   PARENTHESE_OUVRANTE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE ACCOLADE_FERMANTE
+%token <std::string*>   LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
 
 
-%type <std::unique_ptr<Titre>> titre sous_titre
-%type <std::unique_ptr<Bloc>> paragraphe element
-%type <std::unique_ptr<Image>> image
-%type <sd::unique_ptr<TitrePage>> titrepage
+%type <std::variant<int, std::string, std::unique_ptr<Bloc>>> paragraphe element titre sous_titre image titrepage
 %type <std::map<std::string, std::map<std::string, std::string>>> attributs
 %type <std::map<std::string, std::string>> liste_attributs
 %type <std::map<std::string, std::string>> attribut
 %type <std::string*> nomattribut
-%type <std::string*> largeur hauteur couleurTexte couleurFond opacite
-%type <std::string*> valeur
-%type <std::variant<int, std::string, std::unique_ptr<Bloc>>> valeurvar
+%type <std::string*> valeur define style
+%type <std::variant<int, std::string, std::unique_ptr<Bloc>>> valeurvar variable
 
 %%
 
 programme:
-    elements
+    declarations elements
 ;
 
 elements:
@@ -85,13 +83,21 @@ elements:
     |
 ;
 
+declarations:
+    declaration declarations
+    |
+;
+
+declaration:
+    define
+    | style
+;
+
 element:
     titre
     | sous_titre
     | paragraphe
     | image
-    | define
-    | style
     | titrepage
     | variable
 ;
@@ -162,32 +168,12 @@ attribut:
 ;
 
 nomattribut:
-    largeur
-    | hauteur
-    | couleurTexte
-    | couleurFond
-    | opacite
+    LARGEUR { $$ = "width"; }
+    | HAUTEUR { $$ = "height"; }
+    | COULEURTEXTE { $$ = "color"; }
+    | COULEURFOND { $$ = "background-color"; }
+    | OPACITE { $$ = "opacity"; }
 ;
-
-largeur:
-    ATTRIBUT { $$ = "width"; }
-    ;
-
-hauteur:
-    ATTRIBUT { $$ = "height"; }
-    ;
-
-couleurTexte:
-    ATTRIBUT { $$ = "color"; }
-    ;
-
-couleurFond:
-    ATTRIBUT { $$ = "background-color"; }
-    ;
-
-opacite:
-    ATTRIBUT { $$ = "opacity"; }
-    ;
 
 valeur:
     ENTIER { $$ = $1; }
@@ -199,7 +185,7 @@ valeur:
 define:
     DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE 
     { 
-        doc->setPropriete($3, $6);
+        doc->setPropriete(*$3, *$6);
     }
     ;
 
