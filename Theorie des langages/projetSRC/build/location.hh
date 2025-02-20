@@ -31,12 +31,12 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/location.hh
+ ** \file /c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/location.hh
  ** Define the yy::location class.
  */
 
-#ifndef YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_AUTRE_PROJETSRC_BUILD_LOCATION_HH_INCLUDED
-# define YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_AUTRE_PROJETSRC_BUILD_LOCATION_HH_INCLUDED
+#ifndef YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_THEORIE_DES_LANGAGES_PROJETSRC_BUILD_LOCATION_HH_INCLUDED
+# define YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_THEORIE_DES_LANGAGES_PROJETSRC_BUILD_LOCATION_HH_INCLUDED
 
 # include <iostream>
 # include <string>
@@ -54,7 +54,7 @@
 # endif
 
 namespace yy {
-#line 58 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/location.hh"
+#line 58 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/location.hh"
 
   /// A point in a source file.
   class position
@@ -299,6 +299,6 @@ namespace yy {
   }
 
 } // yy
-#line 303 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/location.hh"
+#line 303 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/location.hh"
 
-#endif // !YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_AUTRE_PROJETSRC_BUILD_LOCATION_HH_INCLUDED
+#endif // !YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_THEORIE_DES_LANGAGES_PROJETSRC_BUILD_LOCATION_HH_INCLUDED

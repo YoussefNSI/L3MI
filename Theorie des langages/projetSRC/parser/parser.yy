@@ -45,16 +45,15 @@
 %token                 NEWLINE
 %token <TitreInfo>     TITRE SOUS_TITRE
 %token                 PARAGRAPHE IMAGE
-%token                 DEFINE TITREPAGE STYLE
+%token                 DEFINE TITREPAGE STYLE SELECTSTYLE
 %token <std::string>   PROPRIETE COMMENTAIRE
 %token <std::string>   SI SINON FINSI POUR FINI IDENTIFIANT BLOCS
 %token <int>           ENTIER
 %token <std::string>   CHAINE
 %token <std::string>   HEX_COULEUR RGB_COULEUR
-%token                 EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE POINT
+%token                 EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE POINT PLUS MOINS MULT DIV
 %token                 PARENTHESE_OUVRANTE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE ACCOLADE_FERMANTE
 %token                 LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
-%token <int>           INDICE
 
 
 %type <Bloc*> bloc_element titre sous_titre paragraphe image titrepage commentaire
@@ -65,7 +64,7 @@
 %type <std::string> nomattribut
 %type <std::string> valeur define style
 %type <std::pair<std::string, int>> selecteur
-%type <int> index_expression
+%type <int> index_expression expr terme facteur
 
 %%
 
@@ -234,6 +233,26 @@ variable:
             }
         }
     }
+    | IDENTIFIANT POINT SELECTSTYLE EGAL IDENTIFIANT {
+        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        if (bloc != nullptr) {
+            std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> prop = doc->getVariable($5);
+            if (std::holds_alternative<std::map<std::string, std::string>>(prop)) {
+                for (auto const& [key, val] : std::get<std::map<std::string, std::string>>(prop)) {
+                    bloc->setPropriete(key, val);
+                }
+            }
+        }
+    }
+    | IDENTIFIANT POINT SELECTSTYLE EGAL attributs {
+        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        if (bloc != nullptr) {
+            for (auto const& [key, val] : $5) {
+                bloc->setPropriete(key, val);
+            }
+        }
+    }
+
 ;
 
 selecteur : 
@@ -244,16 +263,39 @@ selecteur :
 ;
 
 index_expression:
-    INDICE { $$ = $1; }
-    | CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT {
+    CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT {
         auto val = doc->getVariable($2);
         if (!std::holds_alternative<int>(val)) {
             std::cerr << "Erreur: la variable " << $2 << " n'est pas un entier" << std::endl;
             $$ = -2;
         }
-        $$ = std::get<int>(val);
-    }
+        $$ = std::get<int>(val);}
+    | CROCHET_OUVRANT expr CROCHET_FERMANT { $$ = $2; }
 ;
+
+expr:
+    expr PLUS terme { $$ = $1 + $3; }
+    | expr MOINS terme { $$ = $1 - $3; }
+    | terme { $$ = $1; }
+;
+
+terme:
+    terme MULT facteur { $$ = $1 * $3; }
+    | terme DIV facteur { $$ = $1 / $3; }
+    | facteur { $$ = $1; }
+;
+
+facteur:
+    ENTIER { $$ = $1; }
+    | IDENTIFIANT {
+        auto val = doc->getVariable($1);
+        if(std::holds_alternative<int>(val)) {
+            $$ = std::get<int>(val);
+        } else {
+            std::cerr << "Erreur: la variable " << $1 << " n'est pas un entier" << std::endl;
+            $$ = -1;
+        }
+    }
 
 valeurvar:
     ENTIER { $$ = $1; }

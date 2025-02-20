@@ -54,11 +54,7 @@ using token = yy::Parser::token;
 @STYLE        { std::cout << "[SCAN] STYLE" << std::endl;
                 return token::STYLE; }
 
-\[[0-9]+\]      {
-    yylval->emplace<int>(atoi(yytext + 1));
-    std::cout << "[SCAN] INDICE : " << yylval->as<int>() << std::endl;
-    return token::INDICE;
-}
+
 
 page            { std::cout << "[SCAN] PAGE" << std::endl;
                 yylval->emplace<std::string>(std::string("page"));
@@ -91,6 +87,7 @@ couleurFond     { std::cout << "[SCAN] COULEURFOND" << std::endl; return token::
 opacite         { std::cout << "[SCAN] OPACITE" << std::endl; return token::OPACITE; }
 largeur         { std::cout << "[SCAN] LARGEUR" << std::endl; return token::LARGEUR; }
 hauteur         { std::cout << "[SCAN] HAUTEUR" << std::endl; return token::HAUTEUR; }
+style           { std::cout << "[SCAN] STYLE" << std::endl; return token::SELECTSTYLE; }
 
 encodage      {
     std::cout << "[SCAN] ENCODAGE" << std::endl;
@@ -142,6 +139,10 @@ FINI          return token::FINI;
 \}             { std::cout << "[SCAN] }" << std::endl; return token::ACCOLADE_FERMANTE; }
 \;             { std::cout << "[SCAN] ;" << std::endl; return token::POINT_VIRGULE; }
 \.             { std::cout << "[SCAN] ." << std::endl; return token::POINT; }
+\+             { std::cout << "[SCAN] +" << std::endl; return token::PLUS; }
+\-             { std::cout << "[SCAN] -" << std::endl; return token::MOINS; }
+\*             { std::cout << "[SCAN] *" << std::endl; return token::MULT; }
+\/             { std::cout << "[SCAN] /" << std::endl; return token::DIV; }
 
 [0-9]+          { std::cout << "[SCAN] ENTIER : " << yytext << std::endl;
     yylval->emplace<int>(atoi(yytext)); return token::ENTIER; }

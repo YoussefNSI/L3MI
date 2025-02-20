@@ -4,7 +4,7 @@
 # compile CXX with /mingw64/bin/c++.exe
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/parser -I/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/expressions -I/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build
+CXX_INCLUDES = -I"/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/parser" -I"/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/expressions" -I"/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build"
 
 CXX_FLAGS = -std=c++17 -Wall -Wpedantic
 

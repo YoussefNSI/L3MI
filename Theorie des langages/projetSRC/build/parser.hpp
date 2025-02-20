@@ -32,7 +32,7 @@
 
 
 /**
- ** \file /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp
+ ** \file /c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp
  ** Define the yy::parser class.
  */
 
@@ -42,8 +42,8 @@
 // especially those whose name start with YY_ or yy_.  They are
 // private implementation details that can be changed or removed.
 
-#ifndef YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_AUTRE_PROJETSRC_BUILD_PARSER_HPP_INCLUDED
-# define YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_AUTRE_PROJETSRC_BUILD_PARSER_HPP_INCLUDED
+#ifndef YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_THEORIE_DES_LANGAGES_PROJETSRC_BUILD_PARSER_HPP_INCLUDED
+# define YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_THEORIE_DES_LANGAGES_PROJETSRC_BUILD_PARSER_HPP_INCLUDED
 // "%code requires" blocks.
 #line 13 "parser/parser.yy"
 
@@ -59,7 +59,7 @@
     extern Document* doc;
 
 
-#line 63 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
+#line 63 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -199,7 +199,7 @@
 #endif
 
 namespace yy {
-#line 203 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
+#line 203 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
 
 
 
@@ -432,8 +432,10 @@ namespace yy {
       char dummy2[sizeof (TitreInfo)];
 
       // ENTIER
-      // INDICE
       // index_expression
+      // expr
+      // terme
+      // facteur
       char dummy3[sizeof (int)];
 
       // attributs
@@ -525,36 +527,40 @@ namespace yy {
     DEFINE = 263,                  // DEFINE
     TITREPAGE = 264,               // TITREPAGE
     STYLE = 265,                   // STYLE
-    PROPRIETE = 266,               // PROPRIETE
-    COMMENTAIRE = 267,             // COMMENTAIRE
-    SI = 268,                      // SI
-    SINON = 269,                   // SINON
-    FINSI = 270,                   // FINSI
-    POUR = 271,                    // POUR
-    FINI = 272,                    // FINI
-    IDENTIFIANT = 273,             // IDENTIFIANT
-    BLOCS = 274,                   // BLOCS
-    ENTIER = 275,                  // ENTIER
-    CHAINE = 276,                  // CHAINE
-    HEX_COULEUR = 277,             // HEX_COULEUR
-    RGB_COULEUR = 278,             // RGB_COULEUR
-    EGAL = 279,                    // EGAL
-    CROCHET_FERMANT = 280,         // CROCHET_FERMANT
-    CROCHET_OUVRANT = 281,         // CROCHET_OUVRANT
-    DEUX_POINTS = 282,             // DEUX_POINTS
-    VIRGULE = 283,                 // VIRGULE
-    POINT_VIRGULE = 284,           // POINT_VIRGULE
-    POINT = 285,                   // POINT
-    PARENTHESE_OUVRANTE = 286,     // PARENTHESE_OUVRANTE
-    PARENTHESE_FERMANTE = 287,     // PARENTHESE_FERMANTE
-    ACCOLADE_OUVRANTE = 288,       // ACCOLADE_OUVRANTE
-    ACCOLADE_FERMANTE = 289,       // ACCOLADE_FERMANTE
-    LARGEUR = 290,                 // LARGEUR
-    HAUTEUR = 291,                 // HAUTEUR
-    COULEURTEXTE = 292,            // COULEURTEXTE
-    COULEURFOND = 293,             // COULEURFOND
-    OPACITE = 294,                 // OPACITE
-    INDICE = 295                   // INDICE
+    SELECTSTYLE = 266,             // SELECTSTYLE
+    PROPRIETE = 267,               // PROPRIETE
+    COMMENTAIRE = 268,             // COMMENTAIRE
+    SI = 269,                      // SI
+    SINON = 270,                   // SINON
+    FINSI = 271,                   // FINSI
+    POUR = 272,                    // POUR
+    FINI = 273,                    // FINI
+    IDENTIFIANT = 274,             // IDENTIFIANT
+    BLOCS = 275,                   // BLOCS
+    ENTIER = 276,                  // ENTIER
+    CHAINE = 277,                  // CHAINE
+    HEX_COULEUR = 278,             // HEX_COULEUR
+    RGB_COULEUR = 279,             // RGB_COULEUR
+    EGAL = 280,                    // EGAL
+    CROCHET_FERMANT = 281,         // CROCHET_FERMANT
+    CROCHET_OUVRANT = 282,         // CROCHET_OUVRANT
+    DEUX_POINTS = 283,             // DEUX_POINTS
+    VIRGULE = 284,                 // VIRGULE
+    POINT_VIRGULE = 285,           // POINT_VIRGULE
+    POINT = 286,                   // POINT
+    PLUS = 287,                    // PLUS
+    MOINS = 288,                   // MOINS
+    MULT = 289,                    // MULT
+    DIV = 290,                     // DIV
+    PARENTHESE_OUVRANTE = 291,     // PARENTHESE_OUVRANTE
+    PARENTHESE_FERMANTE = 292,     // PARENTHESE_FERMANTE
+    ACCOLADE_OUVRANTE = 293,       // ACCOLADE_OUVRANTE
+    ACCOLADE_FERMANTE = 294,       // ACCOLADE_FERMANTE
+    LARGEUR = 295,                 // LARGEUR
+    HAUTEUR = 296,                 // HAUTEUR
+    COULEURTEXTE = 297,            // COULEURTEXTE
+    COULEURFOND = 298,             // COULEURFOND
+    OPACITE = 299                  // OPACITE
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -571,7 +577,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 41, ///< Number of tokens.
+        YYNTOKENS = 45, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -584,58 +590,65 @@ namespace yy {
         S_DEFINE = 8,                            // DEFINE
         S_TITREPAGE = 9,                         // TITREPAGE
         S_STYLE = 10,                            // STYLE
-        S_PROPRIETE = 11,                        // PROPRIETE
-        S_COMMENTAIRE = 12,                      // COMMENTAIRE
-        S_SI = 13,                               // SI
-        S_SINON = 14,                            // SINON
-        S_FINSI = 15,                            // FINSI
-        S_POUR = 16,                             // POUR
-        S_FINI = 17,                             // FINI
-        S_IDENTIFIANT = 18,                      // IDENTIFIANT
-        S_BLOCS = 19,                            // BLOCS
-        S_ENTIER = 20,                           // ENTIER
-        S_CHAINE = 21,                           // CHAINE
-        S_HEX_COULEUR = 22,                      // HEX_COULEUR
-        S_RGB_COULEUR = 23,                      // RGB_COULEUR
-        S_EGAL = 24,                             // EGAL
-        S_CROCHET_FERMANT = 25,                  // CROCHET_FERMANT
-        S_CROCHET_OUVRANT = 26,                  // CROCHET_OUVRANT
-        S_DEUX_POINTS = 27,                      // DEUX_POINTS
-        S_VIRGULE = 28,                          // VIRGULE
-        S_POINT_VIRGULE = 29,                    // POINT_VIRGULE
-        S_POINT = 30,                            // POINT
-        S_PARENTHESE_OUVRANTE = 31,              // PARENTHESE_OUVRANTE
-        S_PARENTHESE_FERMANTE = 32,              // PARENTHESE_FERMANTE
-        S_ACCOLADE_OUVRANTE = 33,                // ACCOLADE_OUVRANTE
-        S_ACCOLADE_FERMANTE = 34,                // ACCOLADE_FERMANTE
-        S_LARGEUR = 35,                          // LARGEUR
-        S_HAUTEUR = 36,                          // HAUTEUR
-        S_COULEURTEXTE = 37,                     // COULEURTEXTE
-        S_COULEURFOND = 38,                      // COULEURFOND
-        S_OPACITE = 39,                          // OPACITE
-        S_INDICE = 40,                           // INDICE
-        S_YYACCEPT = 41,                         // $accept
-        S_programme = 42,                        // programme
-        S_programme_element = 43,                // programme_element
-        S_declaration = 44,                      // declaration
-        S_bloc_element = 45,                     // bloc_element
-        S_titre = 46,                            // titre
-        S_sous_titre = 47,                       // sous_titre
-        S_paragraphe = 48,                       // paragraphe
-        S_image = 49,                            // image
-        S_commentaire = 50,                      // commentaire
-        S_attributs = 51,                        // attributs
-        S_liste_attributs = 52,                  // liste_attributs
-        S_attribut = 53,                         // attribut
-        S_nomattribut = 54,                      // nomattribut
-        S_valeur = 55,                           // valeur
-        S_define = 56,                           // define
-        S_titrepage = 57,                        // titrepage
-        S_variable = 58,                         // variable
-        S_selecteur = 59,                        // selecteur
-        S_index_expression = 60,                 // index_expression
-        S_valeurvar = 61,                        // valeurvar
-        S_style = 62                             // style
+        S_SELECTSTYLE = 11,                      // SELECTSTYLE
+        S_PROPRIETE = 12,                        // PROPRIETE
+        S_COMMENTAIRE = 13,                      // COMMENTAIRE
+        S_SI = 14,                               // SI
+        S_SINON = 15,                            // SINON
+        S_FINSI = 16,                            // FINSI
+        S_POUR = 17,                             // POUR
+        S_FINI = 18,                             // FINI
+        S_IDENTIFIANT = 19,                      // IDENTIFIANT
+        S_BLOCS = 20,                            // BLOCS
+        S_ENTIER = 21,                           // ENTIER
+        S_CHAINE = 22,                           // CHAINE
+        S_HEX_COULEUR = 23,                      // HEX_COULEUR
+        S_RGB_COULEUR = 24,                      // RGB_COULEUR
+        S_EGAL = 25,                             // EGAL
+        S_CROCHET_FERMANT = 26,                  // CROCHET_FERMANT
+        S_CROCHET_OUVRANT = 27,                  // CROCHET_OUVRANT
+        S_DEUX_POINTS = 28,                      // DEUX_POINTS
+        S_VIRGULE = 29,                          // VIRGULE
+        S_POINT_VIRGULE = 30,                    // POINT_VIRGULE
+        S_POINT = 31,                            // POINT
+        S_PLUS = 32,                             // PLUS
+        S_MOINS = 33,                            // MOINS
+        S_MULT = 34,                             // MULT
+        S_DIV = 35,                              // DIV
+        S_PARENTHESE_OUVRANTE = 36,              // PARENTHESE_OUVRANTE
+        S_PARENTHESE_FERMANTE = 37,              // PARENTHESE_FERMANTE
+        S_ACCOLADE_OUVRANTE = 38,                // ACCOLADE_OUVRANTE
+        S_ACCOLADE_FERMANTE = 39,                // ACCOLADE_FERMANTE
+        S_LARGEUR = 40,                          // LARGEUR
+        S_HAUTEUR = 41,                          // HAUTEUR
+        S_COULEURTEXTE = 42,                     // COULEURTEXTE
+        S_COULEURFOND = 43,                      // COULEURFOND
+        S_OPACITE = 44,                          // OPACITE
+        S_YYACCEPT = 45,                         // $accept
+        S_programme = 46,                        // programme
+        S_programme_element = 47,                // programme_element
+        S_declaration = 48,                      // declaration
+        S_bloc_element = 49,                     // bloc_element
+        S_titre = 50,                            // titre
+        S_sous_titre = 51,                       // sous_titre
+        S_paragraphe = 52,                       // paragraphe
+        S_image = 53,                            // image
+        S_commentaire = 54,                      // commentaire
+        S_attributs = 55,                        // attributs
+        S_liste_attributs = 56,                  // liste_attributs
+        S_attribut = 57,                         // attribut
+        S_nomattribut = 58,                      // nomattribut
+        S_valeur = 59,                           // valeur
+        S_define = 60,                           // define
+        S_titrepage = 61,                        // titrepage
+        S_variable = 62,                         // variable
+        S_selecteur = 63,                        // selecteur
+        S_index_expression = 64,                 // index_expression
+        S_expr = 65,                             // expr
+        S_terme = 66,                            // terme
+        S_facteur = 67,                          // facteur
+        S_valeurvar = 68,                        // valeurvar
+        S_style = 69                             // style
       };
     };
 
@@ -688,8 +701,10 @@ namespace yy {
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
-      case symbol_kind::S_INDICE: // INDICE
       case symbol_kind::S_index_expression: // index_expression
+      case symbol_kind::S_expr: // expr
+      case symbol_kind::S_terme: // terme
+      case symbol_kind::S_facteur: // facteur
         value.move< int > (std::move (that.value));
         break;
 
@@ -888,8 +903,10 @@ switch (yykind)
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
-      case symbol_kind::S_INDICE: // INDICE
       case symbol_kind::S_index_expression: // index_expression
+      case symbol_kind::S_expr: // expr
+      case symbol_kind::S_terme: // terme
+      case symbol_kind::S_facteur: // facteur
         value.template destroy< int > ();
         break;
 
@@ -1026,7 +1043,7 @@ switch (yykind)
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::NEWLINE)
-                   || (token::PARAGRAPHE <= tok && tok <= token::STYLE)
+                   || (token::PARAGRAPHE <= tok && tok <= token::SELECTSTYLE)
                    || (token::EGAL <= tok && tok <= token::OPACITE));
 #endif
       }
@@ -1051,8 +1068,7 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT (tok == token::ENTIER
-                   || tok == token::INDICE);
+        YY_ASSERT (tok == token::ENTIER);
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1279,6 +1295,21 @@ switch (yykind)
       make_STYLE (const location_type& l)
       {
         return symbol_type (token::STYLE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_SELECTSTYLE (location_type l)
+      {
+        return symbol_type (token::SELECTSTYLE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_SELECTSTYLE (const location_type& l)
+      {
+        return symbol_type (token::SELECTSTYLE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1584,6 +1615,66 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_PLUS (location_type l)
+      {
+        return symbol_type (token::PLUS, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_PLUS (const location_type& l)
+      {
+        return symbol_type (token::PLUS, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_MOINS (location_type l)
+      {
+        return symbol_type (token::MOINS, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_MOINS (const location_type& l)
+      {
+        return symbol_type (token::MOINS, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_MULT (location_type l)
+      {
+        return symbol_type (token::MULT, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_MULT (const location_type& l)
+      {
+        return symbol_type (token::MULT, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DIV (location_type l)
+      {
+        return symbol_type (token::DIV, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_DIV (const location_type& l)
+      {
+        return symbol_type (token::DIV, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_PARENTHESE_OUVRANTE (location_type l)
       {
         return symbol_type (token::PARENTHESE_OUVRANTE, std::move (l));
@@ -1714,21 +1805,6 @@ switch (yykind)
       make_OPACITE (const location_type& l)
       {
         return symbol_type (token::OPACITE, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_INDICE (int v, location_type l)
-      {
-        return symbol_type (token::INDICE, std::move (v), std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_INDICE (const int& v, const location_type& l)
-      {
-        return symbol_type (token::INDICE, v, l);
       }
 #endif
 
@@ -2061,8 +2137,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 108,     ///< Last index in yytable_.
-      yynnts_ = 22,  ///< Number of nonterminal symbols.
+      yylast_ = 123,     ///< Last index in yytable_.
+      yynnts_ = 25,  ///< Number of nonterminal symbols.
       yyfinal_ = 36 ///< Termination state number.
     };
 
@@ -2075,9 +2151,9 @@ switch (yykind)
 
 
 } // yy
-#line 2079 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
+#line 2155 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
 
 
 
 
-#endif // !YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_AUTRE_PROJETSRC_BUILD_PARSER_HPP_INCLUDED
+#endif // !YY_YY_C_USERS_RADOU_DOCUMENTS_GITHUB_L3MI_THEORIE_DES_LANGAGES_PROJETSRC_BUILD_PARSER_HPP_INCLUDED
