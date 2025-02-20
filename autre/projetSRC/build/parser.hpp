@@ -456,11 +456,6 @@ namespace yy {
       // CHAINE
       // HEX_COULEUR
       // RGB_COULEUR
-      // LARGEUR
-      // HAUTEUR
-      // COULEURTEXTE
-      // COULEURFOND
-      // OPACITE
       // nomattribut
       // valeur
       // define
@@ -469,7 +464,7 @@ namespace yy {
 
       // variable
       // valeurvar
-      char dummy7[sizeof (std::variant<int, std::string, Bloc*>)];
+      char dummy7[sizeof (std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>)];
     };
 
     /// The size of the largest semantic type.
@@ -637,11 +632,10 @@ namespace yy {
         S_define = 56,                           // define
         S_titrepage = 57,                        // titrepage
         S_variable = 58,                         // variable
-        S_59_1 = 59,                             // $@1
-        S_selecteur = 60,                        // selecteur
-        S_index_expression = 61,                 // index_expression
-        S_valeurvar = 62,                        // valeurvar
-        S_style = 63                             // style
+        S_selecteur = 59,                        // selecteur
+        S_index_expression = 60,                 // index_expression
+        S_valeurvar = 61,                        // valeurvar
+        S_style = 62                             // style
       };
     };
 
@@ -721,11 +715,6 @@ namespace yy {
       case symbol_kind::S_CHAINE: // CHAINE
       case symbol_kind::S_HEX_COULEUR: // HEX_COULEUR
       case symbol_kind::S_RGB_COULEUR: // RGB_COULEUR
-      case symbol_kind::S_LARGEUR: // LARGEUR
-      case symbol_kind::S_HAUTEUR: // HAUTEUR
-      case symbol_kind::S_COULEURTEXTE: // COULEURTEXTE
-      case symbol_kind::S_COULEURFOND: // COULEURFOND
-      case symbol_kind::S_OPACITE: // OPACITE
       case symbol_kind::S_nomattribut: // nomattribut
       case symbol_kind::S_valeur: // valeur
       case symbol_kind::S_define: // define
@@ -735,7 +724,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.move< std::variant<int, std::string, Bloc*> > (std::move (that.value));
+        value.move< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (std::move (that.value));
         break;
 
       default:
@@ -846,13 +835,13 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::variant<int, std::string, Bloc*>&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::variant<int, std::string, Bloc*>& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -926,11 +915,6 @@ switch (yykind)
       case symbol_kind::S_CHAINE: // CHAINE
       case symbol_kind::S_HEX_COULEUR: // HEX_COULEUR
       case symbol_kind::S_RGB_COULEUR: // RGB_COULEUR
-      case symbol_kind::S_LARGEUR: // LARGEUR
-      case symbol_kind::S_HAUTEUR: // HAUTEUR
-      case symbol_kind::S_COULEURTEXTE: // COULEURTEXTE
-      case symbol_kind::S_COULEURFOND: // COULEURFOND
-      case symbol_kind::S_OPACITE: // OPACITE
       case symbol_kind::S_nomattribut: // nomattribut
       case symbol_kind::S_valeur: // valeur
       case symbol_kind::S_define: // define
@@ -940,7 +924,7 @@ switch (yykind)
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.template destroy< std::variant<int, std::string, Bloc*> > ();
+        value.template destroy< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ();
         break;
 
       default:
@@ -1043,7 +1027,7 @@ switch (yykind)
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::NEWLINE)
                    || (token::PARAGRAPHE <= tok && tok <= token::STYLE)
-                   || (token::EGAL <= tok && tok <= token::ACCOLADE_FERMANTE));
+                   || (token::EGAL <= tok && tok <= token::OPACITE));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1081,8 +1065,7 @@ switch (yykind)
       {
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT ((token::PROPRIETE <= tok && tok <= token::BLOCS)
-                   || (token::CHAINE <= tok && tok <= token::RGB_COULEUR)
-                   || (token::LARGEUR <= tok && tok <= token::OPACITE));
+                   || (token::CHAINE <= tok && tok <= token::RGB_COULEUR));
 #endif
       }
     };
@@ -1661,76 +1644,76 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_LARGEUR (std::string v, location_type l)
+      make_LARGEUR (location_type l)
       {
-        return symbol_type (token::LARGEUR, std::move (v), std::move (l));
+        return symbol_type (token::LARGEUR, std::move (l));
       }
 #else
       static
       symbol_type
-      make_LARGEUR (const std::string& v, const location_type& l)
+      make_LARGEUR (const location_type& l)
       {
-        return symbol_type (token::LARGEUR, v, l);
+        return symbol_type (token::LARGEUR, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_HAUTEUR (std::string v, location_type l)
+      make_HAUTEUR (location_type l)
       {
-        return symbol_type (token::HAUTEUR, std::move (v), std::move (l));
+        return symbol_type (token::HAUTEUR, std::move (l));
       }
 #else
       static
       symbol_type
-      make_HAUTEUR (const std::string& v, const location_type& l)
+      make_HAUTEUR (const location_type& l)
       {
-        return symbol_type (token::HAUTEUR, v, l);
+        return symbol_type (token::HAUTEUR, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_COULEURTEXTE (std::string v, location_type l)
+      make_COULEURTEXTE (location_type l)
       {
-        return symbol_type (token::COULEURTEXTE, std::move (v), std::move (l));
+        return symbol_type (token::COULEURTEXTE, std::move (l));
       }
 #else
       static
       symbol_type
-      make_COULEURTEXTE (const std::string& v, const location_type& l)
+      make_COULEURTEXTE (const location_type& l)
       {
-        return symbol_type (token::COULEURTEXTE, v, l);
+        return symbol_type (token::COULEURTEXTE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_COULEURFOND (std::string v, location_type l)
+      make_COULEURFOND (location_type l)
       {
-        return symbol_type (token::COULEURFOND, std::move (v), std::move (l));
+        return symbol_type (token::COULEURFOND, std::move (l));
       }
 #else
       static
       symbol_type
-      make_COULEURFOND (const std::string& v, const location_type& l)
+      make_COULEURFOND (const location_type& l)
       {
-        return symbol_type (token::COULEURFOND, v, l);
+        return symbol_type (token::COULEURFOND, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_OPACITE (std::string v, location_type l)
+      make_OPACITE (location_type l)
       {
-        return symbol_type (token::OPACITE, std::move (v), std::move (l));
+        return symbol_type (token::OPACITE, std::move (l));
       }
 #else
       static
       symbol_type
-      make_OPACITE (const std::string& v, const location_type& l)
+      make_OPACITE (const location_type& l)
       {
-        return symbol_type (token::OPACITE, v, l);
+        return symbol_type (token::OPACITE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1851,7 +1834,7 @@ switch (yykind)
 
 #if YYDEBUG
     // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-    static const unsigned char yyrline_[];
+    static const short yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r) const;
     /// Print the state stack on the debug stream.
@@ -2078,9 +2061,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 91,     ///< Last index in yytable_.
-      yynnts_ = 23,  ///< Number of nonterminal symbols.
-      yyfinal_ = 35 ///< Termination state number.
+      yylast_ = 108,     ///< Last index in yytable_.
+      yynnts_ = 22,  ///< Number of nonterminal symbols.
+      yyfinal_ = 36 ///< Termination state number.
     };
 
 
@@ -2092,7 +2075,7 @@ switch (yykind)
 
 
 } // yy
-#line 2096 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
+#line 2079 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
 
 
 

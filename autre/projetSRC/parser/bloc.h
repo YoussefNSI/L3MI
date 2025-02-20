@@ -97,7 +97,7 @@ private:
     std::string texte;
 };
 
-using VariableType = std::variant<int, std::string, Bloc *>;
+using VariableType = std::variant<int, std::string, Bloc *, std::map<std::string, std::string>>;
 
 class Document
 {
