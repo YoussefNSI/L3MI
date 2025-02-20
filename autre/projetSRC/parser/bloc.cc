@@ -3,12 +3,6 @@
 #include <iostream>
 #include "bloc.h"
 
-int Document::nbParagraphe = 0;
-int Document::nbTitre = 0;
-int Document::nbImage = 0;
-int Document::nbTitrePage = 0;
-int Document::nbCommentaire = 0;
-
 std::string Titre::toHTML()
 {
     std::string style;
@@ -147,11 +141,20 @@ void Commentaire::setPropriete(const std::string &nom, const std::string &valeur
     }
 }
 
+Document::Document()
+{
+    blocCounts["paragraphe"] = 0;
+    blocCounts["titre"] = 0;
+    blocCounts["image"] = 0;
+    blocCounts["titrepage"] = 0;
+    blocCounts["commentaire"] = 0;
+}
+
+
 void Document::afficherBlocs() const
 {
-    for (const auto &bloc : blocs)
-    {
-        std::cout << bloc.second->toHTML() << std::endl;
+    for (const auto& pair : blocs) {
+        std::cout << pair.first << " -> " << pair.second->getType() << std::endl;
     }
 }
 
@@ -175,27 +178,10 @@ Bloc *Document::getNBloc(const std::string &type, int index) const
     throw std::runtime_error("Bloc de type " + type + " avec l'indice " + std::to_string(index) + " introuvable");
 }
 
-void Document::addBloc(const std::string &type, Bloc *bloc)
+void Document::addBloc(Bloc *bloc)
 {
-    switch(type[0])
-    {
-        case 'p':
-            nbParagraphe++;
-            break;
-        case 't':
-            nbTitre++;
-            break;
-        case 'i':
-            nbImage++;
-            break;
-        case 'z':
-            nbTitrePage++;
-            break;
-        case 'c':
-            nbCommentaire++;
-            break;
-        default:
-            throw std::runtime_error("Type " + type + " inconnu");
-    }
-    blocs[type + std::string(nb{bloc.getType()})] = bloc;
+    std::string type = bloc->getType();
+    ++blocCounts[type];
+    std::string key = type + std::to_string(blocCounts[type]);
+    blocs[key] = bloc;
 }

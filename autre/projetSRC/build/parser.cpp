@@ -1084,7 +1084,7 @@ namespace yy {
 #line 98 "parser/parser.yy"
                            { 
         yylhs.value.as < Bloc* > () = new Titre(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > (), yystack_[2].value.as < TitreInfo > ().niveau);
-        doc->addBloc("titre", yylhs.value.as < Bloc* > ());
+        doc->addBloc(yylhs.value.as < Bloc* > ());
     }
 #line 1090 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1093,7 +1093,7 @@ namespace yy {
 #line 102 "parser/parser.yy"
                    { 
         yylhs.value.as < Bloc* > () = new Titre(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > (), yystack_[1].value.as < TitreInfo > ().niveau);
-        doc->addBloc("titre", yylhs.value.as < Bloc* > ());
+        doc->addBloc(yylhs.value.as < Bloc* > ());
     }
 #line 1099 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1102,7 +1102,7 @@ namespace yy {
 #line 109 "parser/parser.yy"
                                 { 
         yylhs.value.as < Bloc* > () = new Titre(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > (), yystack_[2].value.as < TitreInfo > ().niveau);
-        doc->addBloc("titre", yylhs.value.as < Bloc* > ());
+        doc->addBloc(yylhs.value.as < Bloc* > ());
     }
 #line 1108 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1111,7 +1111,7 @@ namespace yy {
 #line 113 "parser/parser.yy"
                         { 
         yylhs.value.as < Bloc* > () = new Titre(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > (), yystack_[1].value.as < TitreInfo > ().niveau);
-        doc->addBloc("titre", yylhs.value.as < Bloc* > ());
+        doc->addBloc(yylhs.value.as < Bloc* > ());
     }
 #line 1117 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1120,7 +1120,7 @@ namespace yy {
 #line 120 "parser/parser.yy"
                                 { 
         yylhs.value.as < Bloc* > () = new Paragraphe(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > ());
-        doc->addBloc("paragraphe", yylhs.value.as < Bloc* > ());
+        doc->addBloc(yylhs.value.as < Bloc* > ());
     }
 #line 1126 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1129,7 +1129,7 @@ namespace yy {
 #line 124 "parser/parser.yy"
                         { 
         yylhs.value.as < Bloc* > () = new Paragraphe(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > ());
-        doc->addBloc("paragraphe", yylhs.value.as < Bloc* > ());
+        doc->addBloc(yylhs.value.as < Bloc* > ());
     }
 #line 1135 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1137,7 +1137,7 @@ namespace yy {
   case 21: // image: IMAGE CHAINE
 #line 131 "parser/parser.yy"
                  { 
-        doc->addBloc("image", new Image(yystack_[0].value.as < std::string > ()));
+        doc->addBloc(new Image(yystack_[0].value.as < std::string > ()));
     }
 #line 1143 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1145,7 +1145,7 @@ namespace yy {
   case 22: // commentaire: COMMENTAIRE
 #line 137 "parser/parser.yy"
                 { 
-        doc->addBloc("commentaire", new Commentaire(yystack_[0].value.as < std::string > ()));
+        doc->addBloc(new Commentaire(yystack_[0].value.as < std::string > ()));
     }
 #line 1151 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;
@@ -1258,7 +1258,7 @@ namespace yy {
 #line 191 "parser/parser.yy"
                      { 
         auto bloc = new TitrePage(yystack_[0].value.as < std::string > ());
-        doc->addBloc("z", bloc);
+        doc->addBloc(bloc);
     }
 #line 1264 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.cpp"
     break;

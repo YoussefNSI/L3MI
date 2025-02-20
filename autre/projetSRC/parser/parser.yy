@@ -97,45 +97,45 @@ bloc_element:
 titre:
     TITRE attributs CHAINE { 
         $$ = new Titre($2, $3, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
     | TITRE CHAINE { 
         $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
 ;
 
 sous_titre:
     SOUS_TITRE attributs CHAINE { 
         $$ = new Titre($2, $3, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
     | SOUS_TITRE CHAINE { 
         $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
 ;
 
 paragraphe:
     PARAGRAPHE attributs CHAINE { 
         $$ = new Paragraphe($2, $3);
-        doc->addBloc("paragraphe", $$);
+        doc->addBloc($$);
     }
     | PARAGRAPHE CHAINE { 
         $$ = new Paragraphe(std::map<std::string, std::string>(), $2);
-        doc->addBloc("paragraphe", $$);
+        doc->addBloc($$);
     }
 ;
 
 image:
     IMAGE CHAINE { 
-        doc->addBloc("image", new Image($2));
+        doc->addBloc(new Image($2));
     }
 ;
 
 commentaire:
     COMMENTAIRE { 
-        doc->addBloc("commentaire", new Commentaire($1));
+        doc->addBloc(new Commentaire($1));
     }
 ;
 
@@ -190,7 +190,7 @@ define:
 titrepage:
     TITREPAGE CHAINE { 
         auto bloc = new TitrePage($2);
-        doc->addBloc("z", bloc);
+        doc->addBloc(bloc);
     }
 ;
 
