@@ -1,6 +1,5 @@
 Terminals unused in grammar
 
-    ATTRIBUT
     SI
     SINON
     FINSI
@@ -13,23 +12,22 @@ Grammar
 
     0 $accept: programme $end
 
-    1 programme: declarations elements
+    1 programme: programme_element programme
+    2          | ε
 
-    2 elements: element elements
-    3         | ε
-
-    4 declarations: declaration declarations
-    5             | ε
+    3 programme_element: declaration
+    4                  | bloc_element
+    5                  | variable
 
     6 declaration: define
     7            | style
 
-    8 element: titre
-    9        | sous_titre
-   10        | paragraphe
-   11        | image
-   12        | titrepage
-   13        | variable
+    8 bloc_element: titre
+    9             | sous_titre
+   10             | paragraphe
+   11             | image
+   12             | titrepage
+   13             | commentaire
 
    14 titre: TITRE attributs CHAINE
    15      | TITRE CHAINE
@@ -42,78 +40,80 @@ Grammar
 
    20 image: IMAGE CHAINE
 
-   21 attributs: CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
+   21 commentaire: COMMENTAIRE
 
-   22 liste_attributs: attribut
-   23                | attribut VIRGULE liste_attributs
-   24                | attribut NEWLINE liste_attributs
+   22 attributs: CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
 
-   25 attribut: nomattribut DEUX_POINTS valeur
+   23 liste_attributs: attribut
+   24                | attribut VIRGULE liste_attributs
+   25                | attribut NEWLINE liste_attributs
 
-   26 nomattribut: LARGEUR
-   27            | HAUTEUR
-   28            | COULEURTEXTE
-   29            | COULEURFOND
-   30            | OPACITE
+   26 attribut: nomattribut DEUX_POINTS valeur
 
-   31 valeur: ENTIER
-   32       | HEX_COULEUR
-   33       | RGB_COULEUR
-   34       | CHAINE
+   27 nomattribut: LARGEUR
+   28            | HAUTEUR
+   29            | COULEURTEXTE
+   30            | COULEURFOND
+   31            | OPACITE
 
-   35 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
+   32 valeur: ENTIER
+   33       | HEX_COULEUR
+   34       | RGB_COULEUR
+   35       | CHAINE
 
-   36 titrepage: TITREPAGE CHAINE
+   36 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
 
-   37 variable: IDENTIFIANT EGAL valeurvar
+   37 titrepage: TITREPAGE CHAINE
 
-   38 valeurvar: ENTIER
-   39          | HEX_COULEUR
-   40          | RGB_COULEUR
-   41          | element
+   38 variable: IDENTIFIANT EGAL valeurvar
 
-   42 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+   39 valeurvar: ENTIER
+   40          | HEX_COULEUR
+   41          | RGB_COULEUR
+   42          | bloc_element
+
+   43 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    NEWLINE (258) 24
+    NEWLINE (258) 25
     TITRE <TitreInfo> (259) 14 15
     SOUS_TITRE <TitreInfo> (260) 16 17
-    PARAGRAPHE <std::string*> (261) 18 19
-    IMAGE <std::string*> (262) 20
-    DEFINE <std::string*> (263) 35
-    TITREPAGE <std::string*> (264) 36
-    STYLE <std::string*> (265) 42
-    ATTRIBUT <std::string*> (266)
-    PROPRIETE <std::string*> (267) 35
-    SI <std::string*> (268)
-    SINON <std::string*> (269)
-    FINSI <std::string*> (270)
-    POUR <std::string*> (271)
-    FINI <std::string*> (272)
-    IDENTIFIANT <std::string*> (273) 37 42
-    ENTIER <int> (274) 31 38
-    CHAINE <std::string*> (275) 14 15 16 17 18 19 20 34 36
-    HEX_COULEUR <std::string*> (276) 32 39
-    RGB_COULEUR <std::string*> (277) 33 40
-    EGAL <std::string*> (278) 37
-    CROCHET_FERMANT <std::string*> (279) 21
-    CROCHET_OUVRANT <std::string*> (280) 21
-    DEUX_POINTS <std::string*> (281) 25
-    VIRGULE <std::string*> (282) 23
-    POINT_VIRGULE <std::string*> (283)
-    PARENTHESE_OUVRANTE <std::string*> (284) 35 42
-    PARENTHESE_FERMANTE <std::string*> (285) 35 42
-    ACCOLADE_OUVRANTE <std::string*> (286) 35 42
-    ACCOLADE_FERMANTE <std::string*> (287) 35 42
-    LARGEUR <std::string*> (288) 26
-    HAUTEUR <std::string*> (289) 27
-    COULEURTEXTE <std::string*> (290) 28
-    COULEURFOND <std::string*> (291) 29
-    OPACITE <std::string*> (292) 30
+    PARAGRAPHE (261) 18 19
+    IMAGE (262) 20
+    DEFINE (263) 36
+    TITREPAGE (264) 37
+    STYLE (265) 43
+    PROPRIETE <std::string> (266) 36
+    COMMENTAIRE <std::string> (267) 21
+    SI <std::string> (268)
+    SINON <std::string> (269)
+    FINSI <std::string> (270)
+    POUR <std::string> (271)
+    FINI <std::string> (272)
+    IDENTIFIANT <std::string> (273) 38 43
+    ENTIER <int> (274) 32 39
+    CHAINE <std::string> (275) 14 15 16 17 18 19 20 35 37
+    HEX_COULEUR <std::string> (276) 33 40
+    RGB_COULEUR <std::string> (277) 34 41
+    EGAL <std::string> (278) 38
+    CROCHET_FERMANT <std::string> (279) 22
+    CROCHET_OUVRANT <std::string> (280) 22
+    DEUX_POINTS <std::string> (281) 26
+    VIRGULE <std::string> (282) 24
+    POINT_VIRGULE <std::string> (283)
+    PARENTHESE_OUVRANTE (284) 36 43
+    PARENTHESE_FERMANTE (285) 36 43
+    ACCOLADE_OUVRANTE (286) 36 43
+    ACCOLADE_FERMANTE (287) 36 43
+    LARGEUR <std::string> (288) 27
+    HAUTEUR <std::string> (289) 28
+    COULEURTEXTE <std::string> (290) 29
+    COULEURFOND <std::string> (291) 30
+    OPACITE <std::string> (292) 31
 
 
 Nonterminals, with rules where they appear
@@ -121,61 +121,61 @@ Nonterminals, with rules where they appear
     $accept (38)
         on left: 0
     programme (39)
-        on left: 1
-        on right: 0
-    elements (40)
-        on left: 2 3
-        on right: 1 2
-    declarations (41)
-        on left: 4 5
-        on right: 1 4
-    declaration (42)
+        on left: 1 2
+        on right: 0 1
+    programme_element (40)
+        on left: 3 4 5
+        on right: 1
+    declaration (41)
         on left: 6 7
-        on right: 4
-    element <std::variant<int, std::string, std::unique_ptr<Bloc>>> (43)
+        on right: 3
+    bloc_element <Bloc*> (42)
         on left: 8 9 10 11 12 13
-        on right: 2 41
-    titre <std::variant<int, std::string, std::unique_ptr<Bloc>>> (44)
+        on right: 4 42
+    titre <Bloc*> (43)
         on left: 14 15
         on right: 8
-    sous_titre <std::variant<int, std::string, std::unique_ptr<Bloc>>> (45)
+    sous_titre <Bloc*> (44)
         on left: 16 17
         on right: 9
-    paragraphe <std::variant<int, std::string, std::unique_ptr<Bloc>>> (46)
+    paragraphe <Bloc*> (45)
         on left: 18 19
         on right: 10
-    image <std::variant<int, std::string, std::unique_ptr<Bloc>>> (47)
+    image <Bloc*> (46)
         on left: 20
         on right: 11
-    attributs <std::map<std::string, std::map<std::string, std::string>>> (48)
+    commentaire <Bloc*> (47)
         on left: 21
-        on right: 14 16 18 42
-    liste_attributs <std::map<std::string, std::string>> (49)
-        on left: 22 23 24
-        on right: 21 23 24
-    attribut <std::map<std::string, std::string>> (50)
-        on left: 25
-        on right: 22 23 24
-    nomattribut <std::string*> (51)
-        on left: 26 27 28 29 30
-        on right: 25
-    valeur <std::string*> (52)
-        on left: 31 32 33 34
-        on right: 25 35
-    define <std::string*> (53)
-        on left: 35
-        on right: 6
-    titrepage <std::variant<int, std::string, std::unique_ptr<Bloc>>> (54)
-        on left: 36
-        on right: 12
-    variable <std::variant<int, std::string, std::unique_ptr<Bloc>>> (55)
-        on left: 37
         on right: 13
-    valeurvar <std::variant<int, std::string, std::unique_ptr<Bloc>>> (56)
-        on left: 38 39 40 41
-        on right: 37
-    style <std::string*> (57)
-        on left: 42
+    attributs <std::map<std::string, std::string>> (48)
+        on left: 22
+        on right: 14 16 18 43
+    liste_attributs <std::map<std::string, std::string>> (49)
+        on left: 23 24 25
+        on right: 22 24 25
+    attribut <std::map<std::string, std::string>> (50)
+        on left: 26
+        on right: 23 24 25
+    nomattribut <std::string> (51)
+        on left: 27 28 29 30 31
+        on right: 26
+    valeur <std::string> (52)
+        on left: 32 33 34 35
+        on right: 26 36
+    define <std::string> (53)
+        on left: 36
+        on right: 6
+    titrepage <Bloc*> (54)
+        on left: 37
+        on right: 12
+    variable <std::variant<int, std::string, Bloc*>> (55)
+        on left: 38
+        on right: 5
+    valeurvar <std::variant<int, std::string, Bloc*>> (56)
+        on left: 39 40 41 42
+        on right: 38
+    style <std::string> (57)
+        on left: 43
         on right: 7
 
 
@@ -183,495 +183,517 @@ State 0
 
     0 $accept: • programme $end
 
-    DEFINE  shift, and go to state 1
-    STYLE   shift, and go to state 2
+    TITRE        shift, and go to state 1
+    SOUS_TITRE   shift, and go to state 2
+    PARAGRAPHE   shift, and go to state 3
+    IMAGE        shift, and go to state 4
+    DEFINE       shift, and go to state 5
+    TITREPAGE    shift, and go to state 6
+    STYLE        shift, and go to state 7
+    COMMENTAIRE  shift, and go to state 8
+    IDENTIFIANT  shift, and go to state 9
 
-    $default  reduce using rule 5 (declarations)
+    $default  reduce using rule 2 (programme)
 
-    programme     go to state 3
-    declarations  go to state 4
-    declaration   go to state 5
-    define        go to state 6
-    style         go to state 7
+    programme          go to state 10
+    programme_element  go to state 11
+    declaration        go to state 12
+    bloc_element       go to state 13
+    titre              go to state 14
+    sous_titre         go to state 15
+    paragraphe         go to state 16
+    image              go to state 17
+    commentaire        go to state 18
+    define             go to state 19
+    titrepage          go to state 20
+    variable           go to state 21
+    style              go to state 22
 
 
 State 1
 
-   35 define: DEFINE • PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
+   14 titre: TITRE • attributs CHAINE
+   15      | TITRE • CHAINE
 
-    PARENTHESE_OUVRANTE  shift, and go to state 8
+    CHAINE           shift, and go to state 23
+    CROCHET_OUVRANT  shift, and go to state 24
+
+    attributs  go to state 25
 
 
 State 2
 
-   42 style: STYLE • PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+   16 sous_titre: SOUS_TITRE • attributs CHAINE
+   17           | SOUS_TITRE • CHAINE
 
-    PARENTHESE_OUVRANTE  shift, and go to state 9
+    CHAINE           shift, and go to state 26
+    CROCHET_OUVRANT  shift, and go to state 24
+
+    attributs  go to state 27
 
 
 State 3
 
-    0 $accept: programme • $end
+   18 paragraphe: PARAGRAPHE • attributs CHAINE
+   19           | PARAGRAPHE • CHAINE
 
-    $end  shift, and go to state 10
+    CHAINE           shift, and go to state 28
+    CROCHET_OUVRANT  shift, and go to state 24
+
+    attributs  go to state 29
 
 
 State 4
 
-    1 programme: declarations • elements
+   20 image: IMAGE • CHAINE
 
-    TITRE        shift, and go to state 11
-    SOUS_TITRE   shift, and go to state 12
-    PARAGRAPHE   shift, and go to state 13
-    IMAGE        shift, and go to state 14
-    TITREPAGE    shift, and go to state 15
-    IDENTIFIANT  shift, and go to state 16
-
-    $default  reduce using rule 3 (elements)
-
-    elements    go to state 17
-    element     go to state 18
-    titre       go to state 19
-    sous_titre  go to state 20
-    paragraphe  go to state 21
-    image       go to state 22
-    titrepage   go to state 23
-    variable    go to state 24
+    CHAINE  shift, and go to state 30
 
 
 State 5
 
-    4 declarations: declaration • declarations
+   36 define: DEFINE • PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
 
-    DEFINE  shift, and go to state 1
-    STYLE   shift, and go to state 2
-
-    $default  reduce using rule 5 (declarations)
-
-    declarations  go to state 25
-    declaration   go to state 5
-    define        go to state 6
-    style         go to state 7
+    PARENTHESE_OUVRANTE  shift, and go to state 31
 
 
 State 6
+
+   37 titrepage: TITREPAGE • CHAINE
+
+    CHAINE  shift, and go to state 32
+
+
+State 7
+
+   43 style: STYLE • PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+
+    PARENTHESE_OUVRANTE  shift, and go to state 33
+
+
+State 8
+
+   21 commentaire: COMMENTAIRE •
+
+    $default  reduce using rule 21 (commentaire)
+
+
+State 9
+
+   38 variable: IDENTIFIANT • EGAL valeurvar
+
+    EGAL  shift, and go to state 34
+
+
+State 10
+
+    0 $accept: programme • $end
+
+    $end  shift, and go to state 35
+
+
+State 11
+
+    1 programme: programme_element • programme
+
+    TITRE        shift, and go to state 1
+    SOUS_TITRE   shift, and go to state 2
+    PARAGRAPHE   shift, and go to state 3
+    IMAGE        shift, and go to state 4
+    DEFINE       shift, and go to state 5
+    TITREPAGE    shift, and go to state 6
+    STYLE        shift, and go to state 7
+    COMMENTAIRE  shift, and go to state 8
+    IDENTIFIANT  shift, and go to state 9
+
+    $default  reduce using rule 2 (programme)
+
+    programme          go to state 36
+    programme_element  go to state 11
+    declaration        go to state 12
+    bloc_element       go to state 13
+    titre              go to state 14
+    sous_titre         go to state 15
+    paragraphe         go to state 16
+    image              go to state 17
+    commentaire        go to state 18
+    define             go to state 19
+    titrepage          go to state 20
+    variable           go to state 21
+    style              go to state 22
+
+
+State 12
+
+    3 programme_element: declaration •
+
+    $default  reduce using rule 3 (programme_element)
+
+
+State 13
+
+    4 programme_element: bloc_element •
+
+    $default  reduce using rule 4 (programme_element)
+
+
+State 14
+
+    8 bloc_element: titre •
+
+    $default  reduce using rule 8 (bloc_element)
+
+
+State 15
+
+    9 bloc_element: sous_titre •
+
+    $default  reduce using rule 9 (bloc_element)
+
+
+State 16
+
+   10 bloc_element: paragraphe •
+
+    $default  reduce using rule 10 (bloc_element)
+
+
+State 17
+
+   11 bloc_element: image •
+
+    $default  reduce using rule 11 (bloc_element)
+
+
+State 18
+
+   13 bloc_element: commentaire •
+
+    $default  reduce using rule 13 (bloc_element)
+
+
+State 19
 
     6 declaration: define •
 
     $default  reduce using rule 6 (declaration)
 
 
-State 7
+State 20
+
+   12 bloc_element: titrepage •
+
+    $default  reduce using rule 12 (bloc_element)
+
+
+State 21
+
+    5 programme_element: variable •
+
+    $default  reduce using rule 5 (programme_element)
+
+
+State 22
 
     7 declaration: style •
 
     $default  reduce using rule 7 (declaration)
 
 
-State 8
-
-   35 define: DEFINE PARENTHESE_OUVRANTE • PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
-
-    PROPRIETE  shift, and go to state 26
-
-
-State 9
-
-   42 style: STYLE PARENTHESE_OUVRANTE • IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
-
-    IDENTIFIANT  shift, and go to state 27
-
-
-State 10
-
-    0 $accept: programme $end •
-
-    $default  accept
-
-
-State 11
-
-   14 titre: TITRE • attributs CHAINE
-   15      | TITRE • CHAINE
-
-    CHAINE           shift, and go to state 28
-    CROCHET_OUVRANT  shift, and go to state 29
-
-    attributs  go to state 30
-
-
-State 12
-
-   16 sous_titre: SOUS_TITRE • attributs CHAINE
-   17           | SOUS_TITRE • CHAINE
-
-    CHAINE           shift, and go to state 31
-    CROCHET_OUVRANT  shift, and go to state 29
-
-    attributs  go to state 32
-
-
-State 13
-
-   18 paragraphe: PARAGRAPHE • attributs CHAINE
-   19           | PARAGRAPHE • CHAINE
-
-    CHAINE           shift, and go to state 33
-    CROCHET_OUVRANT  shift, and go to state 29
-
-    attributs  go to state 34
-
-
-State 14
-
-   20 image: IMAGE • CHAINE
-
-    CHAINE  shift, and go to state 35
-
-
-State 15
-
-   36 titrepage: TITREPAGE • CHAINE
-
-    CHAINE  shift, and go to state 36
-
-
-State 16
-
-   37 variable: IDENTIFIANT • EGAL valeurvar
-
-    EGAL  shift, and go to state 37
-
-
-State 17
-
-    1 programme: declarations elements •
-
-    $default  reduce using rule 1 (programme)
-
-
-State 18
-
-    2 elements: element • elements
-
-    TITRE        shift, and go to state 11
-    SOUS_TITRE   shift, and go to state 12
-    PARAGRAPHE   shift, and go to state 13
-    IMAGE        shift, and go to state 14
-    TITREPAGE    shift, and go to state 15
-    IDENTIFIANT  shift, and go to state 16
-
-    $default  reduce using rule 3 (elements)
-
-    elements    go to state 38
-    element     go to state 18
-    titre       go to state 19
-    sous_titre  go to state 20
-    paragraphe  go to state 21
-    image       go to state 22
-    titrepage   go to state 23
-    variable    go to state 24
-
-
-State 19
-
-    8 element: titre •
-
-    $default  reduce using rule 8 (element)
-
-
-State 20
-
-    9 element: sous_titre •
-
-    $default  reduce using rule 9 (element)
-
-
-State 21
-
-   10 element: paragraphe •
-
-    $default  reduce using rule 10 (element)
-
-
-State 22
-
-   11 element: image •
-
-    $default  reduce using rule 11 (element)
-
-
 State 23
-
-   12 element: titrepage •
-
-    $default  reduce using rule 12 (element)
-
-
-State 24
-
-   13 element: variable •
-
-    $default  reduce using rule 13 (element)
-
-
-State 25
-
-    4 declarations: declaration declarations •
-
-    $default  reduce using rule 4 (declarations)
-
-
-State 26
-
-   35 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE • PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
-
-    PARENTHESE_FERMANTE  shift, and go to state 39
-
-
-State 27
-
-   42 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT • PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
-
-    PARENTHESE_FERMANTE  shift, and go to state 40
-
-
-State 28
 
    15 titre: TITRE CHAINE •
 
     $default  reduce using rule 15 (titre)
 
 
-State 29
+State 24
 
-   21 attributs: CROCHET_OUVRANT • liste_attributs CROCHET_FERMANT
+   22 attributs: CROCHET_OUVRANT • liste_attributs CROCHET_FERMANT
 
-    LARGEUR       shift, and go to state 41
-    HAUTEUR       shift, and go to state 42
-    COULEURTEXTE  shift, and go to state 43
-    COULEURFOND   shift, and go to state 44
-    OPACITE       shift, and go to state 45
+    LARGEUR       shift, and go to state 37
+    HAUTEUR       shift, and go to state 38
+    COULEURTEXTE  shift, and go to state 39
+    COULEURFOND   shift, and go to state 40
+    OPACITE       shift, and go to state 41
 
-    liste_attributs  go to state 46
-    attribut         go to state 47
-    nomattribut      go to state 48
+    liste_attributs  go to state 42
+    attribut         go to state 43
+    nomattribut      go to state 44
 
 
-State 30
+State 25
 
    14 titre: TITRE attributs • CHAINE
 
-    CHAINE  shift, and go to state 49
+    CHAINE  shift, and go to state 45
 
 
-State 31
+State 26
 
    17 sous_titre: SOUS_TITRE CHAINE •
 
     $default  reduce using rule 17 (sous_titre)
 
 
-State 32
+State 27
 
    16 sous_titre: SOUS_TITRE attributs • CHAINE
 
-    CHAINE  shift, and go to state 50
+    CHAINE  shift, and go to state 46
 
 
-State 33
+State 28
 
    19 paragraphe: PARAGRAPHE CHAINE •
 
     $default  reduce using rule 19 (paragraphe)
 
 
-State 34
+State 29
 
    18 paragraphe: PARAGRAPHE attributs • CHAINE
 
-    CHAINE  shift, and go to state 51
+    CHAINE  shift, and go to state 47
 
 
-State 35
+State 30
 
    20 image: IMAGE CHAINE •
 
     $default  reduce using rule 20 (image)
 
 
+State 31
+
+   36 define: DEFINE PARENTHESE_OUVRANTE • PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
+
+    PROPRIETE  shift, and go to state 48
+
+
+State 32
+
+   37 titrepage: TITREPAGE CHAINE •
+
+    $default  reduce using rule 37 (titrepage)
+
+
+State 33
+
+   43 style: STYLE PARENTHESE_OUVRANTE • IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+
+    IDENTIFIANT  shift, and go to state 49
+
+
+State 34
+
+   38 variable: IDENTIFIANT EGAL • valeurvar
+
+    TITRE        shift, and go to state 1
+    SOUS_TITRE   shift, and go to state 2
+    PARAGRAPHE   shift, and go to state 3
+    IMAGE        shift, and go to state 4
+    TITREPAGE    shift, and go to state 6
+    COMMENTAIRE  shift, and go to state 8
+    ENTIER       shift, and go to state 50
+    HEX_COULEUR  shift, and go to state 51
+    RGB_COULEUR  shift, and go to state 52
+
+    bloc_element  go to state 53
+    titre         go to state 14
+    sous_titre    go to state 15
+    paragraphe    go to state 16
+    image         go to state 17
+    commentaire   go to state 18
+    titrepage     go to state 20
+    valeurvar     go to state 54
+
+
+State 35
+
+    0 $accept: programme $end •
+
+    $default  accept
+
+
 State 36
 
-   36 titrepage: TITREPAGE CHAINE •
+    1 programme: programme_element programme •
 
-    $default  reduce using rule 36 (titrepage)
+    $default  reduce using rule 1 (programme)
 
 
 State 37
 
-   37 variable: IDENTIFIANT EGAL • valeurvar
-
-    TITRE        shift, and go to state 11
-    SOUS_TITRE   shift, and go to state 12
-    PARAGRAPHE   shift, and go to state 13
-    IMAGE        shift, and go to state 14
-    TITREPAGE    shift, and go to state 15
-    IDENTIFIANT  shift, and go to state 16
-    ENTIER       shift, and go to state 52
-    HEX_COULEUR  shift, and go to state 53
-    RGB_COULEUR  shift, and go to state 54
-
-    element     go to state 55
-    titre       go to state 19
-    sous_titre  go to state 20
-    paragraphe  go to state 21
-    image       go to state 22
-    titrepage   go to state 23
-    variable    go to state 24
-    valeurvar   go to state 56
-
-
-State 38
-
-    2 elements: element elements •
-
-    $default  reduce using rule 2 (elements)
-
-
-State 39
-
-   35 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
-
-    ACCOLADE_OUVRANTE  shift, and go to state 57
-
-
-State 40
-
-   42 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
-
-    ACCOLADE_OUVRANTE  shift, and go to state 58
-
-
-State 41
-
-   26 nomattribut: LARGEUR •
-
-    $default  reduce using rule 26 (nomattribut)
-
-
-State 42
-
-   27 nomattribut: HAUTEUR •
+   27 nomattribut: LARGEUR •
 
     $default  reduce using rule 27 (nomattribut)
 
 
-State 43
+State 38
 
-   28 nomattribut: COULEURTEXTE •
+   28 nomattribut: HAUTEUR •
 
     $default  reduce using rule 28 (nomattribut)
 
 
-State 44
+State 39
 
-   29 nomattribut: COULEURFOND •
+   29 nomattribut: COULEURTEXTE •
 
     $default  reduce using rule 29 (nomattribut)
 
 
-State 45
+State 40
 
-   30 nomattribut: OPACITE •
+   30 nomattribut: COULEURFOND •
 
     $default  reduce using rule 30 (nomattribut)
 
 
-State 46
+State 41
 
-   21 attributs: CROCHET_OUVRANT liste_attributs • CROCHET_FERMANT
+   31 nomattribut: OPACITE •
 
-    CROCHET_FERMANT  shift, and go to state 59
-
-
-State 47
-
-   22 liste_attributs: attribut •
-   23                | attribut • VIRGULE liste_attributs
-   24                | attribut • NEWLINE liste_attributs
-
-    NEWLINE  shift, and go to state 60
-    VIRGULE  shift, and go to state 61
-
-    $default  reduce using rule 22 (liste_attributs)
+    $default  reduce using rule 31 (nomattribut)
 
 
-State 48
+State 42
 
-   25 attribut: nomattribut • DEUX_POINTS valeur
+   22 attributs: CROCHET_OUVRANT liste_attributs • CROCHET_FERMANT
 
-    DEUX_POINTS  shift, and go to state 62
+    CROCHET_FERMANT  shift, and go to state 55
 
 
-State 49
+State 43
+
+   23 liste_attributs: attribut •
+   24                | attribut • VIRGULE liste_attributs
+   25                | attribut • NEWLINE liste_attributs
+
+    NEWLINE  shift, and go to state 56
+    VIRGULE  shift, and go to state 57
+
+    $default  reduce using rule 23 (liste_attributs)
+
+
+State 44
+
+   26 attribut: nomattribut • DEUX_POINTS valeur
+
+    DEUX_POINTS  shift, and go to state 58
+
+
+State 45
 
    14 titre: TITRE attributs CHAINE •
 
     $default  reduce using rule 14 (titre)
 
 
-State 50
+State 46
 
    16 sous_titre: SOUS_TITRE attributs CHAINE •
 
     $default  reduce using rule 16 (sous_titre)
 
 
-State 51
+State 47
 
    18 paragraphe: PARAGRAPHE attributs CHAINE •
 
     $default  reduce using rule 18 (paragraphe)
 
 
-State 52
+State 48
 
-   38 valeurvar: ENTIER •
+   36 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE • PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
 
-    $default  reduce using rule 38 (valeurvar)
+    PARENTHESE_FERMANTE  shift, and go to state 59
 
 
-State 53
+State 49
 
-   39 valeurvar: HEX_COULEUR •
+   43 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT • PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+
+    PARENTHESE_FERMANTE  shift, and go to state 60
+
+
+State 50
+
+   39 valeurvar: ENTIER •
 
     $default  reduce using rule 39 (valeurvar)
 
 
-State 54
+State 51
 
-   40 valeurvar: RGB_COULEUR •
+   40 valeurvar: HEX_COULEUR •
 
     $default  reduce using rule 40 (valeurvar)
 
 
-State 55
+State 52
 
-   41 valeurvar: element •
+   41 valeurvar: RGB_COULEUR •
 
     $default  reduce using rule 41 (valeurvar)
 
 
+State 53
+
+   42 valeurvar: bloc_element •
+
+    $default  reduce using rule 42 (valeurvar)
+
+
+State 54
+
+   38 variable: IDENTIFIANT EGAL valeurvar •
+
+    $default  reduce using rule 38 (variable)
+
+
+State 55
+
+   22 attributs: CROCHET_OUVRANT liste_attributs CROCHET_FERMANT •
+
+    $default  reduce using rule 22 (attributs)
+
+
 State 56
 
-   37 variable: IDENTIFIANT EGAL valeurvar •
+   25 liste_attributs: attribut NEWLINE • liste_attributs
 
-    $default  reduce using rule 37 (variable)
+    LARGEUR       shift, and go to state 37
+    HAUTEUR       shift, and go to state 38
+    COULEURTEXTE  shift, and go to state 39
+    COULEURFOND   shift, and go to state 40
+    OPACITE       shift, and go to state 41
+
+    liste_attributs  go to state 61
+    attribut         go to state 43
+    nomattribut      go to state 44
 
 
 State 57
 
-   35 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • valeur ACCOLADE_FERMANTE
+   24 liste_attributs: attribut VIRGULE • liste_attributs
+
+    LARGEUR       shift, and go to state 37
+    HAUTEUR       shift, and go to state 38
+    COULEURTEXTE  shift, and go to state 39
+    COULEURFOND   shift, and go to state 40
+    OPACITE       shift, and go to state 41
+
+    liste_attributs  go to state 62
+    attribut         go to state 43
+    nomattribut      go to state 44
+
+
+State 58
+
+   26 attribut: nomattribut DEUX_POINTS • valeur
 
     ENTIER       shift, and go to state 63
     CHAINE       shift, and go to state 64
@@ -681,136 +703,113 @@ State 57
     valeur  go to state 67
 
 
-State 58
-
-   42 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • attributs ACCOLADE_FERMANTE
-
-    CROCHET_OUVRANT  shift, and go to state 29
-
-    attributs  go to state 68
-
-
 State 59
 
-   21 attributs: CROCHET_OUVRANT liste_attributs CROCHET_FERMANT •
+   36 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
 
-    $default  reduce using rule 21 (attributs)
+    ACCOLADE_OUVRANTE  shift, and go to state 68
 
 
 State 60
 
-   24 liste_attributs: attribut NEWLINE • liste_attributs
+   43 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
 
-    LARGEUR       shift, and go to state 41
-    HAUTEUR       shift, and go to state 42
-    COULEURTEXTE  shift, and go to state 43
-    COULEURFOND   shift, and go to state 44
-    OPACITE       shift, and go to state 45
-
-    liste_attributs  go to state 69
-    attribut         go to state 47
-    nomattribut      go to state 48
+    ACCOLADE_OUVRANTE  shift, and go to state 69
 
 
 State 61
 
-   23 liste_attributs: attribut VIRGULE • liste_attributs
+   25 liste_attributs: attribut NEWLINE liste_attributs •
 
-    LARGEUR       shift, and go to state 41
-    HAUTEUR       shift, and go to state 42
-    COULEURTEXTE  shift, and go to state 43
-    COULEURFOND   shift, and go to state 44
-    OPACITE       shift, and go to state 45
-
-    liste_attributs  go to state 70
-    attribut         go to state 47
-    nomattribut      go to state 48
+    $default  reduce using rule 25 (liste_attributs)
 
 
 State 62
 
-   25 attribut: nomattribut DEUX_POINTS • valeur
+   24 liste_attributs: attribut VIRGULE liste_attributs •
+
+    $default  reduce using rule 24 (liste_attributs)
+
+
+State 63
+
+   32 valeur: ENTIER •
+
+    $default  reduce using rule 32 (valeur)
+
+
+State 64
+
+   35 valeur: CHAINE •
+
+    $default  reduce using rule 35 (valeur)
+
+
+State 65
+
+   33 valeur: HEX_COULEUR •
+
+    $default  reduce using rule 33 (valeur)
+
+
+State 66
+
+   34 valeur: RGB_COULEUR •
+
+    $default  reduce using rule 34 (valeur)
+
+
+State 67
+
+   26 attribut: nomattribut DEUX_POINTS valeur •
+
+    $default  reduce using rule 26 (attribut)
+
+
+State 68
+
+   36 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • valeur ACCOLADE_FERMANTE
 
     ENTIER       shift, and go to state 63
     CHAINE       shift, and go to state 64
     HEX_COULEUR  shift, and go to state 65
     RGB_COULEUR  shift, and go to state 66
 
-    valeur  go to state 71
-
-
-State 63
-
-   31 valeur: ENTIER •
-
-    $default  reduce using rule 31 (valeur)
-
-
-State 64
-
-   34 valeur: CHAINE •
-
-    $default  reduce using rule 34 (valeur)
-
-
-State 65
-
-   32 valeur: HEX_COULEUR •
-
-    $default  reduce using rule 32 (valeur)
-
-
-State 66
-
-   33 valeur: RGB_COULEUR •
-
-    $default  reduce using rule 33 (valeur)
-
-
-State 67
-
-   35 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur • ACCOLADE_FERMANTE
-
-    ACCOLADE_FERMANTE  shift, and go to state 72
-
-
-State 68
-
-   42 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs • ACCOLADE_FERMANTE
-
-    ACCOLADE_FERMANTE  shift, and go to state 73
+    valeur  go to state 70
 
 
 State 69
 
-   24 liste_attributs: attribut NEWLINE liste_attributs •
+   43 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • attributs ACCOLADE_FERMANTE
 
-    $default  reduce using rule 24 (liste_attributs)
+    CROCHET_OUVRANT  shift, and go to state 24
+
+    attributs  go to state 71
 
 
 State 70
 
-   23 liste_attributs: attribut VIRGULE liste_attributs •
+   36 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur • ACCOLADE_FERMANTE
 
-    $default  reduce using rule 23 (liste_attributs)
+    ACCOLADE_FERMANTE  shift, and go to state 72
 
 
 State 71
 
-   25 attribut: nomattribut DEUX_POINTS valeur •
+   43 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs • ACCOLADE_FERMANTE
 
-    $default  reduce using rule 25 (attribut)
+    ACCOLADE_FERMANTE  shift, and go to state 73
 
 
 State 72
 
-   35 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE •
+   36 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE •
 
-    $default  reduce using rule 35 (define)
+    $default  reduce using rule 36 (define)
 
 
 State 73
 
-   42 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE •
+   43 style: STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE •
 
-    $default  reduce using rule 42 (style)
+    $default  reduce using rule 43 (style)

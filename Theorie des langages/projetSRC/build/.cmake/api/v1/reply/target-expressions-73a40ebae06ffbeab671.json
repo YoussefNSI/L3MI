@@ -50,7 +50,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-std=c++14"
+					"fragment" : "-std=c++17"
 				},
 				{
 					"backtrace" : 2,
@@ -83,7 +83,7 @@
 				[
 					1
 				],
-				"standard" : "14"
+				"standard" : "17"
 			},
 			"sourceIndexes" : 
 			[
