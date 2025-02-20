@@ -160,6 +160,7 @@ Bloc *Document::getNBloc(const std::string &type, int index) const
     int count = 0;
     for (const auto &bloc : blocs)
     {
+        std::cout << "Bloc de type " << bloc.first << " Valeur : " << bloc.second->getTexte() << std::endl;
         if ((type == "p" && dynamic_cast<Paragraphe *>(bloc.second)) ||
             (type == "h" && dynamic_cast<Titre *>(bloc.second)) ||
             (type == "img" && dynamic_cast<Image *>(bloc.second)))
@@ -196,5 +197,5 @@ void Document::addBloc(const std::string &type, Bloc *bloc)
         default:
             throw std::runtime_error("Type " + type + " inconnu");
     }
-    blocs[type] = bloc;
+    blocs[type + std::string(nb{bloc.getType()})] = bloc;
 }

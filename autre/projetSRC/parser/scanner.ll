@@ -142,11 +142,12 @@ FINI          return token::FINI;
 \;             { std::cout << "[SCAN] ;" << std::endl; return token::POINT_VIRGULE; }
 \.             { std::cout << "[SCAN] ." << std::endl; return token::POINT; }
 
-
-[a-zA-Z_][a-zA-Z0-9_]*   {  std::cout << "[SCAN] IDENTIFIANT : " << yytext << std::endl;
-                            yylval->emplace<std::string>(yytext); return token::IDENTIFIANT; }
 [0-9]+          { std::cout << "[SCAN] ENTIER : " << yytext << std::endl;
     yylval->emplace<int>(atoi(yytext)); return token::ENTIER; }
+    
+[a-zA-Z_][a-zA-Z0-9_]*   {  std::cout << "[SCAN] IDENTIFIANT : " << yytext << std::endl;
+                            yylval->emplace<std::string>(yytext); return token::IDENTIFIANT; }
+
 \'[^']*\'       { std::cout << "[SCAN] CHAINE : " << yytext << std::endl;
                 yylval->emplace<std::string>(yytext); return token::CHAINE; }
 

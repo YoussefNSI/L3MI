@@ -433,6 +433,7 @@ namespace yy {
 
       // ENTIER
       // INDICE
+      // index_expression
       char dummy3[sizeof (int)];
 
       // attributs
@@ -455,13 +456,6 @@ namespace yy {
       // CHAINE
       // HEX_COULEUR
       // RGB_COULEUR
-      // EGAL
-      // CROCHET_FERMANT
-      // CROCHET_OUVRANT
-      // DEUX_POINTS
-      // VIRGULE
-      // POINT_VIRGULE
-      // POINT
       // LARGEUR
       // HAUTEUR
       // COULEURTEXTE
@@ -645,8 +639,9 @@ namespace yy {
         S_variable = 58,                         // variable
         S_59_1 = 59,                             // $@1
         S_selecteur = 60,                        // selecteur
-        S_valeurvar = 61,                        // valeurvar
-        S_style = 62                             // style
+        S_index_expression = 61,                 // index_expression
+        S_valeurvar = 62,                        // valeurvar
+        S_style = 63                             // style
       };
     };
 
@@ -700,6 +695,7 @@ namespace yy {
 
       case symbol_kind::S_ENTIER: // ENTIER
       case symbol_kind::S_INDICE: // INDICE
+      case symbol_kind::S_index_expression: // index_expression
         value.move< int > (std::move (that.value));
         break;
 
@@ -725,13 +721,6 @@ namespace yy {
       case symbol_kind::S_CHAINE: // CHAINE
       case symbol_kind::S_HEX_COULEUR: // HEX_COULEUR
       case symbol_kind::S_RGB_COULEUR: // RGB_COULEUR
-      case symbol_kind::S_EGAL: // EGAL
-      case symbol_kind::S_CROCHET_FERMANT: // CROCHET_FERMANT
-      case symbol_kind::S_CROCHET_OUVRANT: // CROCHET_OUVRANT
-      case symbol_kind::S_DEUX_POINTS: // DEUX_POINTS
-      case symbol_kind::S_VIRGULE: // VIRGULE
-      case symbol_kind::S_POINT_VIRGULE: // POINT_VIRGULE
-      case symbol_kind::S_POINT: // POINT
       case symbol_kind::S_LARGEUR: // LARGEUR
       case symbol_kind::S_HAUTEUR: // HAUTEUR
       case symbol_kind::S_COULEURTEXTE: // COULEURTEXTE
@@ -911,6 +900,7 @@ switch (yykind)
 
       case symbol_kind::S_ENTIER: // ENTIER
       case symbol_kind::S_INDICE: // INDICE
+      case symbol_kind::S_index_expression: // index_expression
         value.template destroy< int > ();
         break;
 
@@ -936,13 +926,6 @@ switch (yykind)
       case symbol_kind::S_CHAINE: // CHAINE
       case symbol_kind::S_HEX_COULEUR: // HEX_COULEUR
       case symbol_kind::S_RGB_COULEUR: // RGB_COULEUR
-      case symbol_kind::S_EGAL: // EGAL
-      case symbol_kind::S_CROCHET_FERMANT: // CROCHET_FERMANT
-      case symbol_kind::S_CROCHET_OUVRANT: // CROCHET_OUVRANT
-      case symbol_kind::S_DEUX_POINTS: // DEUX_POINTS
-      case symbol_kind::S_VIRGULE: // VIRGULE
-      case symbol_kind::S_POINT_VIRGULE: // POINT_VIRGULE
-      case symbol_kind::S_POINT: // POINT
       case symbol_kind::S_LARGEUR: // LARGEUR
       case symbol_kind::S_HAUTEUR: // HAUTEUR
       case symbol_kind::S_COULEURTEXTE: // COULEURTEXTE
@@ -1060,7 +1043,7 @@ switch (yykind)
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::NEWLINE)
                    || (token::PARAGRAPHE <= tok && tok <= token::STYLE)
-                   || (token::PARENTHESE_OUVRANTE <= tok && tok <= token::ACCOLADE_FERMANTE));
+                   || (token::EGAL <= tok && tok <= token::ACCOLADE_FERMANTE));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1098,7 +1081,7 @@ switch (yykind)
       {
 #if !defined _MSC_VER || defined __clang__
         YY_ASSERT ((token::PROPRIETE <= tok && tok <= token::BLOCS)
-                   || (token::CHAINE <= tok && tok <= token::POINT)
+                   || (token::CHAINE <= tok && tok <= token::RGB_COULEUR)
                    || (token::LARGEUR <= tok && tok <= token::OPACITE));
 #endif
       }
@@ -1513,106 +1496,106 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_EGAL (std::string v, location_type l)
+      make_EGAL (location_type l)
       {
-        return symbol_type (token::EGAL, std::move (v), std::move (l));
+        return symbol_type (token::EGAL, std::move (l));
       }
 #else
       static
       symbol_type
-      make_EGAL (const std::string& v, const location_type& l)
+      make_EGAL (const location_type& l)
       {
-        return symbol_type (token::EGAL, v, l);
+        return symbol_type (token::EGAL, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CROCHET_FERMANT (std::string v, location_type l)
+      make_CROCHET_FERMANT (location_type l)
       {
-        return symbol_type (token::CROCHET_FERMANT, std::move (v), std::move (l));
+        return symbol_type (token::CROCHET_FERMANT, std::move (l));
       }
 #else
       static
       symbol_type
-      make_CROCHET_FERMANT (const std::string& v, const location_type& l)
+      make_CROCHET_FERMANT (const location_type& l)
       {
-        return symbol_type (token::CROCHET_FERMANT, v, l);
+        return symbol_type (token::CROCHET_FERMANT, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_CROCHET_OUVRANT (std::string v, location_type l)
+      make_CROCHET_OUVRANT (location_type l)
       {
-        return symbol_type (token::CROCHET_OUVRANT, std::move (v), std::move (l));
+        return symbol_type (token::CROCHET_OUVRANT, std::move (l));
       }
 #else
       static
       symbol_type
-      make_CROCHET_OUVRANT (const std::string& v, const location_type& l)
+      make_CROCHET_OUVRANT (const location_type& l)
       {
-        return symbol_type (token::CROCHET_OUVRANT, v, l);
+        return symbol_type (token::CROCHET_OUVRANT, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_DEUX_POINTS (std::string v, location_type l)
+      make_DEUX_POINTS (location_type l)
       {
-        return symbol_type (token::DEUX_POINTS, std::move (v), std::move (l));
+        return symbol_type (token::DEUX_POINTS, std::move (l));
       }
 #else
       static
       symbol_type
-      make_DEUX_POINTS (const std::string& v, const location_type& l)
+      make_DEUX_POINTS (const location_type& l)
       {
-        return symbol_type (token::DEUX_POINTS, v, l);
+        return symbol_type (token::DEUX_POINTS, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_VIRGULE (std::string v, location_type l)
+      make_VIRGULE (location_type l)
       {
-        return symbol_type (token::VIRGULE, std::move (v), std::move (l));
+        return symbol_type (token::VIRGULE, std::move (l));
       }
 #else
       static
       symbol_type
-      make_VIRGULE (const std::string& v, const location_type& l)
+      make_VIRGULE (const location_type& l)
       {
-        return symbol_type (token::VIRGULE, v, l);
+        return symbol_type (token::VIRGULE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_POINT_VIRGULE (std::string v, location_type l)
+      make_POINT_VIRGULE (location_type l)
       {
-        return symbol_type (token::POINT_VIRGULE, std::move (v), std::move (l));
+        return symbol_type (token::POINT_VIRGULE, std::move (l));
       }
 #else
       static
       symbol_type
-      make_POINT_VIRGULE (const std::string& v, const location_type& l)
+      make_POINT_VIRGULE (const location_type& l)
       {
-        return symbol_type (token::POINT_VIRGULE, v, l);
+        return symbol_type (token::POINT_VIRGULE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_POINT (std::string v, location_type l)
+      make_POINT (location_type l)
       {
-        return symbol_type (token::POINT, std::move (v), std::move (l));
+        return symbol_type (token::POINT, std::move (l));
       }
 #else
       static
       symbol_type
-      make_POINT (const std::string& v, const location_type& l)
+      make_POINT (const location_type& l)
       {
-        return symbol_type (token::POINT, v, l);
+        return symbol_type (token::POINT, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -2095,8 +2078,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 84,     ///< Last index in yytable_.
-      yynnts_ = 22,  ///< Number of nonterminal symbols.
+      yylast_ = 91,     ///< Last index in yytable_.
+      yynnts_ = 23,  ///< Number of nonterminal symbols.
       yyfinal_ = 35 ///< Termination state number.
     };
 
@@ -2109,7 +2092,7 @@ switch (yykind)
 
 
 } // yy
-#line 2113 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
+#line 2096 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
 
 
 

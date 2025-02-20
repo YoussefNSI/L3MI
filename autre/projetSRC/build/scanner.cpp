@@ -333,24 +333,24 @@ struct yy_trans_info
 static const flex_int16_t yy_accept[177] =
     {   0,
         0,    0,   46,   44,    1,    1,   44,   44,   44,   44,
-       35,   36,   33,   40,   42,   34,   39,   30,   44,   41,
-       41,   41,   41,   31,   32,   41,   41,   41,   41,   41,
-       41,   41,   41,   41,   37,   38,    1,    4,    3,    2,
-        0,    0,    0,   43,   42,    0,    0,    0,   41,   41,
-       41,   25,    0,   41,   41,   41,   41,   41,   41,   41,
-       41,   41,   41,    0,    0,   23,    0,    0,    0,    0,
-       41,   41,   41,    8,   41,   21,   41,   41,   41,   41,
-       41,   41,   41,   41,   41,   41,    0,    0,   23,    0,
-        0,    0,    0,   29,   41,   28,   41,   41,   41,   41,
+       35,   36,   33,   40,   41,   34,   39,   30,   44,   42,
+       42,   42,   42,   31,   32,   42,   42,   42,   42,   42,
+       42,   42,   42,   42,   37,   38,    1,    4,    3,    2,
+        0,    0,    0,   43,   41,    0,    0,    0,   42,   42,
+       42,   25,    0,   42,   42,   42,   42,   42,   42,   42,
+       42,   42,   42,    0,    0,   23,    0,    0,    0,    0,
+       42,   42,   42,    8,   42,   21,   42,   42,   42,   42,
+       42,   42,   42,   42,   42,   42,    0,    0,   23,    0,
+        0,    0,    0,   29,   42,   28,   42,   42,   42,   42,
 
-       41,   41,   41,   41,    9,   41,    0,   41,    0,    0,
-        0,    0,    0,    0,    0,   27,   26,   41,   41,   41,
-       20,   41,   41,   41,   41,    0,   41,    0,    0,   24,
-        0,    7,    0,   41,   41,   41,   22,   41,   41,   41,
-        0,    0,   13,   24,    5,    0,   41,   41,   18,   17,
-       16,   41,    0,    0,    0,   41,   41,   19,   41,    0,
-        0,    0,   41,   41,   41,    0,   10,    6,   41,   41,
-       11,   12,   15,   41,   14,    0
+       42,   42,   42,   42,    9,   42,    0,   42,    0,    0,
+        0,    0,    0,    0,    0,   27,   26,   42,   42,   42,
+       20,   42,   42,   42,   42,    0,   42,    0,    0,   24,
+        0,    7,    0,   42,   42,   42,   22,   42,   42,   42,
+        0,    0,   13,   24,    5,    0,   42,   42,   18,   17,
+       16,   42,    0,    0,    0,   42,   42,   19,   42,    0,
+        0,    0,   42,   42,   42,    0,   10,    6,   42,   42,
+       11,   12,   15,   42,   14,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -1006,26 +1006,26 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 147 "parser/scanner.ll"
-{  std::cout << "[SCAN] IDENTIFIANT : " << yytext << std::endl;
-                            yylval->emplace<std::string>(yytext); return token::IDENTIFIANT; }
+#line 146 "parser/scanner.ll"
+{ std::cout << "[SCAN] ENTIER : " << yytext << std::endl;
+    yylval->emplace<int>(atoi(yytext)); return token::ENTIER; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 149 "parser/scanner.ll"
-{ std::cout << "[SCAN] ENTIER : " << yytext << std::endl;
-    yylval->emplace<int>(atoi(yytext)); return token::ENTIER; }
+{  std::cout << "[SCAN] IDENTIFIANT : " << yytext << std::endl;
+                            yylval->emplace<std::string>(yytext); return token::IDENTIFIANT; }
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 151 "parser/scanner.ll"
+#line 152 "parser/scanner.ll"
 { std::cout << "[SCAN] CHAINE : " << yytext << std::endl;
                 yylval->emplace<std::string>(yytext); return token::CHAINE; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 154 "parser/scanner.ll"
+#line 155 "parser/scanner.ll"
 {
     std::cerr << "Erreur: Caractère invalide '" << yytext[0] << "' ligne " 
               << loc->begin.line << ", colonne " << (loc->begin.column - 1) << std::endl;
@@ -1033,7 +1033,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 159 "parser/scanner.ll"
+#line 160 "parser/scanner.ll"
 ECHO;
 	YY_BREAK
 #line 1039 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/scanner.cpp"
@@ -1999,6 +1999,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 159 "parser/scanner.ll"
+#line 160 "parser/scanner.ll"
 
 

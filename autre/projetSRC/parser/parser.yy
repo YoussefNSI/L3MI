@@ -51,7 +51,7 @@
 %token <int>           ENTIER
 %token <std::string>   CHAINE
 %token <std::string>   HEX_COULEUR RGB_COULEUR
-%token <std::string>   EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE POINT
+%token                 EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE POINT
 %token                 PARENTHESE_OUVRANTE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE ACCOLADE_FERMANTE
 %token <std::string>   LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
 %token <int>           INDICE
@@ -65,6 +65,7 @@
 %type <std::string> nomattribut
 %type <std::string> valeur define style
 %type <std::pair<std::string, int>> selecteur
+%type <int> index_expression
 
 %%
 
@@ -218,10 +219,22 @@ variable:
 ;
 
 selecteur : 
-    PARAGRAPHE INDICE { $$ = std::make_pair("p", $2); }
-    | TITRE INDICE      { $$ = std::make_pair("h", $2); }
-    | SOUS_TITRE INDICE { $$ = std::make_pair("h", $2); }
-    | IMAGE INDICE      { $$ = std::make_pair("img", $2); }
+    PARAGRAPHE index_expression { $$ = std::make_pair("p", $2); }
+    | TITRE index_expression      { $$ = std::make_pair("h", $2); }
+    | SOUS_TITRE index_expression { $$ = std::make_pair("h", $2); }
+    | IMAGE index_expression      { $$ = std::make_pair("img", $2); }
+;
+
+index_expression:
+    INDICE { $$ = $1; }
+    | CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT {
+        auto val = doc->getVariable($2);
+        if (!std::holds_alternative<int>(val)) {
+            std::cerr << "Erreur: la variable " << $2 << " n'est pas un entier" << std::endl;
+            $$ = -2;
+        }
+        $$ = std::get<int>(val);
+    }
 ;
 
 valeurvar:

@@ -47,13 +47,14 @@
 %token                 PARAGRAPHE IMAGE
 %token                 DEFINE TITREPAGE STYLE
 %token <std::string>   PROPRIETE COMMENTAIRE
-%token <std::string>   SI SINON FINSI POUR FINI IDENTIFIANT
+%token <std::string>   SI SINON FINSI POUR FINI IDENTIFIANT BLOCS
 %token <int>           ENTIER
 %token <std::string>   CHAINE
 %token <std::string>   HEX_COULEUR RGB_COULEUR
-%token <std::string>   EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE
+%token                 EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE POINT
 %token                 PARENTHESE_OUVRANTE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE ACCOLADE_FERMANTE
 %token <std::string>   LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
+%token <int>           INDICE
 
 
 %type <Bloc*> bloc_element titre sous_titre paragraphe image titrepage commentaire
@@ -63,6 +64,8 @@
 %type <std::map<std::string, std::string>> attribut
 %type <std::string> nomattribut
 %type <std::string> valeur define style
+%type <std::pair<std::string, int>> selecteur
+%type <int> index_expression
 
 %%
 
@@ -75,10 +78,13 @@ programme_element:
     declaration
     | bloc_element
     | variable
+    | commentaire
+;
 
 declaration:
     define
     | style
+    | titrepage
 ;
 
 bloc_element:
@@ -86,52 +92,50 @@ bloc_element:
     | sous_titre
     | paragraphe
     | image
-    | titrepage
-    | commentaire
-;
+    
 
 titre:
     TITRE attributs CHAINE { 
         $$ = new Titre($2, $3, $1.niveau);
-        doc->addBloc($$);
+        doc->addBloc("titre", $$);
     }
     | TITRE CHAINE { 
         $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
-        doc->addBloc($$);
+        doc->addBloc("titre", $$);
     }
 ;
 
 sous_titre:
     SOUS_TITRE attributs CHAINE { 
         $$ = new Titre($2, $3, $1.niveau);
-        doc->addBloc($$);
+        doc->addBloc("titre", $$);
     }
     | SOUS_TITRE CHAINE { 
         $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
-        doc->addBloc($$);
+        doc->addBloc("titre", $$);
     }
 ;
 
 paragraphe:
     PARAGRAPHE attributs CHAINE { 
         $$ = new Paragraphe($2, $3);
-        doc->addBloc($$);
+        doc->addBloc("paragraphe", $$);
     }
     | PARAGRAPHE CHAINE { 
         $$ = new Paragraphe(std::map<std::string, std::string>(), $2);
-        doc->addBloc($$);
+        doc->addBloc("paragraphe", $$);
     }
 ;
 
 image:
     IMAGE CHAINE { 
-        doc->addBloc(new Image($2));
+        doc->addBloc("image", new Image($2));
     }
 ;
 
 commentaire:
     COMMENTAIRE { 
-        doc->addBloc(new Commentaire($1));
+        doc->addBloc("commentaire", new Commentaire($1));
     }
 ;
 
@@ -186,7 +190,7 @@ define:
 titrepage:
     TITREPAGE CHAINE { 
         auto bloc = new TitrePage($2);
-        doc->addBloc(bloc);
+        doc->addBloc("z", bloc);
     }
 ;
 
@@ -200,6 +204,37 @@ variable:
             doc->setVariable($1, std::get<std::string>($3));
         }
     }
+    | IDENTIFIANT EGAL selecteur { 
+        Bloc *b = doc->getNBloc($3.first, $3.second);
+        if (b != nullptr) {
+            doc->setVariable($1, b);
+        }
+    }
+    IDENTIFIANT POINT nomattribut EGAL valeur {
+        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        if (bloc != nullptr) {
+            bloc->setPropriete($3.first, $5);
+        }
+    }
+;
+
+selecteur : 
+    PARAGRAPHE index_expression { $$ = std::make_pair("p", $2); }
+    | TITRE index_expression      { $$ = std::make_pair("h", $2); }
+    | SOUS_TITRE index_expression { $$ = std::make_pair("h", $2); }
+    | IMAGE index_expression      { $$ = std::make_pair("img", $2); }
+;
+
+index_expression:
+    INDICE { $$ = $1; }
+    | CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT {
+        auto val = doc->getVariable($2);
+        if (!std::holds_alternative<int>(val)) {
+            std::cerr << "Erreur: la variable " << $2 << " n'est pas un entier" << std::endl;
+            $$ = -2;
+        }
+        $$ = std::get<int>(val);
+    }
 ;
 
 valeurvar:
@@ -212,7 +247,7 @@ valeurvar:
 ;
 
 style:
-    STYLE PARENTHESE_OUVRANTE IDENTIFIANT PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE 
+    STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE 
     { 
         doc->setStyle($3, $6);
     }
