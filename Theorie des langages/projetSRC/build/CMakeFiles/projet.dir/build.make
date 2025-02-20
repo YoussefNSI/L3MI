@@ -71,7 +71,7 @@ include CMakeFiles/projet.dir/flags.make
 
 parser.cpp: /c/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/parser.yy
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "[BISON][parser] Building parser with bison 3.8.2"
-	cd "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC" && /usr/bin/bison.exe -d --verbose -o "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp" parser/parser.yy
+	cd "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC" && /usr/bin/bison.exe -Wcounterexamples -d --verbose -o "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp" parser/parser.yy
 
 parser.output: parser.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate parser.output

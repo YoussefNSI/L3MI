@@ -19,7 +19,11 @@ int main( int  argc, char* argv[]) {
     yy::Parser * parser = new yy::Parser(*scanner, *driver);
 
     parser->parse();
-    doc->afficherBlocs();
+    doc->HTMLtoFile("output.html");
+    delete driver;
+    delete scanner;
+    delete parser;
+    delete doc;
 
     return 0;
 }

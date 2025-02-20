@@ -3,6 +3,7 @@
 #include "scanner.hh"
 #include <cstdlib>
 #include <iostream>
+#include <locale.h>
 
 #define YY_NO_UNISTD_H
 
@@ -25,8 +26,8 @@ using token = yy::Parser::token;
     yylval = lval;
 %}
 
-[ \t\r]+         ; 
-[\n]+           {loc->step(); loc->lines(yyleng); }
+[ \t]+         ; 
+[\r\n]+         { loc->lines(yyleng); loc->step(); }
 
 !T+ {
     int length = yyleng - 1;
@@ -59,7 +60,7 @@ using token = yy::Parser::token;
 page            { std::cout << "[SCAN] PAGE" << std::endl;
                 yylval->emplace<std::string>(std::string("page"));
                 return token::BLOCS; }
-titre\[[1-9]]\        { std::cout << "[SCAN] TITRE (style)" << std::endl;
+titre[1-9]        { std::cout << "[SCAN] TITRE (style)" << std::endl;
                 yylval->emplace<std::string>(std::string(yytext));
                 return token::BLOCS; }
 paragraphe      { std::cout << "[SCAN] PARAGRAPHE (style)" << std::endl;
@@ -81,6 +82,8 @@ rgb\(([0-9]+),([0-9]+),([0-9]+)\) {
     std::cout << "[SCAN] HEX : " << yytext << std::endl;
     return token::HEX_COULEUR;
     }
+
+px      ;
 
 couleurTexte    { std::cout << "[SCAN] COULEURTEXTE" << std::endl; return token::COULEURTEXTE; }
 couleurFond     { std::cout << "[SCAN] COULEURFOND" << std::endl; return token::COULEURFOND; }
@@ -117,8 +120,9 @@ langue       {
     return token::COMMENTAIRE;
 }; 
 \%\%\%(.|\n)*?\%\%\%    {
-    std::cout << "[SCAN] COMMENTAIRE : " << yytext << std::endl;
-    yylval->emplace<std::string>(yytext);
+    std::string comment(yytext + 3, yyleng - 6);
+    std::cout << "[SCAN] COMMENTAIRE : " << comment << std::endl;
+    yylval->emplace<std::string>(comment);
     return token::COMMENTAIRE;
 }; 
 
@@ -150,8 +154,9 @@ FINI          return token::FINI;
 [a-zA-Z_][a-zA-Z0-9_]*   {  std::cout << "[SCAN] IDENTIFIANT : " << yytext << std::endl;
                             yylval->emplace<std::string>(yytext); return token::IDENTIFIANT; }
 
-\'[^']*\'       { std::cout << "[SCAN] CHAINE : " << yytext << std::endl;
-                yylval->emplace<std::string>(yytext); return token::CHAINE; }
+\'[^']*\'       {   std::string str(yytext+1, yyleng-2); 
+                std::cout << "[SCAN] CHAINE : " << str << std::endl;
+                yylval->emplace<std::string>(str); return token::CHAINE; }
 
 .               {
     std::cerr << "Erreur: Caractère invalide '" << yytext[0] << "' ligne " 

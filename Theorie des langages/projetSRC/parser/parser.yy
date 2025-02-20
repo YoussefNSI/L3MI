@@ -152,9 +152,9 @@ liste_attributs:
         $$ = $1;
         $$.insert($3.begin(), $3.end());
     }
-    | attribut NEWLINE liste_attributs {
+    | attribut liste_attributs {
         $$ = $1;
-        $$.insert($3.begin(), $3.end());
+        $$.insert($2.begin(), $2.end());
     }
 ;
 
@@ -263,14 +263,7 @@ selecteur :
 ;
 
 index_expression:
-    CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT {
-        auto val = doc->getVariable($2);
-        if (!std::holds_alternative<int>(val)) {
-            std::cerr << "Erreur: la variable " << $2 << " n'est pas un entier" << std::endl;
-            $$ = -2;
-        }
-        $$ = std::get<int>(val);}
-    | CROCHET_OUVRANT expr CROCHET_FERMANT { $$ = $2; }
+    CROCHET_OUVRANT expr CROCHET_FERMANT { $$ = $2; }
 ;
 
 expr:
@@ -306,7 +299,7 @@ valeurvar:
 ;
 
 style:
-    STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE 
+    STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs CROCHET_FERMANT 
     { 
         doc->setStyle($3, $6);
     }

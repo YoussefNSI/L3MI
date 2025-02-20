@@ -141,36 +141,76 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
- C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/bloc.h \
- C:/msys64/mingw64/include/c++/14.2.0/map \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
+ C:/msys64/mingw64/include/c++/14.2.0/sstream \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/fstream \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tempbuf.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/execution_defs.h \
+ C:/msys64/mingw64/include/c++/14.2.0/regex \
+ C:/msys64/mingw64/include/c++/14.2.0/bitset \
+ C:/msys64/mingw64/include/c++/14.2.0/locale \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ctime \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/time_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/messages_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_conv.h \
+ C:/msys64/mingw64/include/c++/14.2.0/stack \
+ C:/msys64/mingw64/include/c++/14.2.0/deque \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_deque.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/deque.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_stack.h \
  C:/msys64/mingw64/include/c++/14.2.0/ext/aligned_buffer.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/allocated_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/concurrence.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
- C:/msys64/mingw64/include/c++/14.2.0/vector \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_constants.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_error.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_automaton.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_automaton.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_scanner.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_scanner.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_compiler.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_compiler.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_executor.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/regex_executor.tcc \
+ C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/bloc.h \
+ C:/msys64/mingw64/include/c++/14.2.0/map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
+ C:/msys64/mingw64/include/c++/14.2.0/vector \
  C:/msys64/mingw64/include/c++/14.2.0/memory \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tempbuf.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_raw_storage_iter.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/align.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
  C:/msys64/mingw64/include/stdint.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr_base.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/allocated_ptr.h \
- C:/msys64/mingw64/include/c++/14.2.0/ext/concurrence.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr_atomic.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_base.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_lockfree_defines.h \
  C:/msys64/mingw64/include/c++/14.2.0/backward/auto_ptr.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_memory_defs.h \
- C:/msys64/mingw64/include/c++/14.2.0/pstl/execution_defs.h \
  C:/msys64/mingw64/include/c++/14.2.0/variant \
  C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h

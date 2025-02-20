@@ -1,14 +1,12 @@
 Terminals unused in grammar
 
+    NEWLINE
     SI
     SINON
     FINSI
     POUR
     FINI
     POINT_VIRGULE
-
-
-State 88 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -49,7 +47,7 @@ Grammar
 
    23 liste_attributs: attribut
    24                | attribut VIRGULE liste_attributs
-   25                | attribut NEWLINE liste_attributs
+   25                | attribut liste_attributs
 
    26 attribut: nomattribut DEUX_POINTS valeur
    27         | nomattribut DEUX_POINTS IDENTIFIANT
@@ -81,41 +79,40 @@ Grammar
    47          | SOUS_TITRE index_expression
    48          | IMAGE index_expression
 
-   49 index_expression: CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT
-   50                 | CROCHET_OUVRANT expr CROCHET_FERMANT
+   49 index_expression: CROCHET_OUVRANT expr CROCHET_FERMANT
 
-   51 expr: expr PLUS terme
-   52     | expr MOINS terme
-   53     | terme
+   50 expr: expr PLUS terme
+   51     | expr MOINS terme
+   52     | terme
 
-   54 terme: terme MULT facteur
-   55      | terme DIV facteur
-   56      | facteur
+   53 terme: terme MULT facteur
+   54      | terme DIV facteur
+   55      | facteur
 
-   57 facteur: ENTIER
-   58        | IDENTIFIANT
+   56 facteur: ENTIER
+   57        | IDENTIFIANT
 
-   59 valeurvar: ENTIER
-   60          | HEX_COULEUR
-   61          | RGB_COULEUR
-   62          | bloc_element
-   63          | attributs
+   58 valeurvar: ENTIER
+   59          | HEX_COULEUR
+   60          | RGB_COULEUR
+   61          | bloc_element
+   62          | attributs
 
-   64 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+   63 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    NEWLINE (258) 25
+    NEWLINE (258)
     TITRE <TitreInfo> (259) 14 15 46
     SOUS_TITRE <TitreInfo> (260) 16 17 47
     PARAGRAPHE (261) 18 19 45
     IMAGE (262) 20 48
     DEFINE (263) 37
     TITREPAGE (264) 38
-    STYLE (265) 64
+    STYLE (265) 63
     SELECTSTYLE (266) 43 44
     PROPRIETE <std::string> (267) 37
     COMMENTAIRE <std::string> (268) 21
@@ -124,27 +121,27 @@ Terminals, with rules where they appear
     FINSI <std::string> (271)
     POUR <std::string> (272)
     FINI <std::string> (273)
-    IDENTIFIANT <std::string> (274) 27 39 40 41 42 43 44 49 58
-    BLOCS <std::string> (275) 64
-    ENTIER <int> (276) 33 57 59
+    IDENTIFIANT <std::string> (274) 27 39 40 41 42 43 44 57
+    BLOCS <std::string> (275) 63
+    ENTIER <int> (276) 33 56 58
     CHAINE <std::string> (277) 14 15 16 17 18 19 20 36 38
-    HEX_COULEUR <std::string> (278) 34 60
-    RGB_COULEUR <std::string> (279) 35 61
+    HEX_COULEUR <std::string> (278) 34 59
+    RGB_COULEUR <std::string> (279) 35 60
     EGAL (280) 39 40 41 42 43 44
-    CROCHET_FERMANT (281) 22 49 50
-    CROCHET_OUVRANT (282) 22 49 50
+    CROCHET_FERMANT (281) 22 49 63
+    CROCHET_OUVRANT (282) 22 49 63
     DEUX_POINTS (283) 26 27
     VIRGULE (284) 24
     POINT_VIRGULE (285)
     POINT (286) 41 42 43 44
-    PLUS (287) 51
-    MOINS (288) 52
-    MULT (289) 54
-    DIV (290) 55
-    PARENTHESE_OUVRANTE (291) 37 64
-    PARENTHESE_FERMANTE (292) 37 64
-    ACCOLADE_OUVRANTE (293) 37 64
-    ACCOLADE_FERMANTE (294) 37 64
+    PLUS (287) 50
+    MOINS (288) 51
+    MULT (289) 53
+    DIV (290) 54
+    PARENTHESE_OUVRANTE (291) 37 63
+    PARENTHESE_FERMANTE (292) 37 63
+    ACCOLADE_OUVRANTE (293) 37
+    ACCOLADE_FERMANTE (294) 37
     LARGEUR (295) 28
     HAUTEUR (296) 29
     COULEURTEXTE (297) 30
@@ -167,7 +164,7 @@ Nonterminals, with rules where they appear
         on right: 3
     bloc_element <Bloc*> (49)
         on left: 10 11 12 13
-        on right: 4 62
+        on right: 4 61
     titre <Bloc*> (50)
         on left: 14 15
         on right: 10
@@ -185,10 +182,10 @@ Nonterminals, with rules where they appear
         on right: 6
     attributs <std::map<std::string, std::string>> (55)
         on left: 22
-        on right: 14 16 18 44 63 64
+        on right: 14 16 18 44 62
     liste_attributs <std::map<std::string, std::string>> (56)
         on left: 23 24 25
-        on right: 22 24 25
+        on right: 22 24 25 63
     attribut <std::map<std::string, std::string>> (57)
         on left: 26 27
         on right: 23 24 25
@@ -211,22 +208,22 @@ Nonterminals, with rules where they appear
         on left: 45 46 47 48
         on right: 40
     index_expression <int> (64)
-        on left: 49 50
+        on left: 49
         on right: 45 46 47 48
     expr <int> (65)
-        on left: 51 52 53
-        on right: 50 51 52
+        on left: 50 51 52
+        on right: 49 50 51
     terme <int> (66)
-        on left: 54 55 56
-        on right: 51 52 53 54 55
+        on left: 53 54 55
+        on right: 50 51 52 53 54
     facteur <int> (67)
-        on left: 57 58
-        on right: 54 55 56
+        on left: 56 57
+        on right: 53 54 55
     valeurvar <std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>> (68)
-        on left: 59 60 61 62 63
+        on left: 58 59 60 61 62
         on right: 39
     style <std::string> (69)
-        on left: 64
+        on left: 63
         on right: 8
 
 
@@ -317,7 +314,7 @@ State 6
 
 State 7
 
-   64 style: STYLE • PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+   63 style: STYLE • PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
 
     PARENTHESE_OUVRANTE  shift, and go to state 33
 
@@ -537,7 +534,7 @@ State 32
 
 State 33
 
-   64 style: STYLE PARENTHESE_OUVRANTE • BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+   63 style: STYLE PARENTHESE_OUVRANTE • BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
 
     BLOCS  shift, and go to state 50
 
@@ -643,12 +640,20 @@ State 44
 
    23 liste_attributs: attribut •
    24                | attribut • VIRGULE liste_attributs
-   25                | attribut • NEWLINE liste_attributs
+   25                | attribut • liste_attributs
 
-    NEWLINE  shift, and go to state 65
-    VIRGULE  shift, and go to state 66
+    VIRGULE       shift, and go to state 65
+    LARGEUR       shift, and go to state 38
+    HAUTEUR       shift, and go to state 39
+    COULEURTEXTE  shift, and go to state 40
+    COULEURFOND   shift, and go to state 41
+    OPACITE       shift, and go to state 42
 
     $default  reduce using rule 23 (liste_attributs)
+
+    liste_attributs  go to state 66
+    attribut         go to state 44
+    nomattribut      go to state 45
 
 
 State 45
@@ -689,7 +694,7 @@ State 49
 
 State 50
 
-   64 style: STYLE PARENTHESE_OUVRANTE BLOCS • PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+   63 style: STYLE PARENTHESE_OUVRANTE BLOCS • PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
 
     PARENTHESE_FERMANTE  shift, and go to state 69
 
@@ -746,37 +751,37 @@ State 54
 
 State 55
 
-   59 valeurvar: ENTIER •
+   58 valeurvar: ENTIER •
 
-    $default  reduce using rule 59 (valeurvar)
+    $default  reduce using rule 58 (valeurvar)
 
 
 State 56
 
-   60 valeurvar: HEX_COULEUR •
+   59 valeurvar: HEX_COULEUR •
 
-    $default  reduce using rule 60 (valeurvar)
+    $default  reduce using rule 59 (valeurvar)
 
 
 State 57
 
-   61 valeurvar: RGB_COULEUR •
+   60 valeurvar: RGB_COULEUR •
 
-    $default  reduce using rule 61 (valeurvar)
+    $default  reduce using rule 60 (valeurvar)
 
 
 State 58
 
-   62 valeurvar: bloc_element •
+   61 valeurvar: bloc_element •
 
-    $default  reduce using rule 62 (valeurvar)
+    $default  reduce using rule 61 (valeurvar)
 
 
 State 59
 
-   63 valeurvar: attributs •
+   62 valeurvar: attributs •
 
-    $default  reduce using rule 63 (valeurvar)
+    $default  reduce using rule 62 (valeurvar)
 
 
 State 60
@@ -818,7 +823,7 @@ State 64
 
 State 65
 
-   25 liste_attributs: attribut NEWLINE • liste_attributs
+   24 liste_attributs: attribut VIRGULE • liste_attributs
 
     LARGEUR       shift, and go to state 38
     HAUTEUR       shift, and go to state 39
@@ -833,17 +838,9 @@ State 65
 
 State 66
 
-   24 liste_attributs: attribut VIRGULE • liste_attributs
+   25 liste_attributs: attribut liste_attributs •
 
-    LARGEUR       shift, and go to state 38
-    HAUTEUR       shift, and go to state 39
-    COULEURTEXTE  shift, and go to state 40
-    COULEURFOND   shift, and go to state 41
-    OPACITE       shift, and go to state 42
-
-    liste_attributs  go to state 79
-    attribut         go to state 44
-    nomattribut      go to state 45
+    $default  reduce using rule 25 (liste_attributs)
 
 
 State 67
@@ -851,37 +848,36 @@ State 67
    26 attribut: nomattribut DEUX_POINTS • valeur
    27         | nomattribut DEUX_POINTS • IDENTIFIANT
 
-    IDENTIFIANT  shift, and go to state 80
-    ENTIER       shift, and go to state 81
-    CHAINE       shift, and go to state 82
-    HEX_COULEUR  shift, and go to state 83
-    RGB_COULEUR  shift, and go to state 84
+    IDENTIFIANT  shift, and go to state 79
+    ENTIER       shift, and go to state 80
+    CHAINE       shift, and go to state 81
+    HEX_COULEUR  shift, and go to state 82
+    RGB_COULEUR  shift, and go to state 83
 
-    valeur  go to state 85
+    valeur  go to state 84
 
 
 State 68
 
    37 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE
 
-    ACCOLADE_OUVRANTE  shift, and go to state 86
+    ACCOLADE_OUVRANTE  shift, and go to state 85
 
 
 State 69
 
-   64 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE • ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
+   63 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE • CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
 
-    ACCOLADE_OUVRANTE  shift, and go to state 87
+    CROCHET_OUVRANT  shift, and go to state 86
 
 
 State 70
 
    22 attributs: CROCHET_OUVRANT • liste_attributs CROCHET_FERMANT
-   49 index_expression: CROCHET_OUVRANT • IDENTIFIANT CROCHET_FERMANT
-   50                 | CROCHET_OUVRANT • expr CROCHET_FERMANT
+   49 index_expression: CROCHET_OUVRANT • expr CROCHET_FERMANT
 
-    IDENTIFIANT   shift, and go to state 88
-    ENTIER        shift, and go to state 89
+    IDENTIFIANT   shift, and go to state 87
+    ENTIER        shift, and go to state 88
     LARGEUR       shift, and go to state 38
     HAUTEUR       shift, and go to state 39
     COULEURTEXTE  shift, and go to state 40
@@ -891,9 +887,9 @@ State 70
     liste_attributs  go to state 43
     attribut         go to state 44
     nomattribut      go to state 45
-    expr             go to state 90
-    terme            go to state 91
-    facteur          go to state 92
+    expr             go to state 89
+    terme            go to state 90
+    facteur          go to state 91
 
 
 State 71
@@ -919,15 +915,14 @@ State 73
 
 State 74
 
-   49 index_expression: CROCHET_OUVRANT • IDENTIFIANT CROCHET_FERMANT
-   50                 | CROCHET_OUVRANT • expr CROCHET_FERMANT
+   49 index_expression: CROCHET_OUVRANT • expr CROCHET_FERMANT
 
-    IDENTIFIANT  shift, and go to state 88
-    ENTIER       shift, and go to state 89
+    IDENTIFIANT  shift, and go to state 87
+    ENTIER       shift, and go to state 88
 
-    expr     go to state 90
-    terme    go to state 91
-    facteur  go to state 92
+    expr     go to state 89
+    terme    go to state 90
+    facteur  go to state 91
 
 
 State 75
@@ -942,10 +937,10 @@ State 76
    43 variable: IDENTIFIANT POINT SELECTSTYLE EGAL • IDENTIFIANT
    44         | IDENTIFIANT POINT SELECTSTYLE EGAL • attributs
 
-    IDENTIFIANT      shift, and go to state 93
+    IDENTIFIANT      shift, and go to state 92
     CROCHET_OUVRANT  shift, and go to state 24
 
-    attributs  go to state 94
+    attributs  go to state 93
 
 
 State 77
@@ -953,292 +948,273 @@ State 77
    41 variable: IDENTIFIANT POINT nomattribut EGAL • valeur
    42         | IDENTIFIANT POINT nomattribut EGAL • IDENTIFIANT
 
-    IDENTIFIANT  shift, and go to state 95
-    ENTIER       shift, and go to state 81
-    CHAINE       shift, and go to state 82
-    HEX_COULEUR  shift, and go to state 83
-    RGB_COULEUR  shift, and go to state 84
+    IDENTIFIANT  shift, and go to state 94
+    ENTIER       shift, and go to state 80
+    CHAINE       shift, and go to state 81
+    HEX_COULEUR  shift, and go to state 82
+    RGB_COULEUR  shift, and go to state 83
 
-    valeur  go to state 96
+    valeur  go to state 95
 
 
 State 78
-
-   25 liste_attributs: attribut NEWLINE liste_attributs •
-
-    $default  reduce using rule 25 (liste_attributs)
-
-
-State 79
 
    24 liste_attributs: attribut VIRGULE liste_attributs •
 
     $default  reduce using rule 24 (liste_attributs)
 
 
-State 80
+State 79
 
    27 attribut: nomattribut DEUX_POINTS IDENTIFIANT •
 
     $default  reduce using rule 27 (attribut)
 
 
-State 81
+State 80
 
    33 valeur: ENTIER •
 
     $default  reduce using rule 33 (valeur)
 
 
-State 82
+State 81
 
    36 valeur: CHAINE •
 
     $default  reduce using rule 36 (valeur)
 
 
-State 83
+State 82
 
    34 valeur: HEX_COULEUR •
 
     $default  reduce using rule 34 (valeur)
 
 
-State 84
+State 83
 
    35 valeur: RGB_COULEUR •
 
     $default  reduce using rule 35 (valeur)
 
 
-State 85
+State 84
 
    26 attribut: nomattribut DEUX_POINTS valeur •
 
     $default  reduce using rule 26 (attribut)
 
 
-State 86
+State 85
 
    37 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • valeur ACCOLADE_FERMANTE
 
-    ENTIER       shift, and go to state 81
-    CHAINE       shift, and go to state 82
-    HEX_COULEUR  shift, and go to state 83
-    RGB_COULEUR  shift, and go to state 84
+    ENTIER       shift, and go to state 80
+    CHAINE       shift, and go to state 81
+    HEX_COULEUR  shift, and go to state 82
+    RGB_COULEUR  shift, and go to state 83
 
-    valeur  go to state 97
+    valeur  go to state 96
+
+
+State 86
+
+   63 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT • liste_attributs CROCHET_FERMANT
+
+    LARGEUR       shift, and go to state 38
+    HAUTEUR       shift, and go to state 39
+    COULEURTEXTE  shift, and go to state 40
+    COULEURFOND   shift, and go to state 41
+    OPACITE       shift, and go to state 42
+
+    liste_attributs  go to state 97
+    attribut         go to state 44
+    nomattribut      go to state 45
 
 
 State 87
 
-   64 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE • attributs ACCOLADE_FERMANTE
-
-    CROCHET_OUVRANT  shift, and go to state 24
-
-    attributs  go to state 98
-
-
-State 88
-
-   49 index_expression: CROCHET_OUVRANT IDENTIFIANT • CROCHET_FERMANT
-   58 facteur: IDENTIFIANT •
-
-    CROCHET_FERMANT  shift, and go to state 99
-
-    CROCHET_FERMANT  [reduce using rule 58 (facteur)]
-    $default         reduce using rule 58 (facteur)
-
-
-State 89
-
-   57 facteur: ENTIER •
+   57 facteur: IDENTIFIANT •
 
     $default  reduce using rule 57 (facteur)
 
 
+State 88
+
+   56 facteur: ENTIER •
+
+    $default  reduce using rule 56 (facteur)
+
+
+State 89
+
+   49 index_expression: CROCHET_OUVRANT expr • CROCHET_FERMANT
+   50 expr: expr • PLUS terme
+   51     | expr • MOINS terme
+
+    CROCHET_FERMANT  shift, and go to state 98
+    PLUS             shift, and go to state 99
+    MOINS            shift, and go to state 100
+
+
 State 90
 
-   50 index_expression: CROCHET_OUVRANT expr • CROCHET_FERMANT
-   51 expr: expr • PLUS terme
-   52     | expr • MOINS terme
+   52 expr: terme •
+   53 terme: terme • MULT facteur
+   54      | terme • DIV facteur
 
-    CROCHET_FERMANT  shift, and go to state 100
-    PLUS             shift, and go to state 101
-    MOINS            shift, and go to state 102
+    MULT  shift, and go to state 101
+    DIV   shift, and go to state 102
+
+    $default  reduce using rule 52 (expr)
 
 
 State 91
 
-   53 expr: terme •
-   54 terme: terme • MULT facteur
-   55      | terme • DIV facteur
+   55 terme: facteur •
 
-    MULT  shift, and go to state 103
-    DIV   shift, and go to state 104
-
-    $default  reduce using rule 53 (expr)
+    $default  reduce using rule 55 (terme)
 
 
 State 92
-
-   56 terme: facteur •
-
-    $default  reduce using rule 56 (terme)
-
-
-State 93
 
    43 variable: IDENTIFIANT POINT SELECTSTYLE EGAL IDENTIFIANT •
 
     $default  reduce using rule 43 (variable)
 
 
-State 94
+State 93
 
    44 variable: IDENTIFIANT POINT SELECTSTYLE EGAL attributs •
 
     $default  reduce using rule 44 (variable)
 
 
-State 95
+State 94
 
    42 variable: IDENTIFIANT POINT nomattribut EGAL IDENTIFIANT •
 
     $default  reduce using rule 42 (variable)
 
 
-State 96
+State 95
 
    41 variable: IDENTIFIANT POINT nomattribut EGAL valeur •
 
     $default  reduce using rule 41 (variable)
 
 
-State 97
+State 96
 
    37 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur • ACCOLADE_FERMANTE
 
-    ACCOLADE_FERMANTE  shift, and go to state 105
+    ACCOLADE_FERMANTE  shift, and go to state 103
+
+
+State 97
+
+   63 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs • CROCHET_FERMANT
+
+    CROCHET_FERMANT  shift, and go to state 104
 
 
 State 98
 
-   64 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs • ACCOLADE_FERMANTE
-
-    ACCOLADE_FERMANTE  shift, and go to state 106
-
-
-State 99
-
-   49 index_expression: CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT •
+   49 index_expression: CROCHET_OUVRANT expr CROCHET_FERMANT •
 
     $default  reduce using rule 49 (index_expression)
 
 
+State 99
+
+   50 expr: expr PLUS • terme
+
+    IDENTIFIANT  shift, and go to state 87
+    ENTIER       shift, and go to state 88
+
+    terme    go to state 105
+    facteur  go to state 91
+
+
 State 100
 
-   50 index_expression: CROCHET_OUVRANT expr CROCHET_FERMANT •
+   51 expr: expr MOINS • terme
 
-    $default  reduce using rule 50 (index_expression)
+    IDENTIFIANT  shift, and go to state 87
+    ENTIER       shift, and go to state 88
+
+    terme    go to state 106
+    facteur  go to state 91
 
 
 State 101
 
-   51 expr: expr PLUS • terme
+   53 terme: terme MULT • facteur
 
-    IDENTIFIANT  shift, and go to state 107
-    ENTIER       shift, and go to state 89
+    IDENTIFIANT  shift, and go to state 87
+    ENTIER       shift, and go to state 88
 
-    terme    go to state 108
-    facteur  go to state 92
+    facteur  go to state 107
 
 
 State 102
 
-   52 expr: expr MOINS • terme
+   54 terme: terme DIV • facteur
 
-    IDENTIFIANT  shift, and go to state 107
-    ENTIER       shift, and go to state 89
+    IDENTIFIANT  shift, and go to state 87
+    ENTIER       shift, and go to state 88
 
-    terme    go to state 109
-    facteur  go to state 92
+    facteur  go to state 108
 
 
 State 103
-
-   54 terme: terme MULT • facteur
-
-    IDENTIFIANT  shift, and go to state 107
-    ENTIER       shift, and go to state 89
-
-    facteur  go to state 110
-
-
-State 104
-
-   55 terme: terme DIV • facteur
-
-    IDENTIFIANT  shift, and go to state 107
-    ENTIER       shift, and go to state 89
-
-    facteur  go to state 111
-
-
-State 105
 
    37 define: DEFINE PARENTHESE_OUVRANTE PROPRIETE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE valeur ACCOLADE_FERMANTE •
 
     $default  reduce using rule 37 (define)
 
 
+State 104
+
+   63 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs CROCHET_FERMANT •
+
+    $default  reduce using rule 63 (style)
+
+
+State 105
+
+   50 expr: expr PLUS terme •
+   53 terme: terme • MULT facteur
+   54      | terme • DIV facteur
+
+    MULT  shift, and go to state 101
+    DIV   shift, and go to state 102
+
+    $default  reduce using rule 50 (expr)
+
+
 State 106
 
-   64 style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE •
+   51 expr: expr MOINS terme •
+   53 terme: terme • MULT facteur
+   54      | terme • DIV facteur
 
-    $default  reduce using rule 64 (style)
-
-
-State 107
-
-   58 facteur: IDENTIFIANT •
-
-    $default  reduce using rule 58 (facteur)
-
-
-State 108
-
-   51 expr: expr PLUS terme •
-   54 terme: terme • MULT facteur
-   55      | terme • DIV facteur
-
-    MULT  shift, and go to state 103
-    DIV   shift, and go to state 104
+    MULT  shift, and go to state 101
+    DIV   shift, and go to state 102
 
     $default  reduce using rule 51 (expr)
 
 
-State 109
+State 107
 
-   52 expr: expr MOINS terme •
-   54 terme: terme • MULT facteur
-   55      | terme • DIV facteur
+   53 terme: terme MULT facteur •
 
-    MULT  shift, and go to state 103
-    DIV   shift, and go to state 104
-
-    $default  reduce using rule 52 (expr)
+    $default  reduce using rule 53 (terme)
 
 
-State 110
+State 108
 
-   54 terme: terme MULT facteur •
+   54 terme: terme DIV facteur •
 
     $default  reduce using rule 54 (terme)
-
-
-State 111
-
-   55 terme: terme DIV facteur •
-
-    $default  reduce using rule 55 (terme)

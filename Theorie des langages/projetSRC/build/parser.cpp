@@ -1154,10 +1154,10 @@ namespace yy {
 #line 1155 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 26: // liste_attributs: attribut NEWLINE liste_attributs
+  case 26: // liste_attributs: attribut liste_attributs
 #line 155 "parser/parser.yy"
-                                       {
-        yylhs.value.as < std::map<std::string, std::string> > () = yystack_[2].value.as < std::map<std::string, std::string> > ();
+                               {
+        yylhs.value.as < std::map<std::string, std::string> > () = yystack_[1].value.as < std::map<std::string, std::string> > ();
         yylhs.value.as < std::map<std::string, std::string> > ().insert(yystack_[0].value.as < std::map<std::string, std::string> > ().begin(), yystack_[0].value.as < std::map<std::string, std::string> > ().end());
     }
 #line 1164 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
@@ -1359,68 +1359,56 @@ namespace yy {
 #line 1360 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 50: // index_expression: CROCHET_OUVRANT IDENTIFIANT CROCHET_FERMANT
+  case 50: // index_expression: CROCHET_OUVRANT expr CROCHET_FERMANT
 #line 266 "parser/parser.yy"
-                                                {
-        auto val = doc->getVariable(yystack_[1].value.as < std::string > ());
-        if (!std::holds_alternative<int>(val)) {
-            std::cerr << "Erreur: la variable " << yystack_[1].value.as < std::string > () << " n'est pas un entier" << std::endl;
-            yylhs.value.as < int > () = -2;
-        }
-        yylhs.value.as < int > () = std::get<int>(val);}
+                                         { yylhs.value.as < int > () = yystack_[1].value.as < int > (); }
+#line 1366 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
+    break;
+
+  case 51: // expr: expr PLUS terme
+#line 270 "parser/parser.yy"
+                    { yylhs.value.as < int > () = yystack_[2].value.as < int > () + yystack_[0].value.as < int > (); }
 #line 1372 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 51: // index_expression: CROCHET_OUVRANT expr CROCHET_FERMANT
-#line 273 "parser/parser.yy"
-                                           { yylhs.value.as < int > () = yystack_[1].value.as < int > (); }
+  case 52: // expr: expr MOINS terme
+#line 271 "parser/parser.yy"
+                       { yylhs.value.as < int > () = yystack_[2].value.as < int > () - yystack_[0].value.as < int > (); }
 #line 1378 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 52: // expr: expr PLUS terme
-#line 277 "parser/parser.yy"
-                    { yylhs.value.as < int > () = yystack_[2].value.as < int > () + yystack_[0].value.as < int > (); }
+  case 53: // expr: terme
+#line 272 "parser/parser.yy"
+            { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
 #line 1384 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 53: // expr: expr MOINS terme
-#line 278 "parser/parser.yy"
-                       { yylhs.value.as < int > () = yystack_[2].value.as < int > () - yystack_[0].value.as < int > (); }
+  case 54: // terme: terme MULT facteur
+#line 276 "parser/parser.yy"
+                       { yylhs.value.as < int > () = yystack_[2].value.as < int > () * yystack_[0].value.as < int > (); }
 #line 1390 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 54: // expr: terme
-#line 279 "parser/parser.yy"
-            { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
+  case 55: // terme: terme DIV facteur
+#line 277 "parser/parser.yy"
+                        { yylhs.value.as < int > () = yystack_[2].value.as < int > () / yystack_[0].value.as < int > (); }
 #line 1396 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 55: // terme: terme MULT facteur
-#line 283 "parser/parser.yy"
-                       { yylhs.value.as < int > () = yystack_[2].value.as < int > () * yystack_[0].value.as < int > (); }
+  case 56: // terme: facteur
+#line 278 "parser/parser.yy"
+              { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
 #line 1402 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 56: // terme: terme DIV facteur
-#line 284 "parser/parser.yy"
-                        { yylhs.value.as < int > () = yystack_[2].value.as < int > () / yystack_[0].value.as < int > (); }
+  case 57: // facteur: ENTIER
+#line 282 "parser/parser.yy"
+           { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
 #line 1408 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 57: // terme: facteur
-#line 285 "parser/parser.yy"
-              { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
-#line 1414 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
-    break;
-
-  case 58: // facteur: ENTIER
-#line 289 "parser/parser.yy"
-           { yylhs.value.as < int > () = yystack_[0].value.as < int > (); }
-#line 1420 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
-    break;
-
-  case 59: // facteur: IDENTIFIANT
-#line 290 "parser/parser.yy"
+  case 58: // facteur: IDENTIFIANT
+#line 283 "parser/parser.yy"
                   {
         auto val = doc->getVariable(yystack_[0].value.as < std::string > ());
         if(std::holds_alternative<int>(val)) {
@@ -1430,49 +1418,49 @@ namespace yy {
             yylhs.value.as < int > () = -1;
         }
     }
+#line 1422 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
+    break;
+
+  case 59: // valeurvar: ENTIER
+#line 294 "parser/parser.yy"
+           { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < int > (); }
+#line 1428 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
+    break;
+
+  case 60: // valeurvar: HEX_COULEUR
+#line 295 "parser/parser.yy"
+                  { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
 #line 1434 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 60: // valeurvar: ENTIER
-#line 301 "parser/parser.yy"
-           { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < int > (); }
+  case 61: // valeurvar: RGB_COULEUR
+#line 296 "parser/parser.yy"
+                  { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
 #line 1440 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 61: // valeurvar: HEX_COULEUR
-#line 302 "parser/parser.yy"
-                  { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
+  case 62: // valeurvar: bloc_element
+#line 297 "parser/parser.yy"
+                   { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>(yystack_[0].value.as < Bloc* > ()); }
 #line 1446 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 62: // valeurvar: RGB_COULEUR
-#line 303 "parser/parser.yy"
-                  { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
+  case 63: // valeurvar: attributs
+#line 298 "parser/parser.yy"
+                { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::map<std::string, std::string> > (); }
 #line 1452 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
-  case 63: // valeurvar: bloc_element
-#line 304 "parser/parser.yy"
-                   { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>(yystack_[0].value.as < Bloc* > ()); }
-#line 1458 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
-    break;
-
-  case 64: // valeurvar: attributs
-#line 305 "parser/parser.yy"
-                { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::map<std::string, std::string> > (); }
-#line 1464 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
-    break;
-
-  case 65: // style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE ACCOLADE_OUVRANTE attributs ACCOLADE_FERMANTE
-#line 310 "parser/parser.yy"
+  case 64: // style: STYLE PARENTHESE_OUVRANTE BLOCS PARENTHESE_FERMANTE CROCHET_OUVRANT liste_attributs CROCHET_FERMANT
+#line 303 "parser/parser.yy"
     { 
         doc->setStyle(yystack_[4].value.as < std::string > (), yystack_[1].value.as < std::map<std::string, std::string> > ());
     }
-#line 1472 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
+#line 1460 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
 
-#line 1476 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
+#line 1464 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
 
             default:
               break;
@@ -1824,25 +1812,24 @@ namespace yy {
   }
 
 
-  const signed char  Parser ::yypact_ninf_ = -75;
+  const signed char  Parser ::yypact_ninf_ = -43;
 
   const signed char  Parser ::yytable_ninf_ = -1;
 
   const signed char
    Parser ::yypact_[] =
   {
-      48,    50,    51,    53,    37,   -25,    64,   -21,   -75,   -11,
-      18,    48,   -75,   -75,   -75,   -75,   -75,   -75,   -75,   -75,
-     -75,   -75,   -75,   -75,     5,    71,   -75,    76,   -75,    82,
-     -75,    15,   -75,    85,     2,    -7,   -75,   -75,   -75,   -75,
-     -75,   -75,   -75,    80,    -1,    79,   -75,   -75,   -75,    72,
-      73,    54,    57,    60,    61,   -75,   -75,   -75,   -75,   -75,
-     -75,   -75,    83,    86,   -75,     5,     5,    41,    74,    75,
-       0,   -75,   -75,   -75,     3,   -75,   -14,    47,   -75,   -75,
-     -75,   -75,   -75,   -75,   -75,   -75,    68,    87,    89,   -75,
-     -16,    -4,   -75,   -75,   -75,   -75,   -75,    77,    81,   -75,
-     -75,    78,    78,    78,    78,   -75,   -75,   -75,    -4,    -4,
-     -75,   -75
+       2,    27,    54,    60,     8,     7,    40,    20,   -43,    17,
+      69,     2,   -43,   -43,   -43,   -43,   -43,   -43,   -43,   -43,
+     -43,   -43,   -43,   -43,    52,    81,   -43,    82,   -43,    83,
+     -43,    94,   -43,    87,    34,    -7,   -43,   -43,   -43,   -43,
+     -43,   -43,   -43,    84,    23,    80,   -43,   -43,   -43,    72,
+      74,    61,    62,    63,    64,   -43,   -43,   -43,   -43,   -43,
+     -43,   -43,    88,    89,   -43,    52,   -43,    49,    77,    85,
+     -16,   -43,   -43,   -43,    10,   -43,    -5,    56,   -43,   -43,
+     -43,   -43,   -43,   -43,   -43,    76,    52,   -43,   -43,   -13,
+      12,   -43,   -43,   -43,   -43,   -43,    78,    90,   -43,    10,
+      10,    10,    10,   -43,   -43,    12,    12,   -43,   -43
   };
 
   const signed char
@@ -1853,65 +1840,64 @@ namespace yy {
       10,     6,     9,    16,     0,     0,    18,     0,    20,     0,
       21,     0,    39,     0,     0,     0,     1,     2,    29,    30,
       31,    32,    33,     0,    24,     0,    15,    17,    19,     0,
-       0,     0,     0,     0,     0,    60,    61,    62,    63,    64,
-      41,    40,     0,     0,    23,     0,     0,     0,     0,     0,
-       0,    47,    48,    46,     0,    49,     0,     0,    26,    25,
-      28,    34,    37,    35,    36,    27,     0,     0,    59,    58,
-       0,    54,    57,    44,    45,    43,    42,     0,     0,    50,
-      51,     0,     0,     0,     0,    38,    65,    59,    52,    53,
-      55,    56
+       0,     0,     0,     0,     0,    59,    60,    61,    62,    63,
+      41,    40,     0,     0,    23,     0,    26,     0,     0,     0,
+       0,    47,    48,    46,     0,    49,     0,     0,    25,    28,
+      34,    37,    35,    36,    27,     0,     0,    58,    57,     0,
+      53,    56,    44,    45,    43,    42,     0,     0,    50,     0,
+       0,     0,     0,    38,    64,    51,    52,    54,    55
   };
 
   const signed char
    Parser ::yypgoto_[] =
   {
-     -75,   106,   -75,   -75,    84,   -75,   -75,   -75,   -75,   -75,
-      -2,   -27,   -75,    88,   -74,   -75,   -75,   -75,   -75,    42,
-     -75,     1,    -3,   -75,   -75
+     -43,   107,   -43,   -43,    86,   -43,   -43,   -43,   -43,   -43,
+      -2,   -42,   -43,    91,   -32,   -43,   -43,   -43,   -43,   -36,
+     -43,   -40,     0,   -43,   -43
   };
 
   const signed char
    Parser ::yydefgoto_[] =
   {
        0,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      25,    43,    44,    45,    85,    19,    20,    21,    60,    71,
-      90,    91,    92,    61,    22
+      25,    43,    44,    45,    84,    19,    20,    21,    60,    71,
+      89,    90,    91,    61,    22
   };
 
   const signed char
    Parser ::yytable_[] =
   {
-      27,    29,    65,    96,    62,    93,    51,    52,    53,    54,
-     100,    31,    97,    24,    34,    33,   101,   102,    36,    88,
-      35,    89,    88,    55,    89,    56,    57,    49,    66,    24,
-     103,   104,    59,    38,    39,    40,    41,    42,    78,    79,
-      38,    39,    40,    41,    42,    38,    39,    40,    41,    42,
-      27,    29,     1,     2,     3,     4,     5,     6,     7,    30,
-      80,     8,    81,    82,    83,    84,    95,     9,    81,    82,
-      83,    84,    23,    26,    94,    28,    23,    24,    24,    26,
-      24,    70,    28,    30,    70,    98,    32,    70,    74,    81,
-      82,    83,    84,    46,    72,    73,    75,   107,    47,    89,
-     110,   111,   108,   109,    48,    50,    64,    67,    76,    68,
-      69,    77,    86,    87,    24,    99,   105,    37,    58,     0,
-     106,     0,     0,    63
+      27,    29,    66,    87,    62,    88,     1,     2,     3,     4,
+       5,     6,     7,    98,    92,     8,    72,    73,    75,    99,
+     100,     9,    24,    78,    38,    39,    40,    41,    42,    87,
+      30,    88,    59,    38,    39,    40,    41,    42,    51,    52,
+      53,    54,    34,    31,    97,    95,   101,   102,    35,    23,
+      27,    29,    65,    96,    24,    55,    33,    56,    57,   105,
+     106,    24,    32,    38,    39,    40,    41,    42,    79,    36,
+      80,    81,    82,    83,    93,    94,    26,    80,    81,    82,
+      83,    24,    28,    23,    26,    28,    30,    24,    70,    70,
+      70,    74,    38,    39,    40,    41,    42,    80,    81,    82,
+      83,   107,   108,    46,    47,    48,    49,    50,    67,    68,
+      64,    69,    86,    76,    77,    85,   104,   103,    37,     0,
+      58,     0,     0,     0,     0,     0,    63
   };
 
   const signed char
    Parser ::yycheck_[] =
   {
-       2,     3,     3,    77,    11,    19,     4,     5,     6,     7,
-      26,    36,    86,    27,    25,    36,    32,    33,     0,    19,
-      31,    21,    19,    21,    21,    23,    24,    12,    29,    27,
-      34,    35,    34,    40,    41,    42,    43,    44,    65,    66,
-      40,    41,    42,    43,    44,    40,    41,    42,    43,    44,
-      52,    53,     4,     5,     6,     7,     8,     9,    10,    22,
-      19,    13,    21,    22,    23,    24,    19,    19,    21,    22,
-      23,    24,    22,    22,    76,    22,    22,    27,    27,    22,
-      27,    27,    22,    22,    27,    87,    22,    27,    27,    21,
-      22,    23,    24,    22,    52,    53,    54,    19,    22,    21,
-     103,   104,   101,   102,    22,    20,    26,    28,    25,    37,
-      37,    25,    38,    38,    27,    26,    39,    11,    34,    -1,
-      39,    -1,    -1,    35
+       2,     3,    44,    19,    11,    21,     4,     5,     6,     7,
+       8,     9,    10,    26,    19,    13,    52,    53,    54,    32,
+      33,    19,    27,    65,    40,    41,    42,    43,    44,    19,
+      22,    21,    34,    40,    41,    42,    43,    44,     4,     5,
+       6,     7,    25,    36,    86,    77,    34,    35,    31,    22,
+      52,    53,    29,    85,    27,    21,    36,    23,    24,    99,
+     100,    27,    22,    40,    41,    42,    43,    44,    19,     0,
+      21,    22,    23,    24,    76,    19,    22,    21,    22,    23,
+      24,    27,    22,    22,    22,    22,    22,    27,    27,    27,
+      27,    27,    40,    41,    42,    43,    44,    21,    22,    23,
+      24,   101,   102,    22,    22,    22,    12,    20,    28,    37,
+      26,    37,    27,    25,    25,    38,    26,    39,    11,    -1,
+      34,    -1,    -1,    -1,    -1,    -1,    35
   };
 
   const signed char
@@ -1923,12 +1909,11 @@ namespace yy {
       22,    36,    22,    36,    25,    31,     0,    46,    40,    41,
       42,    43,    44,    56,    57,    58,    22,    22,    22,    12,
       20,     4,     5,     6,     7,    21,    23,    24,    49,    55,
-      63,    68,    11,    58,    26,     3,    29,    28,    37,    37,
-      27,    64,    64,    64,    27,    64,    25,    25,    56,    56,
-      19,    21,    22,    23,    24,    59,    38,    38,    19,    21,
-      65,    66,    67,    19,    55,    19,    59,    59,    55,    26,
-      26,    32,    33,    34,    35,    39,    39,    19,    66,    66,
-      67,    67
+      63,    68,    11,    58,    26,    29,    56,    28,    37,    37,
+      27,    64,    64,    64,    27,    64,    25,    25,    56,    19,
+      21,    22,    23,    24,    59,    38,    27,    19,    21,    65,
+      66,    67,    19,    55,    19,    59,    59,    56,    26,    32,
+      33,    34,    35,    39,    26,    66,    66,    67,    67
   };
 
   const signed char
@@ -1939,8 +1924,8 @@ namespace yy {
       52,    53,    54,    55,    56,    56,    56,    57,    57,    58,
       58,    58,    58,    58,    59,    59,    59,    59,    60,    61,
       62,    62,    62,    62,    62,    62,    63,    63,    63,    63,
-      64,    64,    65,    65,    65,    66,    66,    66,    67,    67,
-      68,    68,    68,    68,    68,    69
+      64,    65,    65,    65,    66,    66,    66,    67,    67,    68,
+      68,    68,    68,    68,    69
   };
 
   const signed char
@@ -1948,11 +1933,11 @@ namespace yy {
   {
        0,     2,     2,     0,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     3,     2,     3,     2,     3,
-       2,     2,     1,     3,     1,     3,     3,     3,     3,     1,
+       2,     2,     1,     3,     1,     3,     2,     3,     3,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     7,     2,
        3,     3,     5,     5,     5,     5,     2,     2,     2,     2,
-       3,     3,     3,     3,     1,     3,     3,     1,     1,     1,
-       1,     1,     1,     1,     1,     7
+       3,     3,     3,     1,     3,     3,     1,     1,     1,     1,
+       1,     1,     1,     1,     7
   };
 
 
@@ -1989,8 +1974,8 @@ namespace yy {
      123,   130,   136,   142,   148,   151,   155,   162,   165,   174,
      175,   176,   177,   178,   182,   183,   184,   185,   189,   196,
      203,   215,   221,   227,   236,   247,   259,   260,   261,   262,
-     266,   273,   277,   278,   279,   283,   284,   285,   289,   290,
-     301,   302,   303,   304,   305,   309
+     266,   270,   271,   272,   276,   277,   278,   282,   283,   294,
+     295,   296,   297,   298,   302
   };
 
   void
@@ -2072,9 +2057,9 @@ namespace yy {
   }
 
 } // yy
-#line 2076 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
+#line 2061 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
 
-#line 315 "parser/parser.yy"
+#line 308 "parser/parser.yy"
 
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
