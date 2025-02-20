@@ -209,6 +209,8 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/allocator.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_base.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_lockfree_defines.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/basic_ios.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/basic_ios.tcc
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.tcc
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/char_traits.h
@@ -226,6 +228,12 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/functional_hash.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/hash_bytes.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/invoke.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/ios_base.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/locale_classes.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/locale_classes.tcc
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets.tcc
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/localefwd.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/memory_resource.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/memoryfwd.h
@@ -233,6 +241,7 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/nested_exception.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/ostream_insert.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/postypes.h
@@ -260,6 +269,8 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/streambuf.tcc
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/streambuf_iterator.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/string_view.tcc
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/stringfwd.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h
@@ -276,6 +287,7 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/cstdio
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/cstdlib
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/cwchar
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/cwctype
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/debug/assertions.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/debug/debug.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/exception
@@ -287,17 +299,23 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/ext/string_conversions.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/ext/type_traits.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/initializer_list
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/ios
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/iosfwd
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/iostream
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/istream
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/map
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/memory
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/new
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/ostream
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/pstl/execution_defs.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_memory_defs.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/pstl/pstl_config.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/stdexcept
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/stdlib.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/streambuf
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/string
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/string_view
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/system_error
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/tuple
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/type_traits
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/typeinfo
@@ -308,6 +326,9 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++locale.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/cpu_defines.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/ctype_base.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/ctype_inline.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/error_constants.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/gthr-default.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/gthr.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/os_defines.h
@@ -343,6 +364,7 @@ CMakeFiles/projet.dir/parser/bloc.cc.o
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/time.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/vadefs.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/wchar.h
+ /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/include/wctype.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h
  /c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h

@@ -432,12 +432,16 @@ namespace yy {
       char dummy2[sizeof (TitreInfo)];
 
       // ENTIER
+      // INDICE
       char dummy3[sizeof (int)];
 
       // attributs
       // liste_attributs
       // attribut
       char dummy4[sizeof (std::map<std::string, std::string>)];
+
+      // selecteur
+      char dummy5[sizeof (std::pair<std::string, int>)];
 
       // PROPRIETE
       // COMMENTAIRE
@@ -447,6 +451,7 @@ namespace yy {
       // POUR
       // FINI
       // IDENTIFIANT
+      // BLOCS
       // CHAINE
       // HEX_COULEUR
       // RGB_COULEUR
@@ -456,6 +461,7 @@ namespace yy {
       // DEUX_POINTS
       // VIRGULE
       // POINT_VIRGULE
+      // POINT
       // LARGEUR
       // HAUTEUR
       // COULEURTEXTE
@@ -465,11 +471,11 @@ namespace yy {
       // valeur
       // define
       // style
-      char dummy5[sizeof (std::string)];
+      char dummy6[sizeof (std::string)];
 
       // variable
       // valeurvar
-      char dummy6[sizeof (std::variant<int, std::string, Bloc*>)];
+      char dummy7[sizeof (std::variant<int, std::string, Bloc*>)];
     };
 
     /// The size of the largest semantic type.
@@ -538,25 +544,28 @@ namespace yy {
     POUR = 271,                    // POUR
     FINI = 272,                    // FINI
     IDENTIFIANT = 273,             // IDENTIFIANT
-    ENTIER = 274,                  // ENTIER
-    CHAINE = 275,                  // CHAINE
-    HEX_COULEUR = 276,             // HEX_COULEUR
-    RGB_COULEUR = 277,             // RGB_COULEUR
-    EGAL = 278,                    // EGAL
-    CROCHET_FERMANT = 279,         // CROCHET_FERMANT
-    CROCHET_OUVRANT = 280,         // CROCHET_OUVRANT
-    DEUX_POINTS = 281,             // DEUX_POINTS
-    VIRGULE = 282,                 // VIRGULE
-    POINT_VIRGULE = 283,           // POINT_VIRGULE
-    PARENTHESE_OUVRANTE = 284,     // PARENTHESE_OUVRANTE
-    PARENTHESE_FERMANTE = 285,     // PARENTHESE_FERMANTE
-    ACCOLADE_OUVRANTE = 286,       // ACCOLADE_OUVRANTE
-    ACCOLADE_FERMANTE = 287,       // ACCOLADE_FERMANTE
-    LARGEUR = 288,                 // LARGEUR
-    HAUTEUR = 289,                 // HAUTEUR
-    COULEURTEXTE = 290,            // COULEURTEXTE
-    COULEURFOND = 291,             // COULEURFOND
-    OPACITE = 292                  // OPACITE
+    BLOCS = 274,                   // BLOCS
+    ENTIER = 275,                  // ENTIER
+    CHAINE = 276,                  // CHAINE
+    HEX_COULEUR = 277,             // HEX_COULEUR
+    RGB_COULEUR = 278,             // RGB_COULEUR
+    EGAL = 279,                    // EGAL
+    CROCHET_FERMANT = 280,         // CROCHET_FERMANT
+    CROCHET_OUVRANT = 281,         // CROCHET_OUVRANT
+    DEUX_POINTS = 282,             // DEUX_POINTS
+    VIRGULE = 283,                 // VIRGULE
+    POINT_VIRGULE = 284,           // POINT_VIRGULE
+    POINT = 285,                   // POINT
+    PARENTHESE_OUVRANTE = 286,     // PARENTHESE_OUVRANTE
+    PARENTHESE_FERMANTE = 287,     // PARENTHESE_FERMANTE
+    ACCOLADE_OUVRANTE = 288,       // ACCOLADE_OUVRANTE
+    ACCOLADE_FERMANTE = 289,       // ACCOLADE_FERMANTE
+    LARGEUR = 290,                 // LARGEUR
+    HAUTEUR = 291,                 // HAUTEUR
+    COULEURTEXTE = 292,            // COULEURTEXTE
+    COULEURFOND = 293,             // COULEURFOND
+    OPACITE = 294,                 // OPACITE
+    INDICE = 295                   // INDICE
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -573,7 +582,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 38, ///< Number of tokens.
+        YYNTOKENS = 41, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -594,45 +603,50 @@ namespace yy {
         S_POUR = 16,                             // POUR
         S_FINI = 17,                             // FINI
         S_IDENTIFIANT = 18,                      // IDENTIFIANT
-        S_ENTIER = 19,                           // ENTIER
-        S_CHAINE = 20,                           // CHAINE
-        S_HEX_COULEUR = 21,                      // HEX_COULEUR
-        S_RGB_COULEUR = 22,                      // RGB_COULEUR
-        S_EGAL = 23,                             // EGAL
-        S_CROCHET_FERMANT = 24,                  // CROCHET_FERMANT
-        S_CROCHET_OUVRANT = 25,                  // CROCHET_OUVRANT
-        S_DEUX_POINTS = 26,                      // DEUX_POINTS
-        S_VIRGULE = 27,                          // VIRGULE
-        S_POINT_VIRGULE = 28,                    // POINT_VIRGULE
-        S_PARENTHESE_OUVRANTE = 29,              // PARENTHESE_OUVRANTE
-        S_PARENTHESE_FERMANTE = 30,              // PARENTHESE_FERMANTE
-        S_ACCOLADE_OUVRANTE = 31,                // ACCOLADE_OUVRANTE
-        S_ACCOLADE_FERMANTE = 32,                // ACCOLADE_FERMANTE
-        S_LARGEUR = 33,                          // LARGEUR
-        S_HAUTEUR = 34,                          // HAUTEUR
-        S_COULEURTEXTE = 35,                     // COULEURTEXTE
-        S_COULEURFOND = 36,                      // COULEURFOND
-        S_OPACITE = 37,                          // OPACITE
-        S_YYACCEPT = 38,                         // $accept
-        S_programme = 39,                        // programme
-        S_programme_element = 40,                // programme_element
-        S_declaration = 41,                      // declaration
-        S_bloc_element = 42,                     // bloc_element
-        S_titre = 43,                            // titre
-        S_sous_titre = 44,                       // sous_titre
-        S_paragraphe = 45,                       // paragraphe
-        S_image = 46,                            // image
-        S_commentaire = 47,                      // commentaire
-        S_attributs = 48,                        // attributs
-        S_liste_attributs = 49,                  // liste_attributs
-        S_attribut = 50,                         // attribut
-        S_nomattribut = 51,                      // nomattribut
-        S_valeur = 52,                           // valeur
-        S_define = 53,                           // define
-        S_titrepage = 54,                        // titrepage
-        S_variable = 55,                         // variable
-        S_valeurvar = 56,                        // valeurvar
-        S_style = 57                             // style
+        S_BLOCS = 19,                            // BLOCS
+        S_ENTIER = 20,                           // ENTIER
+        S_CHAINE = 21,                           // CHAINE
+        S_HEX_COULEUR = 22,                      // HEX_COULEUR
+        S_RGB_COULEUR = 23,                      // RGB_COULEUR
+        S_EGAL = 24,                             // EGAL
+        S_CROCHET_FERMANT = 25,                  // CROCHET_FERMANT
+        S_CROCHET_OUVRANT = 26,                  // CROCHET_OUVRANT
+        S_DEUX_POINTS = 27,                      // DEUX_POINTS
+        S_VIRGULE = 28,                          // VIRGULE
+        S_POINT_VIRGULE = 29,                    // POINT_VIRGULE
+        S_POINT = 30,                            // POINT
+        S_PARENTHESE_OUVRANTE = 31,              // PARENTHESE_OUVRANTE
+        S_PARENTHESE_FERMANTE = 32,              // PARENTHESE_FERMANTE
+        S_ACCOLADE_OUVRANTE = 33,                // ACCOLADE_OUVRANTE
+        S_ACCOLADE_FERMANTE = 34,                // ACCOLADE_FERMANTE
+        S_LARGEUR = 35,                          // LARGEUR
+        S_HAUTEUR = 36,                          // HAUTEUR
+        S_COULEURTEXTE = 37,                     // COULEURTEXTE
+        S_COULEURFOND = 38,                      // COULEURFOND
+        S_OPACITE = 39,                          // OPACITE
+        S_INDICE = 40,                           // INDICE
+        S_YYACCEPT = 41,                         // $accept
+        S_programme = 42,                        // programme
+        S_programme_element = 43,                // programme_element
+        S_declaration = 44,                      // declaration
+        S_bloc_element = 45,                     // bloc_element
+        S_titre = 46,                            // titre
+        S_sous_titre = 47,                       // sous_titre
+        S_paragraphe = 48,                       // paragraphe
+        S_image = 49,                            // image
+        S_commentaire = 50,                      // commentaire
+        S_attributs = 51,                        // attributs
+        S_liste_attributs = 52,                  // liste_attributs
+        S_attribut = 53,                         // attribut
+        S_nomattribut = 54,                      // nomattribut
+        S_valeur = 55,                           // valeur
+        S_define = 56,                           // define
+        S_titrepage = 57,                        // titrepage
+        S_variable = 58,                         // variable
+        S_59_1 = 59,                             // $@1
+        S_selecteur = 60,                        // selecteur
+        S_valeurvar = 61,                        // valeurvar
+        S_style = 62                             // style
       };
     };
 
@@ -685,6 +699,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
+      case symbol_kind::S_INDICE: // INDICE
         value.move< int > (std::move (that.value));
         break;
 
@@ -692,6 +707,10 @@ namespace yy {
       case symbol_kind::S_liste_attributs: // liste_attributs
       case symbol_kind::S_attribut: // attribut
         value.move< std::map<std::string, std::string> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_selecteur: // selecteur
+        value.move< std::pair<std::string, int> > (std::move (that.value));
         break;
 
       case symbol_kind::S_PROPRIETE: // PROPRIETE
@@ -702,6 +721,7 @@ namespace yy {
       case symbol_kind::S_POUR: // POUR
       case symbol_kind::S_FINI: // FINI
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
+      case symbol_kind::S_BLOCS: // BLOCS
       case symbol_kind::S_CHAINE: // CHAINE
       case symbol_kind::S_HEX_COULEUR: // HEX_COULEUR
       case symbol_kind::S_RGB_COULEUR: // RGB_COULEUR
@@ -711,6 +731,7 @@ namespace yy {
       case symbol_kind::S_DEUX_POINTS: // DEUX_POINTS
       case symbol_kind::S_VIRGULE: // VIRGULE
       case symbol_kind::S_POINT_VIRGULE: // POINT_VIRGULE
+      case symbol_kind::S_POINT: // POINT
       case symbol_kind::S_LARGEUR: // LARGEUR
       case symbol_kind::S_HAUTEUR: // HAUTEUR
       case symbol_kind::S_COULEURTEXTE: // COULEURTEXTE
@@ -808,6 +829,20 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::pair<std::string, int>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::pair<std::string, int>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -875,6 +910,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
+      case symbol_kind::S_INDICE: // INDICE
         value.template destroy< int > ();
         break;
 
@@ -882,6 +918,10 @@ switch (yykind)
       case symbol_kind::S_liste_attributs: // liste_attributs
       case symbol_kind::S_attribut: // attribut
         value.template destroy< std::map<std::string, std::string> > ();
+        break;
+
+      case symbol_kind::S_selecteur: // selecteur
+        value.template destroy< std::pair<std::string, int> > ();
         break;
 
       case symbol_kind::S_PROPRIETE: // PROPRIETE
@@ -892,6 +932,7 @@ switch (yykind)
       case symbol_kind::S_POUR: // POUR
       case symbol_kind::S_FINI: // FINI
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
+      case symbol_kind::S_BLOCS: // BLOCS
       case symbol_kind::S_CHAINE: // CHAINE
       case symbol_kind::S_HEX_COULEUR: // HEX_COULEUR
       case symbol_kind::S_RGB_COULEUR: // RGB_COULEUR
@@ -901,6 +942,7 @@ switch (yykind)
       case symbol_kind::S_DEUX_POINTS: // DEUX_POINTS
       case symbol_kind::S_VIRGULE: // VIRGULE
       case symbol_kind::S_POINT_VIRGULE: // POINT_VIRGULE
+      case symbol_kind::S_POINT: // POINT
       case symbol_kind::S_LARGEUR: // LARGEUR
       case symbol_kind::S_HAUTEUR: // HAUTEUR
       case symbol_kind::S_COULEURTEXTE: // COULEURTEXTE
@@ -1042,7 +1084,8 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT (tok == token::ENTIER);
+        YY_ASSERT (tok == token::ENTIER
+                   || tok == token::INDICE);
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1054,8 +1097,8 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT ((token::PROPRIETE <= tok && tok <= token::IDENTIFIANT)
-                   || (token::CHAINE <= tok && tok <= token::POINT_VIRGULE)
+        YY_ASSERT ((token::PROPRIETE <= tok && tok <= token::BLOCS)
+                   || (token::CHAINE <= tok && tok <= token::POINT)
                    || (token::LARGEUR <= tok && tok <= token::OPACITE));
 #endif
       }
@@ -1395,6 +1438,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_BLOCS (std::string v, location_type l)
+      {
+        return symbol_type (token::BLOCS, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_BLOCS (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::BLOCS, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_ENTIER (int v, location_type l)
       {
         return symbol_type (token::ENTIER, std::move (v), std::move (l));
@@ -1545,6 +1603,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_POINT (std::string v, location_type l)
+      {
+        return symbol_type (token::POINT, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_POINT (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::POINT, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_PARENTHESE_OUVRANTE (location_type l)
       {
         return symbol_type (token::PARENTHESE_OUVRANTE, std::move (l));
@@ -1675,6 +1748,21 @@ switch (yykind)
       make_OPACITE (const std::string& v, const location_type& l)
       {
         return symbol_type (token::OPACITE, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_INDICE (int v, location_type l)
+      {
+        return symbol_type (token::INDICE, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_INDICE (const int& v, const location_type& l)
+      {
+        return symbol_type (token::INDICE, v, l);
       }
 #endif
 
@@ -2007,8 +2095,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 69,     ///< Last index in yytable_.
-      yynnts_ = 20,  ///< Number of nonterminal symbols.
+      yylast_ = 84,     ///< Last index in yytable_.
+      yynnts_ = 22,  ///< Number of nonterminal symbols.
       yyfinal_ = 35 ///< Termination state number.
     };
 
@@ -2021,7 +2109,7 @@ switch (yykind)
 
 
 } // yy
-#line 2025 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
+#line 2113 "/c/Users/radou/Documents/GitHub/L3MI/autre/projetSRC/build/parser.hpp"
 
 
 

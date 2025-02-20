@@ -207,6 +207,8 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/c++/14.2.0/bits/allocator.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_base.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_lockfree_defines.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/basic_ios.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/basic_ios.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/char_traits.h \
@@ -224,6 +226,12 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/c++/14.2.0/bits/functional_hash.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/hash_bytes.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/invoke.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/ios_base.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/locale_classes.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/locale_classes.tcc \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/localefwd.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/memory_resource.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/memoryfwd.h \
@@ -231,6 +239,7 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/c++/14.2.0/bits/nested_exception.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/ostream_insert.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/postypes.h \
@@ -258,6 +267,8 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/streambuf.tcc \
+  C:/msys64/mingw64/include/c++/14.2.0/bits/streambuf_iterator.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/string_view.tcc \
   C:/msys64/mingw64/include/c++/14.2.0/bits/stringfwd.h \
   C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
@@ -274,6 +285,7 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/c++/14.2.0/cstdio \
   C:/msys64/mingw64/include/c++/14.2.0/cstdlib \
   C:/msys64/mingw64/include/c++/14.2.0/cwchar \
+  C:/msys64/mingw64/include/c++/14.2.0/cwctype \
   C:/msys64/mingw64/include/c++/14.2.0/debug/assertions.h \
   C:/msys64/mingw64/include/c++/14.2.0/debug/debug.h \
   C:/msys64/mingw64/include/c++/14.2.0/exception \
@@ -285,17 +297,23 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/c++/14.2.0/ext/string_conversions.h \
   C:/msys64/mingw64/include/c++/14.2.0/ext/type_traits.h \
   C:/msys64/mingw64/include/c++/14.2.0/initializer_list \
+  C:/msys64/mingw64/include/c++/14.2.0/ios \
   C:/msys64/mingw64/include/c++/14.2.0/iosfwd \
+  C:/msys64/mingw64/include/c++/14.2.0/iostream \
+  C:/msys64/mingw64/include/c++/14.2.0/istream \
   C:/msys64/mingw64/include/c++/14.2.0/map \
   C:/msys64/mingw64/include/c++/14.2.0/memory \
   C:/msys64/mingw64/include/c++/14.2.0/new \
+  C:/msys64/mingw64/include/c++/14.2.0/ostream \
   C:/msys64/mingw64/include/c++/14.2.0/pstl/execution_defs.h \
   C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_memory_defs.h \
   C:/msys64/mingw64/include/c++/14.2.0/pstl/pstl_config.h \
   C:/msys64/mingw64/include/c++/14.2.0/stdexcept \
   C:/msys64/mingw64/include/c++/14.2.0/stdlib.h \
+  C:/msys64/mingw64/include/c++/14.2.0/streambuf \
   C:/msys64/mingw64/include/c++/14.2.0/string \
   C:/msys64/mingw64/include/c++/14.2.0/string_view \
+  C:/msys64/mingw64/include/c++/14.2.0/system_error \
   C:/msys64/mingw64/include/c++/14.2.0/tuple \
   C:/msys64/mingw64/include/c++/14.2.0/type_traits \
   C:/msys64/mingw64/include/c++/14.2.0/typeinfo \
@@ -306,6 +324,9 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++locale.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/cpu_defines.h \
+  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/ctype_base.h \
+  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/ctype_inline.h \
+  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/error_constants.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/gthr-default.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/gthr.h \
   C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/os_defines.h \
@@ -341,6 +362,7 @@ CMakeFiles/projet.dir/parser/bloc.cc.o: /c/Users/radou/Documents/GitHub/L3MI/aut
   C:/msys64/mingw64/include/time.h \
   C:/msys64/mingw64/include/vadefs.h \
   C:/msys64/mingw64/include/wchar.h \
+  C:/msys64/mingw64/include/wctype.h \
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h \
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h \
   C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h \

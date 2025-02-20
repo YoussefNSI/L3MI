@@ -11,6 +11,7 @@ class Bloc
 public:
     virtual ~Bloc() = default;
     virtual std::string toHTML() = 0;
+    virtual void setPropriete(const std::string &nom, const std::string &valeur) = 0;
 };
 
 class Titre : public Bloc
@@ -23,6 +24,8 @@ public:
     std::string toHTML() override;
     std::string getTexte() const { return texte; }
     std::map<std::string, std::string> getAttributs() const { return attributs; }
+
+    void setPropriete(const std::string &nom, const std::string &valeur) override;
 
 private:
     std::map<std::string, std::string> attributs;
@@ -40,6 +43,8 @@ public:
     std::string getTexte() const { return texte; }
     std::map<std::string, std::string> getAttributs() const { return attributs; }
 
+    void setPropriete(const std::string &nom, const std::string &valeur) override;
+
 private:
     std::map<std::string, std::string> attributs;
     std::string texte;
@@ -52,6 +57,8 @@ public:
     std::string toHTML() override;
     std::string getSrc() const { return src; }
 
+    void setPropriete(const std::string &nom, const std::string &valeur) override;
+
 private:
     std::string src;
 };
@@ -62,6 +69,8 @@ public:
     TitrePage(std::string texte) : texte(texte) {}
     std::string toHTML() override;
     std::string getTexte() const { return texte; }
+
+    void setPropriete(const std::string &nom, const std::string &valeur) override;
 
 private:
     std::string texte;
@@ -74,6 +83,8 @@ public:
     std::string toHTML() override;
     std::string getTexte() const { return texte; }
 
+    void setPropriete(const std::string &nom, const std::string &valeur) override;
+
 private:
     std::string texte;
 };
@@ -83,18 +94,16 @@ using VariableType = std::variant<int, std::string, Bloc *>;
 class Document
 {
 public:
+    static int nbParagraphe, nbTitre, nbImage, nbTitrePage, nbCommentaire;
     Document() = default;
     ~Document()
     {
-        for (auto bloc : blocs)
+        for (auto &pair : blocs)
         {
-            delete bloc;
+            delete pair.second;
         }
     }
-    void addBloc(Bloc *bloc)
-    {
-        blocs.push_back(bloc);
-    }
+    void addBloc(const std::string &type, Bloc *bloc);
     void setPropriete(const std::string &nom, const std::string &valeur)
     {
         proprietes[nom] = valeur;
@@ -113,9 +122,12 @@ public:
     std::map<std::string, std::string> getStyle(const std::string &nom) const;
     std::string toHTML() const;
 
+    Bloc *getNBloc(const std::string &type, int index) const;
+
 private:
-    std::vector<Bloc *> blocs;
+    std::map<std::string, Bloc *> blocs;                                // blocs
     std::map<std::string, std::string> proprietes;                       // @DEFINE
     std::map<std::string, VariableType> variables;                       // variables
-    std::map<std::string, std::map<std::string, std::string>> mapStyles; // attributs
+    std::map<std::string, std::map<std::string, std::string>> mapStyles; // @STYLE
 };
+
