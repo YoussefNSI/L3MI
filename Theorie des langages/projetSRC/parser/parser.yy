@@ -53,12 +53,12 @@
 %token <std::string>   HEX_COULEUR RGB_COULEUR
 %token                 EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE POINT
 %token                 PARENTHESE_OUVRANTE PARENTHESE_FERMANTE ACCOLADE_OUVRANTE ACCOLADE_FERMANTE
-%token <std::string>   LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
+%token                 LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
 %token <int>           INDICE
 
 
 %type <Bloc*> bloc_element titre sous_titre paragraphe image titrepage commentaire
-%type <std::variant<int, std::string, Bloc*>> variable valeurvar
+%type <std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>> variable valeurvar
 %type <std::map<std::string, std::string>> attributs
 %type <std::map<std::string, std::string>> liste_attributs
 %type <std::map<std::string, std::string>> attribut
@@ -97,45 +97,45 @@ bloc_element:
 titre:
     TITRE attributs CHAINE { 
         $$ = new Titre($2, $3, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
     | TITRE CHAINE { 
         $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
 ;
 
 sous_titre:
     SOUS_TITRE attributs CHAINE { 
         $$ = new Titre($2, $3, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
     | SOUS_TITRE CHAINE { 
         $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
-        doc->addBloc("titre", $$);
+        doc->addBloc($$);
     }
 ;
 
 paragraphe:
     PARAGRAPHE attributs CHAINE { 
         $$ = new Paragraphe($2, $3);
-        doc->addBloc("paragraphe", $$);
+        doc->addBloc($$);
     }
     | PARAGRAPHE CHAINE { 
         $$ = new Paragraphe(std::map<std::string, std::string>(), $2);
-        doc->addBloc("paragraphe", $$);
+        doc->addBloc($$);
     }
 ;
 
 image:
     IMAGE CHAINE { 
-        doc->addBloc("image", new Image($2));
+        doc->addBloc(new Image($2));
     }
 ;
 
 commentaire:
     COMMENTAIRE { 
-        doc->addBloc("commentaire", new Commentaire($1));
+        doc->addBloc(new Commentaire($1));
     }
 ;
 
@@ -163,6 +163,12 @@ attribut:
     nomattribut DEUX_POINTS valeur { 
          $$ = std::map<std::string, std::string>{{ $1, $3 }};
     }
+    | nomattribut DEUX_POINTS IDENTIFIANT {
+        std::string val = std::get<std::string>(doc->getVariable($3));
+        if (val != "") {
+            $$ = std::map<std::string, std::string>{{ $1, val }};
+        }
+    }
 ;
 
 nomattribut:
@@ -174,7 +180,7 @@ nomattribut:
 ;
 
 valeur:
-    ENTIER { $$ = $1; }
+    ENTIER { $$ = std::to_string($1); } // ne pas oublier de gerer ce cas dans bloc.cc/bloc.h
     | HEX_COULEUR { $$ = $1; }
     | RGB_COULEUR { $$ = $1; }
     | CHAINE { $$ = $1; }
@@ -190,7 +196,7 @@ define:
 titrepage:
     TITREPAGE CHAINE { 
         auto bloc = new TitrePage($2);
-        doc->addBloc("z", bloc);
+        doc->addBloc(bloc);
     }
 ;
 
@@ -202,7 +208,10 @@ variable:
             doc->setVariable($1, std::get<int>($3));
         } else if (std::holds_alternative<std::string>($3)) {
             doc->setVariable($1, std::get<std::string>($3));
+        } else if (std::holds_alternative<std::map<std::string, std::string>>($3)) {
+            doc->setVariable($1, std::get<std::map<std::string, std::string>>($3));
         }
+
     }
     | IDENTIFIANT EGAL selecteur { 
         Bloc *b = doc->getNBloc($3.first, $3.second);
@@ -210,10 +219,19 @@ variable:
             doc->setVariable($1, b);
         }
     }
-    IDENTIFIANT POINT nomattribut EGAL valeur {
+    | IDENTIFIANT POINT nomattribut EGAL valeur {
         Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
         if (bloc != nullptr) {
-            bloc->setPropriete($3.first, $5);
+            bloc->setPropriete($3, $5);
+        }
+    }
+    | IDENTIFIANT POINT nomattribut EGAL IDENTIFIANT {
+        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        if (bloc != nullptr) {
+            std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> prop = doc->getVariable($5);
+            if (std::holds_alternative<std::string>(prop)) {
+                bloc->setPropriete($3, std::get<std::string>(prop));
+            }
         }
     }
 ;
@@ -241,9 +259,8 @@ valeurvar:
     ENTIER { $$ = $1; }
     | HEX_COULEUR { $$ = $1; }
     | RGB_COULEUR { $$ = $1; }
-    | bloc_element { 
-        $$ = std::variant<int, std::string, Bloc*>($1); 
-    }
+    | bloc_element { $$ = std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>($1); }
+    | attributs { $$ = $1; }
 ;
 
 style:

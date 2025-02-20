@@ -25,7 +25,8 @@ using token = yy::Parser::token;
     yylval = lval;
 %}
 
-[ \t\n]+        ; 
+[ \t\r]+         ; 
+[\n]+           {loc->step(); loc->lines(yyleng); }
 
 !T+ {
     int length = yyleng - 1;
@@ -85,11 +86,11 @@ rgb\(([0-9]+),([0-9]+),([0-9]+)\) {
     return token::HEX_COULEUR;
     }
 
-couleurTexte   return token::COULEURTEXTE;
-couleurFond    return token::COULEURFOND;
-opacite       return token::OPACITE;
-largeur       return token::LARGEUR;
-hauteur       return token::HAUTEUR;
+couleurTexte    { std::cout << "[SCAN] COULEURTEXTE" << std::endl; return token::COULEURTEXTE; }
+couleurFond     { std::cout << "[SCAN] COULEURFOND" << std::endl; return token::COULEURFOND; }
+opacite         { std::cout << "[SCAN] OPACITE" << std::endl; return token::OPACITE; }
+largeur         { std::cout << "[SCAN] LARGEUR" << std::endl; return token::LARGEUR; }
+hauteur         { std::cout << "[SCAN] HAUTEUR" << std::endl; return token::HAUTEUR; }
 
 encodage      {
     std::cout << "[SCAN] ENCODAGE" << std::endl;

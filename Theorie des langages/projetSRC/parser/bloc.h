@@ -97,13 +97,12 @@ private:
     std::string texte;
 };
 
-using VariableType = std::variant<int, std::string, Bloc *>;
+using VariableType = std::variant<int, std::string, Bloc *, std::map<std::string, std::string>>;
 
 class Document
 {
 public:
-    static int nbParagraphe, nbTitre, nbImage, nbTitrePage, nbCommentaire;
-    Document() = default;
+    Document();
     ~Document()
     {
         for (auto &pair : blocs)
@@ -111,7 +110,7 @@ public:
             delete pair.second;
         }
     }
-    void addBloc(const std::string &type, Bloc *bloc);
+    void addBloc(Bloc *bloc);
     void setPropriete(const std::string &nom, const std::string &valeur)
     {
         proprietes[nom] = valeur;
@@ -137,5 +136,6 @@ private:
     std::map<std::string, std::string> proprietes;                       // @DEFINE
     std::map<std::string, VariableType> variables;                       // variables
     std::map<std::string, std::map<std::string, std::string>> mapStyles; // @STYLE
+    std::map<std::string, int> blocCounts;                             // compteur de bloc pour chaque type
 };
 
