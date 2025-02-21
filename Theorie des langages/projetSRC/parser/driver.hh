@@ -5,16 +5,9 @@
 
 
 class Driver {
-private:
-    std::string instructions;       
-
 public:
     Driver();
     ~Driver();
-    std::string executeInstruction(std::string instruction);
-    std::string getInstructions();
-    
-   
 };
 
 #endif

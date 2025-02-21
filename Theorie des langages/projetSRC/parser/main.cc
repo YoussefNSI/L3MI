@@ -19,7 +19,7 @@ int main( int  argc, char* argv[]) {
     yy::Parser * parser = new yy::Parser(*scanner, *driver);
 
     parser->parse();
-    doc->HTMLtoFile("output.html");
+    doc->HTMLtoFile("../output.html");
     delete driver;
     delete scanner;
     delete parser;
