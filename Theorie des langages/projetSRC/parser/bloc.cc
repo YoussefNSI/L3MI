@@ -20,7 +20,7 @@ std::string Titre::toHTML(int currentIndent)
     }
     if (style.empty())
     {
-        html = espace + "<h" + std::to_string(niveau) + ">" + texte + "</h" + std::to_string(niveau) + ">";
+        html = espace + "<h" + std::to_string(niveau) + (style.empty() ? ">" : " style=\"" + style + "\">") + texte + "</h" + std::to_string(niveau) + ">";
     }
     else
     {
@@ -60,14 +60,7 @@ std::string Paragraphe::toHTML(int currentIndent)
     std::string line;
     std::string html;
     int i = 1;
-    if (style.empty())
-    {
-        html = espace + "<p>";
-    }
-    else
-    {
-        html = espace + "<p style=\"" + style + "\"> ";
-    }
+    html = espace + "<p" + (style.empty() ? ">" : " style=\"" + style + "\">");
 
     while (std::getline(iss, line))
     {
@@ -208,7 +201,7 @@ std::string Document::toHTML() const
                     bloc.second->setPropriete(prop, valeur);
                 }
             }
-            else if (titre.first && bloc.second->getType() == "Titre" && dynamic_cast<Titre *>(bloc.second)->getNiveau() >= titre.second)
+            else if (titre.first && bloc.second->getType() == "Titre" && std::dynamic_pointer_cast<Titre>(bloc.second)->getNiveau() >= titre.second)
             {
                 for (const auto &[prop, valeur] : mapStyle)
                 {
@@ -373,15 +366,15 @@ void Document::afficherBlocs() const
     }
 }
 
-Bloc *Document::getNBloc(const std::string &type, int index) const
+std::shared_ptr<Bloc> Document::getNBloc(const std::string &type, int index) const
 {
     int count = 0;
     for (const auto &bloc : blocs)
     {
         std::cout << "Bloc de type " << bloc.first << " Valeur : " << bloc.second->getTexte() << std::endl;
-        if ((type == "p" && dynamic_cast<Paragraphe *>(bloc.second)) ||
-            (type == "h" && dynamic_cast<Titre *>(bloc.second)) ||
-            (type == "img" && dynamic_cast<Image *>(bloc.second)))
+        if ((type == "p" && std::dynamic_pointer_cast<Paragraphe>(bloc.second)) ||
+            (type == "h" && std::dynamic_pointer_cast<Titre>(bloc.second)) ||
+            (type == "img" && std::dynamic_pointer_cast<Image>(bloc.second)))
         {
             if (count == index)
             {
@@ -393,7 +386,7 @@ Bloc *Document::getNBloc(const std::string &type, int index) const
     throw std::runtime_error("Bloc de type " + type + " avec l'indice " + std::to_string(index) + " introuvable");
 }
 
-void Document::addBloc(Bloc *bloc)
+void Document::addBloc(std::shared_ptr<Bloc> bloc)
 {
     std::string type = bloc->getType();
     ++blocCounts[type];

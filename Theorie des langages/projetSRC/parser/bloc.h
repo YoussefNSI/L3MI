@@ -100,21 +100,14 @@ private:
     std::string texte;
 };
 
-using VariableType = std::variant<int, std::string, Bloc *, std::map<std::string, std::string>>;
+using VariableType = std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>>;
 
 class Document
 {
 public:
     Document();
-    ~Document()
-    {
-        for (auto &pair : blocs)
-        {
-            delete pair.second;
-        }
-        delete metablocs.second;
-    }
-    void addBloc(Bloc *bloc);
+    ~Document() = default;
+    void addBloc(std::shared_ptr<Bloc> bloc);
     void setPropriete(const std::string &nom, const std::string &valeur)
     {
         proprietes[nom] = valeur;
@@ -134,11 +127,11 @@ public:
     std::string toHTML() const;
     void HTMLtoFile(const std::string &filename) const;
 
-    Bloc *getNBloc(const std::string &type, int index) const;
+    std::shared_ptr<Bloc> getNBloc(const std::string &type, int index) const;
 
 private:
-    std::map<std::string, Bloc *> blocs;                                // blocs
-    std::pair<std::string, Bloc *> metablocs;                           // titrepage
+    std::map<std::string, std::shared_ptr<Bloc>> blocs;                                // blocs
+    std::pair<std::string, std::shared_ptr<Bloc>> metablocs;                           // titrepage
     std::map<std::string, std::string> proprietes;                       // @DEFINE
     std::map<std::string, VariableType> variables;                       // variables
     std::map<std::string, std::map<std::string, std::string>> mapStyles; // @STYLE

@@ -56,7 +56,7 @@
         int niveau;
     };
 
-    extern Document* doc;
+    extern std::shared_ptr<Document> doc;
 
 
 #line 63 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
@@ -418,22 +418,12 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // bloc_element
-      // titre
-      // sous_titre
-      // paragraphe
-      // image
-      // commentaire
-      // titrepage
-      // selecteur_variable
-      char dummy1[sizeof (Bloc*)];
-
       // TITRE
       // SOUS_TITRE
-      char dummy2[sizeof (TitreInfo)];
+      char dummy1[sizeof (TitreInfo)];
 
       // condition
-      char dummy3[sizeof (bool)];
+      char dummy2[sizeof (bool)];
 
       // ENTIER
       // TITRE_INDICE
@@ -443,16 +433,26 @@ namespace yy {
       // expr
       // terme
       // facteur
-      char dummy4[sizeof (int)];
+      char dummy3[sizeof (int)];
 
       // attributs
       // liste_attributs
       // attribut
-      char dummy5[sizeof (std::map<std::string, std::string>)];
+      char dummy4[sizeof (std::map<std::string, std::string>)];
 
       // selecteur
       // selecteur_condition
-      char dummy6[sizeof (std::pair<std::string, int>)];
+      char dummy5[sizeof (std::pair<std::string, int>)];
+
+      // bloc_element
+      // titre
+      // sous_titre
+      // paragraphe
+      // image
+      // commentaire
+      // titrepage
+      // selecteur_variable
+      char dummy6[sizeof (std::shared_ptr<Bloc>)];
 
       // PROPRIETE
       // COMMENTAIRE
@@ -469,7 +469,7 @@ namespace yy {
 
       // variable
       // valeurvar
-      char dummy8[sizeof (std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>)];
+      char dummy8[sizeof (std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>>)];
     };
 
     /// The size of the largest semantic type.
@@ -701,17 +701,6 @@ namespace yy {
       {
         switch (this->kind ())
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.move< Bloc* > (std::move (that.value));
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.move< TitreInfo > (std::move (that.value));
@@ -743,6 +732,17 @@ namespace yy {
         value.move< std::pair<std::string, int> > (std::move (that.value));
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.move< std::shared_ptr<Bloc> > (std::move (that.value));
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -759,7 +759,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.move< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (std::move (that.value));
+        value.move< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > (std::move (that.value));
         break;
 
       default:
@@ -781,20 +781,6 @@ namespace yy {
 #else
       basic_symbol (typename Base::kind_type t, const location_type& l)
         : Base (t)
-        , location (l)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, Bloc*&& v, location_type&& l)
-        : Base (t)
-        , value (std::move (v))
-        , location (std::move (l))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const Bloc*& v, const location_type& l)
-        : Base (t)
-        , value (v)
         , location (l)
       {}
 #endif
@@ -870,6 +856,20 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::shared_ptr<Bloc>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::shared_ptr<Bloc>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -884,13 +884,13 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>>&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>>& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -921,17 +921,6 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.template destroy< Bloc* > ();
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.template destroy< TitreInfo > ();
@@ -963,6 +952,17 @@ switch (yykind)
         value.template destroy< std::pair<std::string, int> > ();
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.template destroy< std::shared_ptr<Bloc> > ();
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -979,7 +979,7 @@ switch (yykind)
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.template destroy< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ();
+        value.template destroy< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ();
         break;
 
       default:

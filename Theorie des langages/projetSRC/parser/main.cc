@@ -8,22 +8,23 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <memory>
 
 #include <cstring>
 
-Document* doc = new Document();
+std::shared_ptr<Document> doc = std::make_shared<Document>();
 
-int main( int  argc, char* argv[]) {
-    Driver * driver = new Driver;
-    Scanner * scanner = new Scanner(std::cin, std::cout);
-    yy::Parser * parser = new yy::Parser(*scanner, *driver);
+int main(int argc, char* argv[]) {
+    Driver* driver = new Driver;
+    Scanner* scanner = new Scanner(std::cin, std::cout);
+    yy::Parser* parser = new yy::Parser(*scanner, *driver);
 
     parser->parse();
     doc->HTMLtoFile("../output.html");
+
     delete driver;
     delete scanner;
     delete parser;
-    delete doc;
 
     return 0;
 }

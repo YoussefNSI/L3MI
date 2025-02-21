@@ -182,17 +182,6 @@ namespace yy {
   {
     switch (this->kind ())
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.copy< Bloc* > (YY_MOVE (that.value));
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.copy< TitreInfo > (YY_MOVE (that.value));
@@ -224,6 +213,17 @@ namespace yy {
         value.copy< std::pair<std::string, int> > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.copy< std::shared_ptr<Bloc> > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -240,7 +240,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.copy< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (YY_MOVE (that.value));
+        value.copy< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -274,17 +274,6 @@ namespace yy {
     super_type::move (s);
     switch (this->kind ())
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.move< Bloc* > (YY_MOVE (s.value));
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.move< TitreInfo > (YY_MOVE (s.value));
@@ -316,6 +305,17 @@ namespace yy {
         value.move< std::pair<std::string, int> > (YY_MOVE (s.value));
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.move< std::shared_ptr<Bloc> > (YY_MOVE (s.value));
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -332,7 +332,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.move< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (YY_MOVE (s.value));
+        value.move< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > (YY_MOVE (s.value));
         break;
 
       default:
@@ -436,17 +436,6 @@ namespace yy {
   {
     switch (that.kind ())
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.YY_MOVE_OR_COPY< Bloc* > (YY_MOVE (that.value));
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.YY_MOVE_OR_COPY< TitreInfo > (YY_MOVE (that.value));
@@ -478,6 +467,17 @@ namespace yy {
         value.YY_MOVE_OR_COPY< std::pair<std::string, int> > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.YY_MOVE_OR_COPY< std::shared_ptr<Bloc> > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -494,7 +494,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.YY_MOVE_OR_COPY< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (YY_MOVE (that.value));
+        value.YY_MOVE_OR_COPY< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -512,17 +512,6 @@ namespace yy {
   {
     switch (that.kind ())
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.move< Bloc* > (YY_MOVE (that.value));
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.move< TitreInfo > (YY_MOVE (that.value));
@@ -554,6 +543,17 @@ namespace yy {
         value.move< std::pair<std::string, int> > (YY_MOVE (that.value));
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.move< std::shared_ptr<Bloc> > (YY_MOVE (that.value));
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -570,7 +570,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.move< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (YY_MOVE (that.value));
+        value.move< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -588,17 +588,6 @@ namespace yy {
     state = that.state;
     switch (that.kind ())
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.copy< Bloc* > (that.value);
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.copy< TitreInfo > (that.value);
@@ -630,6 +619,17 @@ namespace yy {
         value.copy< std::pair<std::string, int> > (that.value);
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.copy< std::shared_ptr<Bloc> > (that.value);
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -646,7 +646,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.copy< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (that.value);
+        value.copy< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > (that.value);
         break;
 
       default:
@@ -663,17 +663,6 @@ namespace yy {
     state = that.state;
     switch (that.kind ())
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        value.move< Bloc* > (that.value);
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.move< TitreInfo > (that.value);
@@ -705,6 +694,17 @@ namespace yy {
         value.move< std::pair<std::string, int> > (that.value);
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        value.move< std::shared_ptr<Bloc> > (that.value);
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -721,7 +721,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        value.move< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > (that.value);
+        value.move< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > (that.value);
         break;
 
       default:
@@ -982,17 +982,6 @@ namespace yy {
          when using variants.  */
       switch (yyr1_[yyn])
     {
-      case symbol_kind::S_bloc_element: // bloc_element
-      case symbol_kind::S_titre: // titre
-      case symbol_kind::S_sous_titre: // sous_titre
-      case symbol_kind::S_paragraphe: // paragraphe
-      case symbol_kind::S_image: // image
-      case symbol_kind::S_commentaire: // commentaire
-      case symbol_kind::S_titrepage: // titrepage
-      case symbol_kind::S_selecteur_variable: // selecteur_variable
-        yylhs.value.emplace< Bloc* > ();
-        break;
-
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         yylhs.value.emplace< TitreInfo > ();
@@ -1024,6 +1013,17 @@ namespace yy {
         yylhs.value.emplace< std::pair<std::string, int> > ();
         break;
 
+      case symbol_kind::S_bloc_element: // bloc_element
+      case symbol_kind::S_titre: // titre
+      case symbol_kind::S_sous_titre: // sous_titre
+      case symbol_kind::S_paragraphe: // paragraphe
+      case symbol_kind::S_image: // image
+      case symbol_kind::S_commentaire: // commentaire
+      case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
+        yylhs.value.emplace< std::shared_ptr<Bloc> > ();
+        break;
+
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
@@ -1040,7 +1040,7 @@ namespace yy {
 
       case symbol_kind::S_variable: // variable
       case symbol_kind::S_valeurvar: // valeurvar
-        yylhs.value.emplace< std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ();
+        yylhs.value.emplace< std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ();
         break;
 
       default:
@@ -1065,33 +1065,33 @@ namespace yy {
             {
   case 13: // bloc_element: titre
 #line 94 "parser/parser.yy"
-    { yylhs.value.as < Bloc* > () = yystack_[0].value.as < Bloc* > (); }
+    { yylhs.value.as < std::shared_ptr<Bloc> > () = yystack_[0].value.as < std::shared_ptr<Bloc> > (); }
 #line 1070 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 14: // bloc_element: sous_titre
 #line 95 "parser/parser.yy"
-      { yylhs.value.as < Bloc* > () = yystack_[0].value.as < Bloc* > (); }
+      { yylhs.value.as < std::shared_ptr<Bloc> > () = yystack_[0].value.as < std::shared_ptr<Bloc> > (); }
 #line 1076 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 15: // bloc_element: paragraphe
 #line 96 "parser/parser.yy"
-      { yylhs.value.as < Bloc* > () = yystack_[0].value.as < Bloc* > (); }
+      { yylhs.value.as < std::shared_ptr<Bloc> > () = yystack_[0].value.as < std::shared_ptr<Bloc> > (); }
 #line 1082 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 16: // bloc_element: image
 #line 97 "parser/parser.yy"
-      { yylhs.value.as < Bloc* > () = yystack_[0].value.as < Bloc* > (); }
+      { yylhs.value.as < std::shared_ptr<Bloc> > () = yystack_[0].value.as < std::shared_ptr<Bloc> > (); }
 #line 1088 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 17: // titre: TITRE attributs CHAINE
 #line 101 "parser/parser.yy"
                            { 
-        yylhs.value.as < Bloc* > () = new Titre(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > (), yystack_[2].value.as < TitreInfo > ().niveau);
-        doc->addBloc(yylhs.value.as < Bloc* > ());
+        yylhs.value.as < std::shared_ptr<Bloc> > () = std::make_shared<Titre>(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > (), yystack_[2].value.as < TitreInfo > ().niveau);
+        doc->addBloc(yylhs.value.as < std::shared_ptr<Bloc> > ());
     }
 #line 1097 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1099,8 +1099,8 @@ namespace yy {
   case 18: // titre: TITRE CHAINE
 #line 105 "parser/parser.yy"
                    { 
-        yylhs.value.as < Bloc* > () = new Titre(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > (), yystack_[1].value.as < TitreInfo > ().niveau);
-        doc->addBloc(yylhs.value.as < Bloc* > ());
+        yylhs.value.as < std::shared_ptr<Bloc> > () = std::make_shared<Titre>(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > (), yystack_[1].value.as < TitreInfo > ().niveau);
+        doc->addBloc(yylhs.value.as < std::shared_ptr<Bloc> > ());
     }
 #line 1106 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1108,8 +1108,8 @@ namespace yy {
   case 19: // sous_titre: SOUS_TITRE attributs CHAINE
 #line 112 "parser/parser.yy"
                                 { 
-        yylhs.value.as < Bloc* > () = new Titre(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > (), yystack_[2].value.as < TitreInfo > ().niveau);
-        doc->addBloc(yylhs.value.as < Bloc* > ());
+        yylhs.value.as < std::shared_ptr<Bloc> > () = std::make_shared<Titre>(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > (), yystack_[2].value.as < TitreInfo > ().niveau);
+        doc->addBloc(yylhs.value.as < std::shared_ptr<Bloc> > ());
     }
 #line 1115 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1117,8 +1117,8 @@ namespace yy {
   case 20: // sous_titre: SOUS_TITRE CHAINE
 #line 116 "parser/parser.yy"
                         { 
-        yylhs.value.as < Bloc* > () = new Titre(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > (), yystack_[1].value.as < TitreInfo > ().niveau);
-        doc->addBloc(yylhs.value.as < Bloc* > ());
+        yylhs.value.as < std::shared_ptr<Bloc> > () = std::make_shared<Titre>(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > (), yystack_[1].value.as < TitreInfo > ().niveau);
+        doc->addBloc(yylhs.value.as < std::shared_ptr<Bloc> > ());
     }
 #line 1124 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1126,8 +1126,8 @@ namespace yy {
   case 21: // paragraphe: PARAGRAPHE attributs CHAINE
 #line 123 "parser/parser.yy"
                                 { 
-        yylhs.value.as < Bloc* > () = new Paragraphe(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > ());
-        doc->addBloc(yylhs.value.as < Bloc* > ());
+        yylhs.value.as < std::shared_ptr<Bloc> > () = std::make_shared<Paragraphe>(yystack_[1].value.as < std::map<std::string, std::string> > (), yystack_[0].value.as < std::string > ());
+        doc->addBloc(yylhs.value.as < std::shared_ptr<Bloc> > ());
     }
 #line 1133 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1135,8 +1135,8 @@ namespace yy {
   case 22: // paragraphe: PARAGRAPHE CHAINE
 #line 127 "parser/parser.yy"
                         { 
-        yylhs.value.as < Bloc* > () = new Paragraphe(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > ());
-        doc->addBloc(yylhs.value.as < Bloc* > ());
+        yylhs.value.as < std::shared_ptr<Bloc> > () = std::make_shared<Paragraphe>(std::map<std::string, std::string>(), yystack_[0].value.as < std::string > ());
+        doc->addBloc(yylhs.value.as < std::shared_ptr<Bloc> > ());
     }
 #line 1142 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1144,7 +1144,7 @@ namespace yy {
   case 23: // image: IMAGE CHAINE
 #line 134 "parser/parser.yy"
                  { 
-        doc->addBloc(new Image(yystack_[0].value.as < std::string > ()));
+        doc->addBloc(std::make_shared<Image>(yystack_[0].value.as < std::string > ()));
     }
 #line 1150 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1152,7 +1152,7 @@ namespace yy {
   case 24: // commentaire: COMMENTAIRE
 #line 140 "parser/parser.yy"
                 { 
-        doc->addBloc(new Commentaire(yystack_[0].value.as < std::string > ()));
+        doc->addBloc(std::make_shared<Commentaire>(yystack_[0].value.as < std::string > ()));
     }
 #line 1158 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
@@ -1275,7 +1275,7 @@ namespace yy {
   case 41: // titrepage: TITREPAGE CHAINE
 #line 200 "parser/parser.yy"
                      { 
-        auto bloc = new TitrePage(yystack_[0].value.as < std::string > ());
+        auto bloc = std::make_shared<TitrePage>(yystack_[0].value.as < std::string > ());
         doc->addBloc(bloc);
     }
 #line 1282 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
@@ -1284,14 +1284,14 @@ namespace yy {
   case 42: // variable: IDENTIFIANT EGAL valeurvar
 #line 207 "parser/parser.yy"
                                { 
-        if (std::holds_alternative<Bloc*>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ())) {
-            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<Bloc*>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ()));
-        } else if (std::holds_alternative<int>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ())) {
-            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<int>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ()));
-        } else if (std::holds_alternative<std::string>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ())) {
-            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<std::string>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ()));
-        } else if (std::holds_alternative<std::map<std::string, std::string>>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ())) {
-            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<std::map<std::string, std::string>>(yystack_[0].value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > ()));
+        if (std::holds_alternative<std::shared_ptr<Bloc>>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ())) {
+            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<std::shared_ptr<Bloc>>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ()));
+        } else if (std::holds_alternative<int>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ())) {
+            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<int>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ()));
+        } else if (std::holds_alternative<std::string>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ())) {
+            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<std::string>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ()));
+        } else if (std::holds_alternative<std::map<std::string, std::string>>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ())) {
+            doc->setVariable(yystack_[2].value.as < std::string > (), std::get<std::map<std::string, std::string>>(yystack_[0].value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > ()));
         }
 
     }
@@ -1301,7 +1301,7 @@ namespace yy {
   case 43: // variable: IDENTIFIANT EGAL selecteur
 #line 219 "parser/parser.yy"
                                  { 
-        Bloc *b = doc->getNBloc(yystack_[0].value.as < std::pair<std::string, int> > ().first, yystack_[0].value.as < std::pair<std::string, int> > ().second);
+        std::shared_ptr<Bloc> b = doc->getNBloc(yystack_[0].value.as < std::pair<std::string, int> > ().first, yystack_[0].value.as < std::pair<std::string, int> > ().second);
         if (b != nullptr) {
             doc->setVariable(yystack_[2].value.as < std::string > (), b);
         }
@@ -1312,7 +1312,7 @@ namespace yy {
   case 44: // variable: IDENTIFIANT POINT nomattribut EGAL valeur
 #line 225 "parser/parser.yy"
                                                 {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable(yystack_[4].value.as < std::string > ()));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable(yystack_[4].value.as < std::string > ()));
         if (bloc != nullptr) {
             bloc->setPropriete(yystack_[2].value.as < std::string > (), yystack_[0].value.as < std::string > ());
         }
@@ -1323,9 +1323,9 @@ namespace yy {
   case 45: // variable: IDENTIFIANT POINT nomattribut EGAL IDENTIFIANT
 #line 231 "parser/parser.yy"
                                                      {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable(yystack_[4].value.as < std::string > ()));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable(yystack_[4].value.as < std::string > ()));
         if (bloc != nullptr) {
-            std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> prop = doc->getVariable(yystack_[0].value.as < std::string > ());
+            std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> prop = doc->getVariable(yystack_[0].value.as < std::string > ());
             if (std::holds_alternative<std::string>(prop)) {
                 bloc->setPropriete(yystack_[2].value.as < std::string > (), std::get<std::string>(prop));
             }
@@ -1337,9 +1337,9 @@ namespace yy {
   case 46: // variable: IDENTIFIANT POINT SELECTSTYLE EGAL IDENTIFIANT
 #line 240 "parser/parser.yy"
                                                      {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable(yystack_[4].value.as < std::string > ()));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable(yystack_[4].value.as < std::string > ()));
         if (bloc != nullptr) {
-            std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> prop = doc->getVariable(yystack_[0].value.as < std::string > ());
+            std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> prop = doc->getVariable(yystack_[0].value.as < std::string > ());
             if (std::holds_alternative<std::map<std::string, std::string>>(prop)) {
                 for (auto const& [key, val] : std::get<std::map<std::string, std::string>>(prop)) {
                     bloc->setPropriete(key, val);
@@ -1353,7 +1353,7 @@ namespace yy {
   case 47: // variable: IDENTIFIANT POINT SELECTSTYLE EGAL attributs
 #line 251 "parser/parser.yy"
                                                    {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable(yystack_[4].value.as < std::string > ()));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable(yystack_[4].value.as < std::string > ()));
         if (bloc != nullptr) {
             for (auto const& [key, val] : yystack_[0].value.as < std::map<std::string, std::string> > ()) {
                 bloc->setPropriete(key, val);
@@ -1383,7 +1383,7 @@ namespace yy {
 
   case 51: // selecteur2: TITRE_INDICE POINT nomattribut EGAL valeur
 #line 270 "parser/parser.yy"
-    { Bloc* b = doc->getNBloc("h", yystack_[4].value.as < int > ()); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("h", yystack_[4].value.as < int > ()); 
         if (b != nullptr) {
             b->setPropriete(yystack_[2].value.as < std::string > (), yystack_[0].value.as < std::string > ());
         }
@@ -1393,7 +1393,7 @@ namespace yy {
 
   case 52: // selecteur2: PARAGRAPHE_INDICE POINT nomattribut EGAL valeur
 #line 276 "parser/parser.yy"
-    { Bloc* b = doc->getNBloc("p", yystack_[4].value.as < int > ()); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("p", yystack_[4].value.as < int > ()); 
         if (b != nullptr) {
             b->setPropriete(yystack_[2].value.as < std::string > (), yystack_[0].value.as < std::string > ());
         }
@@ -1403,7 +1403,7 @@ namespace yy {
 
   case 53: // selecteur2: IMAGE_INDICE POINT nomattribut EGAL valeur
 #line 282 "parser/parser.yy"
-    { Bloc* b = doc->getNBloc("img", yystack_[4].value.as < int > ()); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("img", yystack_[4].value.as < int > ()); 
         if (b != nullptr) {
             b->setPropriete(yystack_[2].value.as < std::string > (), yystack_[0].value.as < std::string > ());
         }
@@ -1425,13 +1425,13 @@ namespace yy {
 
   case 56: // selecteur_variable: PARAGRAPHE_INDICE
 #line 295 "parser/parser.yy"
-                         { Bloc* b = doc->getNBloc("p", yystack_[0].value.as < int > ()); if (b != nullptr) { yylhs.value.as < Bloc* > () = b; } }
+                         { std::shared_ptr<Bloc> b = doc->getNBloc("p", yystack_[0].value.as < int > ()); if (b != nullptr) { yylhs.value.as < std::shared_ptr<Bloc> > () = b; } }
 #line 1430 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 57: // selecteur_variable: TITRE_INDICE
 #line 296 "parser/parser.yy"
-                        { Bloc* b = doc->getNBloc("h", yystack_[0].value.as < int > ()); if (b != nullptr) { yylhs.value.as < Bloc* > () = b; } }
+                        { std::shared_ptr<Bloc> b = doc->getNBloc("h", yystack_[0].value.as < int > ()); if (b != nullptr) { yylhs.value.as < std::shared_ptr<Bloc> > () = b; } }
 #line 1436 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
@@ -1499,37 +1499,37 @@ namespace yy {
 
   case 67: // valeurvar: ENTIER
 #line 327 "parser/parser.yy"
-           { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < int > (); }
+           { yylhs.value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > () = yystack_[0].value.as < int > (); }
 #line 1504 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 68: // valeurvar: HEX_COULEUR
 #line 328 "parser/parser.yy"
-                  { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
+                  { yylhs.value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
 #line 1510 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 69: // valeurvar: RGB_COULEUR
 #line 329 "parser/parser.yy"
-                  { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
+                  { yylhs.value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::string > (); }
 #line 1516 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 70: // valeurvar: bloc_element
 #line 330 "parser/parser.yy"
-                   { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>(yystack_[0].value.as < Bloc* > ()); }
+                   { yylhs.value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > () = std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>>(yystack_[0].value.as < std::shared_ptr<Bloc> > ()); }
 #line 1522 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 71: // valeurvar: attributs
 #line 331 "parser/parser.yy"
-                { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::map<std::string, std::string> > (); }
+                { yylhs.value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::map<std::string, std::string> > (); }
 #line 1528 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
   case 72: // valeurvar: selecteur_variable
 #line 332 "parser/parser.yy"
-                         { yylhs.value.as < std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> > () = yystack_[0].value.as < Bloc* > (); }
+                         { yylhs.value.as < std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> > () = yystack_[0].value.as < std::shared_ptr<Bloc> > (); }
 #line 1534 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
@@ -1544,7 +1544,7 @@ namespace yy {
   case 76: // condition: IDENTIFIANT POINT nomattribut EGAL EGAL valeur
 #line 348 "parser/parser.yy"
                                                    { 
-        Bloc* b = std::get<Bloc*>(doc->getVariable(yystack_[5].value.as < std::string > ()));
+        std::shared_ptr<Bloc> b = std::get<std::shared_ptr<Bloc>>(doc->getVariable(yystack_[5].value.as < std::string > ()));
         if (b != nullptr) {
             std::string val = b->getPropriete(yystack_[3].value.as < std::string > ());
             if (val == yystack_[0].value.as < std::string > ()) {
@@ -1560,9 +1560,9 @@ namespace yy {
   case 77: // condition: IDENTIFIANT POINT nomattribut EGAL EGAL selecteur_condition POINT nomattribut
 #line 359 "parser/parser.yy"
                                                                                     { 
-        Bloc* b = std::get<Bloc*>(doc->getVariable(yystack_[7].value.as < std::string > ()));
+        std::shared_ptr<Bloc> b = std::get<std::shared_ptr<Bloc>>(doc->getVariable(yystack_[7].value.as < std::string > ()));
         if (b != nullptr) {
-            Bloc* b2 = doc->getNBloc(yystack_[2].value.as < std::pair<std::string, int> > ().first, yystack_[2].value.as < std::pair<std::string, int> > ().second);
+            std::shared_ptr<Bloc> b2 = doc->getNBloc(yystack_[2].value.as < std::pair<std::string, int> > ().first, yystack_[2].value.as < std::pair<std::string, int> > ().second);
             if (b2 != nullptr) {
                 std::string val = b->getPropriete(yystack_[5].value.as < std::string > ());
                 std::string val2 = b2->getPropriete(yystack_[0].value.as < std::string > ());
@@ -1580,7 +1580,7 @@ namespace yy {
   case 78: // condition: selecteur_condition POINT nomattribut EGAL EGAL valeur
 #line 374 "parser/parser.yy"
                                                              { 
-        Bloc* b = doc->getNBloc(yystack_[5].value.as < std::pair<std::string, int> > ().first, yystack_[5].value.as < std::pair<std::string, int> > ().second);
+        std::shared_ptr<Bloc> b = doc->getNBloc(yystack_[5].value.as < std::pair<std::string, int> > ().first, yystack_[5].value.as < std::pair<std::string, int> > ().second);
         if (b != nullptr) {
             std::string val = b->getPropriete(yystack_[3].value.as < std::string > ());
             if (val == yystack_[0].value.as < std::string > ()) {
@@ -1596,9 +1596,9 @@ namespace yy {
   case 79: // condition: selecteur_condition POINT nomattribut EGAL EGAL selecteur_condition POINT nomattribut
 #line 385 "parser/parser.yy"
                                                                                             { 
-        Bloc* b = doc->getNBloc(yystack_[7].value.as < std::pair<std::string, int> > ().first, yystack_[7].value.as < std::pair<std::string, int> > ().second);
+        std::shared_ptr<Bloc> b = doc->getNBloc(yystack_[7].value.as < std::pair<std::string, int> > ().first, yystack_[7].value.as < std::pair<std::string, int> > ().second);
         if (b != nullptr) {
-            Bloc* b2 = doc->getNBloc(yystack_[2].value.as < std::pair<std::string, int> > ().first, yystack_[2].value.as < std::pair<std::string, int> > ().second);
+            std::shared_ptr<Bloc> b2 = doc->getNBloc(yystack_[2].value.as < std::pair<std::string, int> > ().first, yystack_[2].value.as < std::pair<std::string, int> > ().second);
             if (b2 != nullptr) {
                 std::string val = b->getPropriete(yystack_[5].value.as < std::string > ());
                 std::string val2 = b2->getPropriete(yystack_[0].value.as < std::string > ());

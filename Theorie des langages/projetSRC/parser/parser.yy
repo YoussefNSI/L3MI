@@ -20,7 +20,7 @@
         int niveau;
     };
 
-    extern Document* doc;
+    extern std::shared_ptr<Document> doc;
 
 }
 
@@ -57,8 +57,8 @@
 %token                 LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
 
 
-%type <Bloc*> bloc_element titre sous_titre paragraphe image titrepage commentaire selecteur_variable
-%type <std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>> variable valeurvar
+%type <std::shared_ptr<Bloc>> bloc_element titre sous_titre paragraphe image titrepage commentaire selecteur_variable
+%type <std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>>> variable valeurvar
 %type <std::map<std::string, std::string>> attributs
 %type <std::map<std::string, std::string>> liste_attributs
 %type <std::map<std::string, std::string>> attribut
@@ -99,46 +99,46 @@ bloc_element:
 
 titre:
     TITRE attributs CHAINE { 
-        $$ = new Titre($2, $3, $1.niveau);
+        $$ = std::make_shared<Titre>($2, $3, $1.niveau);
         doc->addBloc($$);
     }
     | TITRE CHAINE { 
-        $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
+        $$ = std::make_shared<Titre>(std::map<std::string, std::string>(), $2, $1.niveau);
         doc->addBloc($$);
     }
 ;
 
 sous_titre:
     SOUS_TITRE attributs CHAINE { 
-        $$ = new Titre($2, $3, $1.niveau);
+        $$ = std::make_shared<Titre>($2, $3, $1.niveau);
         doc->addBloc($$);
     }
     | SOUS_TITRE CHAINE { 
-        $$ = new Titre(std::map<std::string, std::string>(), $2, $1.niveau);
+        $$ = std::make_shared<Titre>(std::map<std::string, std::string>(), $2, $1.niveau);
         doc->addBloc($$);
     }
 ;
 
 paragraphe:
     PARAGRAPHE attributs CHAINE { 
-        $$ = new Paragraphe($2, $3);
+        $$ = std::make_shared<Paragraphe>($2, $3);
         doc->addBloc($$);
     }
     | PARAGRAPHE CHAINE { 
-        $$ = new Paragraphe(std::map<std::string, std::string>(), $2);
+        $$ = std::make_shared<Paragraphe>(std::map<std::string, std::string>(), $2);
         doc->addBloc($$);
     }
 ;
 
 image:
     IMAGE CHAINE { 
-        doc->addBloc(new Image($2));
+        doc->addBloc(std::make_shared<Image>($2));
     }
 ;
 
 commentaire:
     COMMENTAIRE { 
-        doc->addBloc(new Commentaire($1));
+        doc->addBloc(std::make_shared<Commentaire>($1));
     }
 ;
 
@@ -198,15 +198,15 @@ define:
 
 titrepage:
     TITREPAGE CHAINE { 
-        auto bloc = new TitrePage($2);
+        auto bloc = std::make_shared<TitrePage>($2);
         doc->addBloc(bloc);
     }
 ;
 
 variable:
     IDENTIFIANT EGAL valeurvar { 
-        if (std::holds_alternative<Bloc*>($3)) {
-            doc->setVariable($1, std::get<Bloc*>($3));
+        if (std::holds_alternative<std::shared_ptr<Bloc>>($3)) {
+            doc->setVariable($1, std::get<std::shared_ptr<Bloc>>($3));
         } else if (std::holds_alternative<int>($3)) {
             doc->setVariable($1, std::get<int>($3));
         } else if (std::holds_alternative<std::string>($3)) {
@@ -217,30 +217,30 @@ variable:
 
     }
     | IDENTIFIANT EGAL selecteur { 
-        Bloc *b = doc->getNBloc($3.first, $3.second);
+        std::shared_ptr<Bloc> b = doc->getNBloc($3.first, $3.second);
         if (b != nullptr) {
             doc->setVariable($1, b);
         }
     }
     | IDENTIFIANT POINT nomattribut EGAL valeur {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable($1));
         if (bloc != nullptr) {
             bloc->setPropriete($3, $5);
         }
     }
     | IDENTIFIANT POINT nomattribut EGAL IDENTIFIANT {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable($1));
         if (bloc != nullptr) {
-            std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> prop = doc->getVariable($5);
+            std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> prop = doc->getVariable($5);
             if (std::holds_alternative<std::string>(prop)) {
                 bloc->setPropriete($3, std::get<std::string>(prop));
             }
         }
     }
     | IDENTIFIANT POINT SELECTSTYLE EGAL IDENTIFIANT {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable($1));
         if (bloc != nullptr) {
-            std::variant<int, std::string, Bloc*, std::map<std::string, std::string>> prop = doc->getVariable($5);
+            std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>> prop = doc->getVariable($5);
             if (std::holds_alternative<std::map<std::string, std::string>>(prop)) {
                 for (auto const& [key, val] : std::get<std::map<std::string, std::string>>(prop)) {
                     bloc->setPropriete(key, val);
@@ -249,7 +249,7 @@ variable:
         }
     }
     | IDENTIFIANT POINT SELECTSTYLE EGAL attributs {
-        Bloc* bloc = std::get<Bloc*>(doc->getVariable($1));
+        std::shared_ptr<Bloc> bloc = std::get<std::shared_ptr<Bloc>>(doc->getVariable($1));
         if (bloc != nullptr) {
             for (auto const& [key, val] : $5) {
                 bloc->setPropriete(key, val);
@@ -267,19 +267,19 @@ selecteur :
 
 selecteur2 :
     TITRE_INDICE POINT nomattribut EGAL valeur 
-    { Bloc* b = doc->getNBloc("h", $1); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("h", $1); 
         if (b != nullptr) {
             b->setPropriete($3, $5);
         }
     }
     | PARAGRAPHE_INDICE POINT nomattribut EGAL valeur 
-    { Bloc* b = doc->getNBloc("p", $1); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("p", $1); 
         if (b != nullptr) {
             b->setPropriete($3, $5);
         }
     }
     | IMAGE_INDICE POINT nomattribut EGAL valeur 
-    { Bloc* b = doc->getNBloc("img", $1); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("img", $1); 
         if (b != nullptr) {
             b->setPropriete($3, $5);
         }
@@ -292,8 +292,8 @@ selecteur_condition:
 ;
 
 selecteur_variable:
-    PARAGRAPHE_INDICE    { Bloc* b = doc->getNBloc("p", $1); if (b != nullptr) { $$ = b; } }
-    | TITRE_INDICE      { Bloc* b = doc->getNBloc("h", $1); if (b != nullptr) { $$ = b; } }
+    PARAGRAPHE_INDICE    { std::shared_ptr<Bloc> b = doc->getNBloc("p", $1); if (b != nullptr) { $$ = b; } }
+    | TITRE_INDICE      { std::shared_ptr<Bloc> b = doc->getNBloc("h", $1); if (b != nullptr) { $$ = b; } }
 
 index_expression:
     CROCHET_OUVRANT expr CROCHET_FERMANT { $$ = $2; }
@@ -327,7 +327,7 @@ valeurvar:
     ENTIER { $$ = $1; }
     | HEX_COULEUR { $$ = $1; }
     | RGB_COULEUR { $$ = $1; }
-    | bloc_element { $$ = std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>($1); }
+    | bloc_element { $$ = std::variant<int, std::string, std::shared_ptr<Bloc>, std::map<std::string, std::string>>($1); }
     | attributs { $$ = $1; }
     | selecteur_variable { $$ = $1; }
 ;
@@ -346,7 +346,7 @@ conditionnel:
 
 condition:
     IDENTIFIANT POINT nomattribut EGAL EGAL valeur { 
-        Bloc* b = std::get<Bloc*>(doc->getVariable($1));
+        std::shared_ptr<Bloc> b = std::get<std::shared_ptr<Bloc>>(doc->getVariable($1));
         if (b != nullptr) {
             std::string val = b->getPropriete($3);
             if (val == $6) {
@@ -357,9 +357,9 @@ condition:
         }
     }
     | IDENTIFIANT POINT nomattribut EGAL EGAL selecteur_condition POINT nomattribut { 
-        Bloc* b = std::get<Bloc*>(doc->getVariable($1));
+        std::shared_ptr<Bloc> b = std::get<std::shared_ptr<Bloc>>(doc->getVariable($1));
         if (b != nullptr) {
-            Bloc* b2 = doc->getNBloc($6.first, $6.second);
+            std::shared_ptr<Bloc> b2 = doc->getNBloc($6.first, $6.second);
             if (b2 != nullptr) {
                 std::string val = b->getPropriete($3);
                 std::string val2 = b2->getPropriete($8);
@@ -372,7 +372,7 @@ condition:
         }
     }
     | selecteur_condition POINT nomattribut EGAL EGAL valeur { 
-        Bloc* b = doc->getNBloc($1.first, $1.second);
+        std::shared_ptr<Bloc> b = doc->getNBloc($1.first, $1.second);
         if (b != nullptr) {
             std::string val = b->getPropriete($3);
             if (val == $6) {
@@ -383,9 +383,9 @@ condition:
         }
     }
     | selecteur_condition POINT nomattribut EGAL EGAL selecteur_condition POINT nomattribut { 
-        Bloc* b = doc->getNBloc($1.first, $1.second);
+        std::shared_ptr<Bloc> b = doc->getNBloc($1.first, $1.second);
         if (b != nullptr) {
-            Bloc* b2 = doc->getNBloc($6.first, $6.second);
+            std::shared_ptr<Bloc> b2 = doc->getNBloc($6.first, $6.second);
             if (b2 != nullptr) {
                 std::string val = b->getPropriete($3);
                 std::string val2 = b2->getPropriete($8);
