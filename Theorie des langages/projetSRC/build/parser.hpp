@@ -432,6 +432,9 @@ namespace yy {
       char dummy2[sizeof (TitreInfo)];
 
       // ENTIER
+      // TITRE_INDICE
+      // PARAGRAPHE_INDICE
+      // IMAGE_INDICE
       // index_expression
       // expr
       // terme
@@ -538,29 +541,32 @@ namespace yy {
     IDENTIFIANT = 274,             // IDENTIFIANT
     BLOCS = 275,                   // BLOCS
     ENTIER = 276,                  // ENTIER
-    CHAINE = 277,                  // CHAINE
-    HEX_COULEUR = 278,             // HEX_COULEUR
-    RGB_COULEUR = 279,             // RGB_COULEUR
-    EGAL = 280,                    // EGAL
-    CROCHET_FERMANT = 281,         // CROCHET_FERMANT
-    CROCHET_OUVRANT = 282,         // CROCHET_OUVRANT
-    DEUX_POINTS = 283,             // DEUX_POINTS
-    VIRGULE = 284,                 // VIRGULE
-    POINT_VIRGULE = 285,           // POINT_VIRGULE
-    POINT = 286,                   // POINT
-    PLUS = 287,                    // PLUS
-    MOINS = 288,                   // MOINS
-    MULT = 289,                    // MULT
-    DIV = 290,                     // DIV
-    PARENTHESE_OUVRANTE = 291,     // PARENTHESE_OUVRANTE
-    PARENTHESE_FERMANTE = 292,     // PARENTHESE_FERMANTE
-    ACCOLADE_OUVRANTE = 293,       // ACCOLADE_OUVRANTE
-    ACCOLADE_FERMANTE = 294,       // ACCOLADE_FERMANTE
-    LARGEUR = 295,                 // LARGEUR
-    HAUTEUR = 296,                 // HAUTEUR
-    COULEURTEXTE = 297,            // COULEURTEXTE
-    COULEURFOND = 298,             // COULEURFOND
-    OPACITE = 299                  // OPACITE
+    TITRE_INDICE = 277,            // TITRE_INDICE
+    PARAGRAPHE_INDICE = 278,       // PARAGRAPHE_INDICE
+    IMAGE_INDICE = 279,            // IMAGE_INDICE
+    CHAINE = 280,                  // CHAINE
+    HEX_COULEUR = 281,             // HEX_COULEUR
+    RGB_COULEUR = 282,             // RGB_COULEUR
+    EGAL = 283,                    // EGAL
+    CROCHET_FERMANT = 284,         // CROCHET_FERMANT
+    CROCHET_OUVRANT = 285,         // CROCHET_OUVRANT
+    DEUX_POINTS = 286,             // DEUX_POINTS
+    VIRGULE = 287,                 // VIRGULE
+    POINT_VIRGULE = 288,           // POINT_VIRGULE
+    POINT = 289,                   // POINT
+    PLUS = 290,                    // PLUS
+    MOINS = 291,                   // MOINS
+    MULT = 292,                    // MULT
+    DIV = 293,                     // DIV
+    PARENTHESE_OUVRANTE = 294,     // PARENTHESE_OUVRANTE
+    PARENTHESE_FERMANTE = 295,     // PARENTHESE_FERMANTE
+    ACCOLADE_OUVRANTE = 296,       // ACCOLADE_OUVRANTE
+    ACCOLADE_FERMANTE = 297,       // ACCOLADE_FERMANTE
+    LARGEUR = 298,                 // LARGEUR
+    HAUTEUR = 299,                 // HAUTEUR
+    COULEURTEXTE = 300,            // COULEURTEXTE
+    COULEURFOND = 301,             // COULEURFOND
+    OPACITE = 302                  // OPACITE
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -577,7 +583,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 45, ///< Number of tokens.
+        YYNTOKENS = 48, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -601,54 +607,58 @@ namespace yy {
         S_IDENTIFIANT = 19,                      // IDENTIFIANT
         S_BLOCS = 20,                            // BLOCS
         S_ENTIER = 21,                           // ENTIER
-        S_CHAINE = 22,                           // CHAINE
-        S_HEX_COULEUR = 23,                      // HEX_COULEUR
-        S_RGB_COULEUR = 24,                      // RGB_COULEUR
-        S_EGAL = 25,                             // EGAL
-        S_CROCHET_FERMANT = 26,                  // CROCHET_FERMANT
-        S_CROCHET_OUVRANT = 27,                  // CROCHET_OUVRANT
-        S_DEUX_POINTS = 28,                      // DEUX_POINTS
-        S_VIRGULE = 29,                          // VIRGULE
-        S_POINT_VIRGULE = 30,                    // POINT_VIRGULE
-        S_POINT = 31,                            // POINT
-        S_PLUS = 32,                             // PLUS
-        S_MOINS = 33,                            // MOINS
-        S_MULT = 34,                             // MULT
-        S_DIV = 35,                              // DIV
-        S_PARENTHESE_OUVRANTE = 36,              // PARENTHESE_OUVRANTE
-        S_PARENTHESE_FERMANTE = 37,              // PARENTHESE_FERMANTE
-        S_ACCOLADE_OUVRANTE = 38,                // ACCOLADE_OUVRANTE
-        S_ACCOLADE_FERMANTE = 39,                // ACCOLADE_FERMANTE
-        S_LARGEUR = 40,                          // LARGEUR
-        S_HAUTEUR = 41,                          // HAUTEUR
-        S_COULEURTEXTE = 42,                     // COULEURTEXTE
-        S_COULEURFOND = 43,                      // COULEURFOND
-        S_OPACITE = 44,                          // OPACITE
-        S_YYACCEPT = 45,                         // $accept
-        S_programme = 46,                        // programme
-        S_programme_element = 47,                // programme_element
-        S_declaration = 48,                      // declaration
-        S_bloc_element = 49,                     // bloc_element
-        S_titre = 50,                            // titre
-        S_sous_titre = 51,                       // sous_titre
-        S_paragraphe = 52,                       // paragraphe
-        S_image = 53,                            // image
-        S_commentaire = 54,                      // commentaire
-        S_attributs = 55,                        // attributs
-        S_liste_attributs = 56,                  // liste_attributs
-        S_attribut = 57,                         // attribut
-        S_nomattribut = 58,                      // nomattribut
-        S_valeur = 59,                           // valeur
-        S_define = 60,                           // define
-        S_titrepage = 61,                        // titrepage
-        S_variable = 62,                         // variable
-        S_selecteur = 63,                        // selecteur
-        S_index_expression = 64,                 // index_expression
-        S_expr = 65,                             // expr
-        S_terme = 66,                            // terme
-        S_facteur = 67,                          // facteur
-        S_valeurvar = 68,                        // valeurvar
-        S_style = 69                             // style
+        S_TITRE_INDICE = 22,                     // TITRE_INDICE
+        S_PARAGRAPHE_INDICE = 23,                // PARAGRAPHE_INDICE
+        S_IMAGE_INDICE = 24,                     // IMAGE_INDICE
+        S_CHAINE = 25,                           // CHAINE
+        S_HEX_COULEUR = 26,                      // HEX_COULEUR
+        S_RGB_COULEUR = 27,                      // RGB_COULEUR
+        S_EGAL = 28,                             // EGAL
+        S_CROCHET_FERMANT = 29,                  // CROCHET_FERMANT
+        S_CROCHET_OUVRANT = 30,                  // CROCHET_OUVRANT
+        S_DEUX_POINTS = 31,                      // DEUX_POINTS
+        S_VIRGULE = 32,                          // VIRGULE
+        S_POINT_VIRGULE = 33,                    // POINT_VIRGULE
+        S_POINT = 34,                            // POINT
+        S_PLUS = 35,                             // PLUS
+        S_MOINS = 36,                            // MOINS
+        S_MULT = 37,                             // MULT
+        S_DIV = 38,                              // DIV
+        S_PARENTHESE_OUVRANTE = 39,              // PARENTHESE_OUVRANTE
+        S_PARENTHESE_FERMANTE = 40,              // PARENTHESE_FERMANTE
+        S_ACCOLADE_OUVRANTE = 41,                // ACCOLADE_OUVRANTE
+        S_ACCOLADE_FERMANTE = 42,                // ACCOLADE_FERMANTE
+        S_LARGEUR = 43,                          // LARGEUR
+        S_HAUTEUR = 44,                          // HAUTEUR
+        S_COULEURTEXTE = 45,                     // COULEURTEXTE
+        S_COULEURFOND = 46,                      // COULEURFOND
+        S_OPACITE = 47,                          // OPACITE
+        S_YYACCEPT = 48,                         // $accept
+        S_programme = 49,                        // programme
+        S_programme_element = 50,                // programme_element
+        S_declaration = 51,                      // declaration
+        S_bloc_element = 52,                     // bloc_element
+        S_titre = 53,                            // titre
+        S_sous_titre = 54,                       // sous_titre
+        S_paragraphe = 55,                       // paragraphe
+        S_image = 56,                            // image
+        S_commentaire = 57,                      // commentaire
+        S_attributs = 58,                        // attributs
+        S_liste_attributs = 59,                  // liste_attributs
+        S_attribut = 60,                         // attribut
+        S_nomattribut = 61,                      // nomattribut
+        S_valeur = 62,                           // valeur
+        S_define = 63,                           // define
+        S_titrepage = 64,                        // titrepage
+        S_variable = 65,                         // variable
+        S_selecteur = 66,                        // selecteur
+        S_selecteur2 = 67,                       // selecteur2
+        S_index_expression = 68,                 // index_expression
+        S_expr = 69,                             // expr
+        S_terme = 70,                            // terme
+        S_facteur = 71,                          // facteur
+        S_valeurvar = 72,                        // valeurvar
+        S_style = 73                             // style
       };
     };
 
@@ -701,6 +711,9 @@ namespace yy {
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
+      case symbol_kind::S_TITRE_INDICE: // TITRE_INDICE
+      case symbol_kind::S_PARAGRAPHE_INDICE: // PARAGRAPHE_INDICE
+      case symbol_kind::S_IMAGE_INDICE: // IMAGE_INDICE
       case symbol_kind::S_index_expression: // index_expression
       case symbol_kind::S_expr: // expr
       case symbol_kind::S_terme: // terme
@@ -903,6 +916,9 @@ switch (yykind)
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
+      case symbol_kind::S_TITRE_INDICE: // TITRE_INDICE
+      case symbol_kind::S_PARAGRAPHE_INDICE: // PARAGRAPHE_INDICE
+      case symbol_kind::S_IMAGE_INDICE: // IMAGE_INDICE
       case symbol_kind::S_index_expression: // index_expression
       case symbol_kind::S_expr: // expr
       case symbol_kind::S_terme: // terme
@@ -1068,7 +1084,7 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT (tok == token::ENTIER);
+        YY_ASSERT ((token::ENTIER <= tok && tok <= token::IMAGE_INDICE));
 #endif
       }
 #if 201103L <= YY_CPLUSPLUS
@@ -1460,6 +1476,51 @@ switch (yykind)
       make_ENTIER (const int& v, const location_type& l)
       {
         return symbol_type (token::ENTIER, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_TITRE_INDICE (int v, location_type l)
+      {
+        return symbol_type (token::TITRE_INDICE, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_TITRE_INDICE (const int& v, const location_type& l)
+      {
+        return symbol_type (token::TITRE_INDICE, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_PARAGRAPHE_INDICE (int v, location_type l)
+      {
+        return symbol_type (token::PARAGRAPHE_INDICE, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_PARAGRAPHE_INDICE (const int& v, const location_type& l)
+      {
+        return symbol_type (token::PARAGRAPHE_INDICE, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_IMAGE_INDICE (int v, location_type l)
+      {
+        return symbol_type (token::IMAGE_INDICE, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_IMAGE_INDICE (const int& v, const location_type& l)
+      {
+        return symbol_type (token::IMAGE_INDICE, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -2137,9 +2198,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 126,     ///< Last index in yytable_.
-      yynnts_ = 25,  ///< Number of nonterminal symbols.
-      yyfinal_ = 36 ///< Termination state number.
+      yylast_ = 141,     ///< Last index in yytable_.
+      yynnts_ = 26,  ///< Number of nonterminal symbols.
+      yyfinal_ = 43 ///< Termination state number.
     };
 
 
@@ -2151,7 +2212,7 @@ switch (yykind)
 
 
 } // yy
-#line 2155 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
+#line 2216 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
 
 
 

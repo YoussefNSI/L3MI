@@ -29,6 +29,27 @@ using token = yy::Parser::token;
 [ \t]+         ; 
 [\r\n]+         { loc->lines(yyleng); loc->step(); }
 
+!T\[[0-9]+\] {
+    int indice = atoi(yytext + 2);
+    yylval->emplace<int>(indice);
+    std::cout << "[SCAN] TITRE indice : " << indice << std::endl;
+    return token::TITRE_INDICE;
+}
+
+!P\[[0-9]+\] {
+    int indice = atoi(yytext + 2);
+    yylval->emplace<int>(indice);
+    std::cout << "[SCAN] PARAGRAPHE indice : " << indice << std::endl;
+    return token::PARAGRAPHE_INDICE;
+}
+
+!I\[[0-9]+\] {
+    int indice = atoi(yytext + 2);
+    yylval->emplace<int>(indice);
+    std::cout << "[SCAN] IMAGE indice : " << indice << std::endl;
+    return token::IMAGE_INDICE;
+}
+
 !T+ {
     int length = yyleng - 1;
     if (length == 1) {

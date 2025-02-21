@@ -48,7 +48,7 @@
 %token                 DEFINE TITREPAGE STYLE SELECTSTYLE
 %token <std::string>   PROPRIETE COMMENTAIRE
 %token <std::string>   SI SINON FINSI POUR FINI IDENTIFIANT BLOCS
-%token <int>           ENTIER
+%token <int>           ENTIER TITRE_INDICE PARAGRAPHE_INDICE IMAGE_INDICE
 %token <std::string>   CHAINE
 %token <std::string>   HEX_COULEUR RGB_COULEUR
 %token                 EGAL CROCHET_FERMANT CROCHET_OUVRANT DEUX_POINTS VIRGULE POINT_VIRGULE POINT PLUS MOINS MULT DIV
@@ -78,6 +78,7 @@ programme_element:
     | bloc_element
     | variable
     | commentaire
+    | selecteur2
 ;
 
 declaration:
@@ -258,9 +259,28 @@ variable:
 selecteur : 
     PARAGRAPHE index_expression { $$ = std::make_pair("p", $2); }
     | TITRE index_expression      { $$ = std::make_pair("h", $2); }
-    | SOUS_TITRE index_expression { $$ = std::make_pair("h", $2); }
     | IMAGE index_expression      { $$ = std::make_pair("img", $2); }
 ;
+
+selecteur2 :
+    TITRE_INDICE POINT nomattribut EGAL valeur 
+    { Bloc* b = doc->getNBloc("h", $1); 
+        if (b != nullptr) {
+            b->setPropriete($3, $5);
+        }
+    }
+    | PARAGRAPHE_INDICE POINT nomattribut EGAL valeur 
+    { Bloc* b = doc->getNBloc("p", $1); 
+        if (b != nullptr) {
+            b->setPropriete($3, $5);
+        }
+    }
+    | IMAGE_INDICE POINT nomattribut EGAL valeur 
+    { Bloc* b = doc->getNBloc("img", $1); 
+        if (b != nullptr) {
+            b->setPropriete($3, $5);
+        }
+    }
 
 index_expression:
     CROCHET_OUVRANT expr CROCHET_FERMANT { $$ = $2; }
