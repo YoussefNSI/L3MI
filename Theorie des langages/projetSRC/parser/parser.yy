@@ -47,7 +47,8 @@
 %token                 PARAGRAPHE IMAGE
 %token                 DEFINE TITREPAGE STYLE SELECTSTYLE
 %token <std::string>   PROPRIETE COMMENTAIRE
-%token <std::string>   SI SINON FINSI POUR FINI IDENTIFIANT BLOCS
+%token                 SI SINON FINSI POUR FINI
+%token <std::string>   IDENTIFIANT BLOCS
 %token <int>           ENTIER TITRE_INDICE PARAGRAPHE_INDICE IMAGE_INDICE
 %token <std::string>   CHAINE
 %token <std::string>   HEX_COULEUR RGB_COULEUR
@@ -56,15 +57,16 @@
 %token                 LARGEUR HAUTEUR COULEURTEXTE COULEURFOND OPACITE
 
 
-%type <Bloc*> bloc_element titre sous_titre paragraphe image titrepage commentaire
+%type <Bloc*> bloc_element titre sous_titre paragraphe image titrepage commentaire selecteur_variable
 %type <std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>> variable valeurvar
 %type <std::map<std::string, std::string>> attributs
 %type <std::map<std::string, std::string>> liste_attributs
 %type <std::map<std::string, std::string>> attribut
 %type <std::string> nomattribut
 %type <std::string> valeur define style
-%type <std::pair<std::string, int>> selecteur
+%type <std::pair<std::string, int>> selecteur selecteur_condition
 %type <int> index_expression expr terme facteur
+%type <bool> condition
 
 %%
 
@@ -79,6 +81,7 @@ programme_element:
     | variable
     | commentaire
     | selecteur2
+    | conditionnel
 ;
 
 declaration:
@@ -281,6 +284,16 @@ selecteur2 :
             b->setPropriete($3, $5);
         }
     }
+;
+
+selecteur_condition:
+    PARAGRAPHE_INDICE    { $$ = std::make_pair("p", $1); }
+    | TITRE_INDICE      { $$ = std::make_pair("h", $1); }
+;
+
+selecteur_variable:
+    PARAGRAPHE_INDICE    { Bloc* b = doc->getNBloc("p", $1); if (b != nullptr) { $$ = b; } }
+    | TITRE_INDICE      { Bloc* b = doc->getNBloc("h", $1); if (b != nullptr) { $$ = b; } }
 
 index_expression:
     CROCHET_OUVRANT expr CROCHET_FERMANT { $$ = $2; }
@@ -316,6 +329,7 @@ valeurvar:
     | RGB_COULEUR { $$ = $1; }
     | bloc_element { $$ = std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>($1); }
     | attributs { $$ = $1; }
+    | selecteur_variable { $$ = $1; }
 ;
 
 style:
@@ -324,7 +338,76 @@ style:
         doc->setStyle($3, $6);
     }
 ;
-    
+
+conditionnel:
+    SI PARENTHESE_OUVRANTE condition PARENTHESE_FERMANTE DEUX_POINTS instructions FINSI
+    | SI PARENTHESE_OUVRANTE condition PARENTHESE_FERMANTE DEUX_POINTS instructions SINON DEUX_POINTS instructions FINSI
+;
+
+condition:
+    IDENTIFIANT POINT nomattribut EGAL EGAL valeur { 
+        Bloc* b = std::get<Bloc*>(doc->getVariable($1));
+        if (b != nullptr) {
+            std::string val = b->getPropriete($3);
+            if (val == $6) {
+                $$ = true;
+            } else {
+                $$ = false;
+            }
+        }
+    }
+    | IDENTIFIANT POINT nomattribut EGAL EGAL selecteur_condition POINT nomattribut { 
+        Bloc* b = std::get<Bloc*>(doc->getVariable($1));
+        if (b != nullptr) {
+            Bloc* b2 = doc->getNBloc($6.first, $6.second);
+            if (b2 != nullptr) {
+                std::string val = b->getPropriete($3);
+                std::string val2 = b2->getPropriete($8);
+                if (val == val2) {
+                    $$ = true;
+                } else {
+                    $$ = false;
+                }
+            }
+        }
+    }
+    | selecteur_condition POINT nomattribut EGAL EGAL valeur { 
+        Bloc* b = doc->getNBloc($1.first, $1.second);
+        if (b != nullptr) {
+            std::string val = b->getPropriete($3);
+            if (val == $6) {
+                $$ = true;
+            } else {
+                $$ = false;
+            }
+        }
+    }
+    | selecteur_condition POINT nomattribut EGAL EGAL selecteur_condition POINT nomattribut { 
+        Bloc* b = doc->getNBloc($1.first, $1.second);
+        if (b != nullptr) {
+            Bloc* b2 = doc->getNBloc($6.first, $6.second);
+            if (b2 != nullptr) {
+                std::string val = b->getPropriete($3);
+                std::string val2 = b2->getPropriete($8);
+                if (val == val2) {
+                    $$ = true;
+                } else {
+                    $$ = false;
+                }
+            }
+        }
+    }
+;
+
+instructions:
+    instruction instructions
+    | instruction
+;
+
+instruction:
+    programme_element
+;
+
 %%
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {

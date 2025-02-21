@@ -425,11 +425,15 @@ namespace yy {
       // image
       // commentaire
       // titrepage
+      // selecteur_variable
       char dummy1[sizeof (Bloc*)];
 
       // TITRE
       // SOUS_TITRE
       char dummy2[sizeof (TitreInfo)];
+
+      // condition
+      char dummy3[sizeof (bool)];
 
       // ENTIER
       // TITRE_INDICE
@@ -439,23 +443,19 @@ namespace yy {
       // expr
       // terme
       // facteur
-      char dummy3[sizeof (int)];
+      char dummy4[sizeof (int)];
 
       // attributs
       // liste_attributs
       // attribut
-      char dummy4[sizeof (std::map<std::string, std::string>)];
+      char dummy5[sizeof (std::map<std::string, std::string>)];
 
       // selecteur
-      char dummy5[sizeof (std::pair<std::string, int>)];
+      // selecteur_condition
+      char dummy6[sizeof (std::pair<std::string, int>)];
 
       // PROPRIETE
       // COMMENTAIRE
-      // SI
-      // SINON
-      // FINSI
-      // POUR
-      // FINI
       // IDENTIFIANT
       // BLOCS
       // CHAINE
@@ -465,11 +465,11 @@ namespace yy {
       // valeur
       // define
       // style
-      char dummy6[sizeof (std::string)];
+      char dummy7[sizeof (std::string)];
 
       // variable
       // valeurvar
-      char dummy7[sizeof (std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>)];
+      char dummy8[sizeof (std::variant<int, std::string, Bloc*, std::map<std::string, std::string>>)];
     };
 
     /// The size of the largest semantic type.
@@ -653,12 +653,18 @@ namespace yy {
         S_variable = 65,                         // variable
         S_selecteur = 66,                        // selecteur
         S_selecteur2 = 67,                       // selecteur2
-        S_index_expression = 68,                 // index_expression
-        S_expr = 69,                             // expr
-        S_terme = 70,                            // terme
-        S_facteur = 71,                          // facteur
-        S_valeurvar = 72,                        // valeurvar
-        S_style = 73                             // style
+        S_selecteur_condition = 68,              // selecteur_condition
+        S_selecteur_variable = 69,               // selecteur_variable
+        S_index_expression = 70,                 // index_expression
+        S_expr = 71,                             // expr
+        S_terme = 72,                            // terme
+        S_facteur = 73,                          // facteur
+        S_valeurvar = 74,                        // valeurvar
+        S_style = 75,                            // style
+        S_conditionnel = 76,                     // conditionnel
+        S_condition = 77,                        // condition
+        S_instructions = 78,                     // instructions
+        S_instruction = 79                       // instruction
       };
     };
 
@@ -702,12 +708,17 @@ namespace yy {
       case symbol_kind::S_image: // image
       case symbol_kind::S_commentaire: // commentaire
       case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
         value.move< Bloc* > (std::move (that.value));
         break;
 
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.move< TitreInfo > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_condition: // condition
+        value.move< bool > (std::move (that.value));
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
@@ -728,16 +739,12 @@ namespace yy {
         break;
 
       case symbol_kind::S_selecteur: // selecteur
+      case symbol_kind::S_selecteur_condition: // selecteur_condition
         value.move< std::pair<std::string, int> > (std::move (that.value));
         break;
 
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
-      case symbol_kind::S_SI: // SI
-      case symbol_kind::S_SINON: // SINON
-      case symbol_kind::S_FINSI: // FINSI
-      case symbol_kind::S_POUR: // POUR
-      case symbol_kind::S_FINI: // FINI
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
       case symbol_kind::S_BLOCS: // BLOCS
       case symbol_kind::S_CHAINE: // CHAINE
@@ -800,6 +807,20 @@ namespace yy {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const TitreInfo& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, bool&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const bool& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -907,12 +928,17 @@ switch (yykind)
       case symbol_kind::S_image: // image
       case symbol_kind::S_commentaire: // commentaire
       case symbol_kind::S_titrepage: // titrepage
+      case symbol_kind::S_selecteur_variable: // selecteur_variable
         value.template destroy< Bloc* > ();
         break;
 
       case symbol_kind::S_TITRE: // TITRE
       case symbol_kind::S_SOUS_TITRE: // SOUS_TITRE
         value.template destroy< TitreInfo > ();
+        break;
+
+      case symbol_kind::S_condition: // condition
+        value.template destroy< bool > ();
         break;
 
       case symbol_kind::S_ENTIER: // ENTIER
@@ -933,16 +959,12 @@ switch (yykind)
         break;
 
       case symbol_kind::S_selecteur: // selecteur
+      case symbol_kind::S_selecteur_condition: // selecteur_condition
         value.template destroy< std::pair<std::string, int> > ();
         break;
 
       case symbol_kind::S_PROPRIETE: // PROPRIETE
       case symbol_kind::S_COMMENTAIRE: // COMMENTAIRE
-      case symbol_kind::S_SI: // SI
-      case symbol_kind::S_SINON: // SINON
-      case symbol_kind::S_FINSI: // FINSI
-      case symbol_kind::S_POUR: // POUR
-      case symbol_kind::S_FINI: // FINI
       case symbol_kind::S_IDENTIFIANT: // IDENTIFIANT
       case symbol_kind::S_BLOCS: // BLOCS
       case symbol_kind::S_CHAINE: // CHAINE
@@ -1060,6 +1082,7 @@ switch (yykind)
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::NEWLINE)
                    || (token::PARAGRAPHE <= tok && tok <= token::SELECTSTYLE)
+                   || (token::SI <= tok && tok <= token::FINI)
                    || (token::EGAL <= tok && tok <= token::OPACITE));
 #endif
       }
@@ -1096,7 +1119,8 @@ switch (yykind)
 #endif
       {
 #if !defined _MSC_VER || defined __clang__
-        YY_ASSERT ((token::PROPRIETE <= tok && tok <= token::BLOCS)
+        YY_ASSERT ((token::PROPRIETE <= tok && tok <= token::COMMENTAIRE)
+                   || (token::IDENTIFIANT <= tok && tok <= token::BLOCS)
                    || (token::CHAINE <= tok && tok <= token::RGB_COULEUR));
 #endif
       }
@@ -1361,76 +1385,76 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_SI (std::string v, location_type l)
+      make_SI (location_type l)
       {
-        return symbol_type (token::SI, std::move (v), std::move (l));
+        return symbol_type (token::SI, std::move (l));
       }
 #else
       static
       symbol_type
-      make_SI (const std::string& v, const location_type& l)
+      make_SI (const location_type& l)
       {
-        return symbol_type (token::SI, v, l);
+        return symbol_type (token::SI, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_SINON (std::string v, location_type l)
+      make_SINON (location_type l)
       {
-        return symbol_type (token::SINON, std::move (v), std::move (l));
+        return symbol_type (token::SINON, std::move (l));
       }
 #else
       static
       symbol_type
-      make_SINON (const std::string& v, const location_type& l)
+      make_SINON (const location_type& l)
       {
-        return symbol_type (token::SINON, v, l);
+        return symbol_type (token::SINON, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_FINSI (std::string v, location_type l)
+      make_FINSI (location_type l)
       {
-        return symbol_type (token::FINSI, std::move (v), std::move (l));
+        return symbol_type (token::FINSI, std::move (l));
       }
 #else
       static
       symbol_type
-      make_FINSI (const std::string& v, const location_type& l)
+      make_FINSI (const location_type& l)
       {
-        return symbol_type (token::FINSI, v, l);
+        return symbol_type (token::FINSI, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_POUR (std::string v, location_type l)
+      make_POUR (location_type l)
       {
-        return symbol_type (token::POUR, std::move (v), std::move (l));
+        return symbol_type (token::POUR, std::move (l));
       }
 #else
       static
       symbol_type
-      make_POUR (const std::string& v, const location_type& l)
+      make_POUR (const location_type& l)
       {
-        return symbol_type (token::POUR, v, l);
+        return symbol_type (token::POUR, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_FINI (std::string v, location_type l)
+      make_FINI (location_type l)
       {
-        return symbol_type (token::FINI, std::move (v), std::move (l));
+        return symbol_type (token::FINI, std::move (l));
       }
 #else
       static
       symbol_type
-      make_FINI (const std::string& v, const location_type& l)
+      make_FINI (const location_type& l)
       {
-        return symbol_type (token::FINI, v, l);
+        return symbol_type (token::FINI, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1898,7 +1922,7 @@ switch (yykind)
 
 
     /// Stored state numbers (used for stacks).
-    typedef signed char state_type;
+    typedef unsigned char state_type;
 
     /// The arguments of the error message.
     int yy_syntax_error_arguments_ (const context& yyctx,
@@ -1938,7 +1962,7 @@ switch (yykind)
     // Tables.
     // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
     // STATE-NUM.
-    static const signed char yypact_[];
+    static const short yypact_[];
 
     // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
     // Performed when YYTABLE does not specify something else to do.  Zero
@@ -1946,17 +1970,17 @@ switch (yykind)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const signed char yypgoto_[];
+    static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
-    static const signed char yydefgoto_[];
+    static const unsigned char yydefgoto_[];
 
     // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
     // positive, shift that token.  If negative, reduce the rule whose
     // number is the opposite.  If YYTABLE_NINF, syntax error.
-    static const signed char yytable_[];
+    static const unsigned char yytable_[];
 
-    static const signed char yycheck_[];
+    static const short yycheck_[];
 
     // YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
     // state STATE-NUM.
@@ -2198,9 +2222,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 141,     ///< Last index in yytable_.
-      yynnts_ = 26,  ///< Number of nonterminal symbols.
-      yyfinal_ = 43 ///< Termination state number.
+      yylast_ = 182,     ///< Last index in yytable_.
+      yynnts_ = 32,  ///< Number of nonterminal symbols.
+      yyfinal_ = 46 ///< Termination state number.
     };
 
 
@@ -2212,7 +2236,7 @@ switch (yykind)
 
 
 } // yy
-#line 2216 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
+#line 2240 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
 
 
 

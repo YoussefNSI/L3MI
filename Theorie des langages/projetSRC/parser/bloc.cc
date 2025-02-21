@@ -34,6 +34,16 @@ void Titre::setPropriete(const std::string &nom, const std::string &valeur)
     attributs[nom] = valeur;
 }
 
+std::string Titre::getPropriete(const std::string &nom)
+{
+    auto it = attributs.find(nom);
+    if (it != attributs.end())
+    {
+        return it->second;
+    }
+    throw std::runtime_error("Propriété " + nom + " introuvable");
+}
+
 std::string Paragraphe::toHTML(int currentIndent)
 {
     std::string espace(currentIndent * 4, ' ');
@@ -61,7 +71,8 @@ std::string Paragraphe::toHTML(int currentIndent)
 
     while (std::getline(iss, line))
     {
-        if(i >= 2) html += "\n" + espace;
+        if (i >= 2)
+            html += "\n" + espace;
         html += line;
         i++;
     }
@@ -73,6 +84,16 @@ std::string Paragraphe::toHTML(int currentIndent)
 void Paragraphe::setPropriete(const std::string &nom, const std::string &valeur)
 {
     attributs[nom] = valeur;
+}
+
+std::string Paragraphe::getPropriete(const std::string &nom)
+{
+    auto it = attributs.find(nom);
+    if (it != attributs.end())
+    {
+        return it->second;
+    }
+    throw std::runtime_error("Propriété " + nom + " introuvable");
 }
 
 std::string Image::toHTML(int currentIndent)

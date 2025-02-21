@@ -3,16 +3,17 @@
 
 #include <string>
 
-#include "contexte.hh"
 
 class Driver {
 private:
-    Contexte variables;       
+    std::string instructions;       
 
 public:
     Driver();
     ~Driver();
-
+    std::string executeInstruction(std::string instruction);
+    std::string getInstructions();
+    
    
 };
 

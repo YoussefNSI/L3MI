@@ -981,27 +981,27 @@ YY_RULE_SETUP
 case 30:
 YY_RULE_SETUP
 #line 151 "parser/scanner.ll"
-return token::SI;
+{ std::cout << "[SCAN] SI" << std::endl; return token::SI; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 152 "parser/scanner.ll"
-return token::SINON;
+{ std::cout << "[SCAN] SINON" << std::endl; return token::SINON; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 153 "parser/scanner.ll"
-return token::FINSI;
+{ std::cout << "[SCAN] FINSI" << std::endl; return token::FINSI; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 154 "parser/scanner.ll"
-return token::POUR;
+{ std::cout << "[SCAN] POUR" << std::endl; return token::POUR; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 155 "parser/scanner.ll"
-return token::FINI;
+{ std::cout << "[SCAN] FINI" << std::endl; return token::FINI; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP

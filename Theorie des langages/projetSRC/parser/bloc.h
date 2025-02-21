@@ -12,6 +12,7 @@ public:
     virtual ~Bloc() = default;
     virtual std::string toHTML(int currentIndent=0) = 0;
     virtual void setPropriete(const std::string &nom, const std::string &valeur) = 0;
+    virtual std::string getPropriete(const std::string &nom) { return ""; };
     virtual std::string getType() const = 0;
     virtual std::string getTexte() const = 0;
 };
@@ -28,6 +29,7 @@ public:
     std::map<std::string, std::string> getAttributs() const { return attributs; }
 
     void setPropriete(const std::string &nom, const std::string &valeur) override;
+    std::string getPropriete(const std::string &nom) override;
     std::string getType() const override { return "Titre"; }
 
 private:
@@ -47,6 +49,7 @@ public:
     std::map<std::string, std::string> getAttributs() const { return attributs; }
 
     void setPropriete(const std::string &nom, const std::string &valeur) override;
+    std::string getPropriete(const std::string &nom) override;
     std::string getType() const override { return "Paragraphe"; }
 
 private:

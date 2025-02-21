@@ -147,11 +147,11 @@ langue       {
     return token::COMMENTAIRE;
 }; 
 
-SI            return token::SI;
-SINON         return token::SINON;
-FINSI         return token::FINSI;
-POUR          return token::POUR;
-FINI          return token::FINI;
+SI            { std::cout << "[SCAN] SI" << std::endl; return token::SI; }
+SINON         { std::cout << "[SCAN] SINON" << std::endl; return token::SINON; }
+FINSI         { std::cout << "[SCAN] FINSI" << std::endl; return token::FINSI; }
+POUR          { std::cout << "[SCAN] POUR" << std::endl; return token::POUR; }
+FINI          { std::cout << "[SCAN] FINI" << std::endl; return token::FINI; }
 
 \=             { std::cout << "[SCAN] =" << std::endl; return token::EGAL; }
 \[             { std::cout << "[SCAN] [" << std::endl; return token::CROCHET_OUVRANT; }
