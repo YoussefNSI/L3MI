@@ -42,6 +42,7 @@
     #define yylex scanner.yylex
 }
 
+
 %token                 NEWLINE
 %token <TitreInfo>     TITRE SOUS_TITRE
 %token                 PARAGRAPHE IMAGE
@@ -68,11 +69,13 @@
 %type <int> index_expression expr terme facteur
 %type <bool> condition
 
+%right SINON
+
 %%
 
 programme:
     programme_element programme
-    |
+    | %empty
 ;
 
 programme_element:
@@ -340,9 +343,52 @@ style:
 ;
 
 conditionnel:
-    SI PARENTHESE_OUVRANTE condition PARENTHESE_FERMANTE DEUX_POINTS instructions FINSI
-    | SI PARENTHESE_OUVRANTE condition PARENTHESE_FERMANTE DEUX_POINTS instructions SINON DEUX_POINTS instructions FINSI
+    SI PARENTHESE_OUVRANTE condition PARENTHESE_FERMANTE DEUX_POINTS
+    { 
+        doc->beginTransaction();
+        std::cout << "Condition vraie ? " << $3 << std::endl;
+        driver.pushCondition($3); // Stocke la valeur de condition
+    }
+    instructions
+    else_clause
+    FINSI
+    {
+        driver.resolveConditional(); // Nettoie l'état après FINSI
+    }
 ;
+
+else_clause:
+    %empty
+    {
+        std::cout << "Pas de SINON" << std::endl;
+        if (driver.popCondition()) {
+            doc->commitTransaction();
+        } else {
+            doc->rollbackTransaction();
+        }
+    }
+    | SINON DEUX_POINTS
+    {
+        bool cond = driver.popCondition();
+        if (!cond) { // Si le SI était faux
+            doc->rollbackTransaction(); // Annule SI
+        } else {
+            doc->commitTransaction();   // Valide SINON
+        }
+        doc->beginTransaction();
+        driver.setCurrentElseCondition(cond); // Stocke cond
+    }
+    instructions
+    {
+        bool cond = driver.getCurrentElseCondition();
+        if (!cond) { // Si le SI était faux
+            doc->commitTransaction();   // Valide le SINON
+        } else {
+            doc->rollbackTransaction(); // Annule le SINON
+        }
+    }
+;
+
 
 condition:
     IDENTIFIANT POINT nomattribut EGAL EGAL valeur { 

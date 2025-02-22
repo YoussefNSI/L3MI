@@ -405,3 +405,64 @@ void Document::addBloc(std::shared_ptr<Bloc> bloc)
         blocs[key] = bloc;
     }
 }
+
+void Document::beginTransaction() {
+    std::cout << "Begin transaction" << std::endl;
+    TransactionState state;
+    state.variables = variables;
+    state.proprietes = proprietes;
+    state.mapStyles = mapStyles;
+    state.blocCounts = blocCounts;
+    
+    // On sauvegarde les blocs
+    for (const auto& pair : blocs) {
+        state.blocKeys.insert(pair.first);
+        state.blocsSnapshot[pair.first] = pair.second->clone(); // On clone pour les éventuelles modifications sur le bloc
+    }
+    
+    transactionStack.push(state);
+}
+
+void Document::commitTransaction() {
+    // On vide la pile
+    if (!transactionStack.empty()) {
+        transactionStack.pop();
+        std::cout<< "Commit" << std::endl;
+    }
+}
+
+void Document::rollbackTransaction() {
+    if (transactionStack.empty()) return;
+
+    TransactionState state = transactionStack.top();
+    transactionStack.pop();
+
+    std::cout << "Rollback" << std::endl;
+
+    // On restaure les états sauvegardés
+    variables = state.variables;
+    proprietes = state.proprietes;
+    mapStyles = state.mapStyles;
+    blocCounts = state.blocCounts;
+
+    // On supprime les blocs qui ont été ajoutés depuis le début de la transaction
+    std::vector<std::string> toRemove;
+    for (const auto& pair : blocs) {
+        if (state.blocKeys.find(pair.first) == state.blocKeys.end()) {
+            std::cout << "Remove " << pair.first << std::endl;
+            toRemove.push_back(pair.first);
+        }
+    }
+    for (const auto& key : toRemove) {
+        std::cout << "Remove (2)" << key << std::endl;
+        blocs.erase(key);
+    }
+
+    // On restaure les blocs qui ont été modifiés
+    for (const auto& [key, snapshotBloc] : state.blocsSnapshot) {
+        if (blocs.find(key) != blocs.end()) {
+            std::cout << "Restore " << key << std::endl;
+            blocs[key] = snapshotBloc->clone(); // Rétablir l'état original
+        }
+    }
+}

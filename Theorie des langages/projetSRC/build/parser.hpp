@@ -662,9 +662,12 @@ namespace yy {
         S_valeurvar = 74,                        // valeurvar
         S_style = 75,                            // style
         S_conditionnel = 76,                     // conditionnel
-        S_condition = 77,                        // condition
-        S_instructions = 78,                     // instructions
-        S_instruction = 79                       // instruction
+        S_77_1 = 77,                             // $@1
+        S_else_clause = 78,                      // else_clause
+        S_79_2 = 79,                             // $@2
+        S_condition = 80,                        // condition
+        S_instructions = 81,                     // instructions
+        S_instruction = 82                       // instruction
       };
     };
 
@@ -1944,7 +1947,7 @@ switch (yykind)
     /// \param yyvalue   the value to check
     static bool yy_table_value_is_error_ (int yyvalue) YY_NOEXCEPT;
 
-    static const signed char yypact_ninf_;
+    static const short yypact_ninf_;
     static const signed char yytable_ninf_;
 
     /// Convert a scanner token kind \a t to a symbol kind.
@@ -2222,8 +2225,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 182,     ///< Last index in yytable_.
-      yynnts_ = 32,  ///< Number of nonterminal symbols.
+      yylast_ = 170,     ///< Last index in yytable_.
+      yynnts_ = 35,  ///< Number of nonterminal symbols.
       yyfinal_ = 46 ///< Termination state number.
     };
 
@@ -2236,7 +2239,7 @@ switch (yykind)
 
 
 } // yy
-#line 2240 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
+#line 2243 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.hpp"
 
 
 

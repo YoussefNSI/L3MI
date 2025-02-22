@@ -5,6 +5,8 @@
 #include <vector>
 #include <memory>
 #include <variant>
+#include <set>
+#include <stack>
 
 class Bloc
 {
@@ -15,6 +17,7 @@ public:
     virtual std::string getPropriete(const std::string &nom) { return ""; };
     virtual std::string getType() const = 0;
     virtual std::string getTexte() const = 0;
+    virtual std::shared_ptr<Bloc> clone() const = 0;
 };
 
 class Titre : public Bloc
@@ -31,6 +34,9 @@ public:
     void setPropriete(const std::string &nom, const std::string &valeur) override;
     std::string getPropriete(const std::string &nom) override;
     std::string getType() const override { return "Titre"; }
+    std::shared_ptr<Bloc> clone() const override {
+        return std::make_shared<Titre>(*this);
+    }
 
 private:
     std::map<std::string, std::string> attributs;
@@ -51,6 +57,9 @@ public:
     void setPropriete(const std::string &nom, const std::string &valeur) override;
     std::string getPropriete(const std::string &nom) override;
     std::string getType() const override { return "Paragraphe"; }
+    std::shared_ptr<Bloc> clone() const override {
+        return std::make_shared<Paragraphe>(*this);
+    }
 
 private:
     std::map<std::string, std::string> attributs;
@@ -67,6 +76,9 @@ public:
 
     void setPropriete(const std::string &nom, const std::string &valeur) override;
     std::string getType() const override { return "Image"; }
+    std::shared_ptr<Bloc> clone() const override {
+        return std::make_shared<Image>(*this);
+    }
 
 private:
     std::string src;
@@ -81,6 +93,9 @@ public:
 
     void setPropriete(const std::string &nom, const std::string &valeur) override;
     std::string getType() const override { return "TitrePage"; }
+    std::shared_ptr<Bloc> clone() const override {
+        return std::make_shared<TitrePage>(*this);
+    }
 
 private:
     std::string texte;
@@ -95,6 +110,9 @@ public:
 
     void setPropriete(const std::string &nom, const std::string &valeur) override;
     std::string getType() const override { return "Commentaire"; }
+    std::shared_ptr<Bloc> clone() const override {
+        return std::make_shared<Commentaire>(*this);
+    }
 
 private:
     std::string texte;
@@ -120,7 +138,7 @@ public:
     {
         mapStyles[nom] = valeur;
     }
-    void afficherBlocs() const;
+    void afficherBlocs() const; // Méthode pour le débogage seulement
     std::string getPropriete(const std::string &nom) const;
     const VariableType &getVariable(const std::string &nom) const;
     std::map<std::string, std::string> getStyle(const std::string &nom) const;
@@ -128,6 +146,9 @@ public:
     void HTMLtoFile(const std::string &filename) const;
 
     std::shared_ptr<Bloc> getNBloc(const std::string &type, int index) const;
+    void beginTransaction();
+    void commitTransaction();
+    void rollbackTransaction();
 
 private:
     std::map<std::string, std::shared_ptr<Bloc>> blocs;                                // blocs
@@ -136,5 +157,15 @@ private:
     std::map<std::string, VariableType> variables;                       // variables
     std::map<std::string, std::map<std::string, std::string>> mapStyles; // @STYLE
     std::map<std::string, int> blocCounts;                             // compteur de bloc pour chaque type
+
+    struct TransactionState {
+        std::map<std::string, VariableType> variables;
+        std::map<std::string, std::string> proprietes;
+        std::map<std::string, std::map<std::string, std::string>> mapStyles;
+        std::map<std::string, int> blocCounts;
+        std::set<std::string> blocKeys;
+        std::map<std::string, std::shared_ptr<Bloc>> blocsSnapshot;
+    }; // Struct pour sauvegarder l'état du document lors d'une transaction (pour les conditionnels)
+    std::stack<TransactionState> transactionStack; 
 };
 
