@@ -12,27 +12,11 @@ find_package(BISON)
 find_package(FLEX)
 
 
-include_directories(parser expressions ${CMAKE_CURRENT_BINARY_DIR})
-file(GLOB EXPRESSION_HEADERS 
-    expressions/contexte.hh
-    expressions/expression.hh
-    expressions/expressionBinaire.hh
-    expressions/expressionUnaire.hh
-    expressions/constante.hh
-    expressions/variable.hh
-    )
+include_directories(parser ${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(expressions 
-    expressions/contexte.cc
-    expressions/expressionBinaire.cc
-    expressions/expressionUnaire.cc
-    expressions/constante.cc
-    expressions/variable.cc
-    ${EXPRESSION_HEADERS}
-    )
 
 BISON_TARGET(parser parser/parser.yy ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp VERBOSE ${CMAKE_CURRENT_BINARY_DIR}/automate.txt 
-            COMPILE_FLAGS "-Wcounterexamples")
+            COMPILE_FLAGS "-Wconflicts-sr")
 FLEX_TARGET(scanner parser/scanner.ll  ${CMAKE_CURRENT_BINARY_DIR}/scanner.cpp)
 ADD_FLEX_BISON_DEPENDENCY(scanner parser)
 add_executable(${PROJECT_NAME}
@@ -47,6 +31,5 @@ add_executable(${PROJECT_NAME}
     ${BISON_parser_OUTPUTS}
     ${FLEX_scanner_OUTPUTS}
 )
-target_link_libraries(${PROJECT_NAME} expressions)
+target_link_libraries(${PROJECT_NAME})
 
-target_link_libraries(expressions)

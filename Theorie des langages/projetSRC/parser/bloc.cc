@@ -366,14 +366,14 @@ void Document::afficherBlocs() const
     }
 }
 
+// Récupère le n-ième bloc de type "type"
 std::shared_ptr<Bloc> Document::getNBloc(const std::string &type, int index) const
 {
     int count = 0;
     for (const auto &bloc : blocs)
     {
-        std::cout << "Bloc de type " << bloc.first << " Valeur : " << bloc.second->getTexte() << std::endl;
         if ((type == "p" && std::dynamic_pointer_cast<Paragraphe>(bloc.second)) ||
-            (type == "h" && std::dynamic_pointer_cast<Titre>(bloc.second)) ||
+            (type == "t" && std::dynamic_pointer_cast<Titre>(bloc.second)) ||
             (type == "img" && std::dynamic_pointer_cast<Image>(bloc.second)))
         {
             if (count == index)

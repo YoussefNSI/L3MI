@@ -117,19 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named expressions
-
-# Build rule for target.
-expressions: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 expressions
-.PHONY : expressions
-
-# fast build rule for target.
-expressions/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/build
-.PHONY : expressions/fast
-
-#=============================================================================
 # Target rules for targets named projet
 
 # Build rule for target.
@@ -141,126 +128,6 @@ projet: cmake_check_build_system
 projet/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projet.dir/build.make CMakeFiles/projet.dir/build
 .PHONY : projet/fast
-
-expressions/constante.o: expressions/constante.cc.o
-.PHONY : expressions/constante.o
-
-# target to build an object file
-expressions/constante.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/constante.cc.o
-.PHONY : expressions/constante.cc.o
-
-expressions/constante.i: expressions/constante.cc.i
-.PHONY : expressions/constante.i
-
-# target to preprocess a source file
-expressions/constante.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/constante.cc.i
-.PHONY : expressions/constante.cc.i
-
-expressions/constante.s: expressions/constante.cc.s
-.PHONY : expressions/constante.s
-
-# target to generate assembly for a file
-expressions/constante.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/constante.cc.s
-.PHONY : expressions/constante.cc.s
-
-expressions/contexte.o: expressions/contexte.cc.o
-.PHONY : expressions/contexte.o
-
-# target to build an object file
-expressions/contexte.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/contexte.cc.o
-.PHONY : expressions/contexte.cc.o
-
-expressions/contexte.i: expressions/contexte.cc.i
-.PHONY : expressions/contexte.i
-
-# target to preprocess a source file
-expressions/contexte.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/contexte.cc.i
-.PHONY : expressions/contexte.cc.i
-
-expressions/contexte.s: expressions/contexte.cc.s
-.PHONY : expressions/contexte.s
-
-# target to generate assembly for a file
-expressions/contexte.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/contexte.cc.s
-.PHONY : expressions/contexte.cc.s
-
-expressions/expressionBinaire.o: expressions/expressionBinaire.cc.o
-.PHONY : expressions/expressionBinaire.o
-
-# target to build an object file
-expressions/expressionBinaire.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/expressionBinaire.cc.o
-.PHONY : expressions/expressionBinaire.cc.o
-
-expressions/expressionBinaire.i: expressions/expressionBinaire.cc.i
-.PHONY : expressions/expressionBinaire.i
-
-# target to preprocess a source file
-expressions/expressionBinaire.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/expressionBinaire.cc.i
-.PHONY : expressions/expressionBinaire.cc.i
-
-expressions/expressionBinaire.s: expressions/expressionBinaire.cc.s
-.PHONY : expressions/expressionBinaire.s
-
-# target to generate assembly for a file
-expressions/expressionBinaire.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/expressionBinaire.cc.s
-.PHONY : expressions/expressionBinaire.cc.s
-
-expressions/expressionUnaire.o: expressions/expressionUnaire.cc.o
-.PHONY : expressions/expressionUnaire.o
-
-# target to build an object file
-expressions/expressionUnaire.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/expressionUnaire.cc.o
-.PHONY : expressions/expressionUnaire.cc.o
-
-expressions/expressionUnaire.i: expressions/expressionUnaire.cc.i
-.PHONY : expressions/expressionUnaire.i
-
-# target to preprocess a source file
-expressions/expressionUnaire.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/expressionUnaire.cc.i
-.PHONY : expressions/expressionUnaire.cc.i
-
-expressions/expressionUnaire.s: expressions/expressionUnaire.cc.s
-.PHONY : expressions/expressionUnaire.s
-
-# target to generate assembly for a file
-expressions/expressionUnaire.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/expressionUnaire.cc.s
-.PHONY : expressions/expressionUnaire.cc.s
-
-expressions/variable.o: expressions/variable.cc.o
-.PHONY : expressions/variable.o
-
-# target to build an object file
-expressions/variable.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/variable.cc.o
-.PHONY : expressions/variable.cc.o
-
-expressions/variable.i: expressions/variable.cc.i
-.PHONY : expressions/variable.i
-
-# target to preprocess a source file
-expressions/variable.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/variable.cc.i
-.PHONY : expressions/variable.cc.i
-
-expressions/variable.s: expressions/variable.cc.s
-.PHONY : expressions/variable.s
-
-# target to generate assembly for a file
-expressions/variable.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/expressions.dir/build.make CMakeFiles/expressions.dir/expressions/variable.cc.s
-.PHONY : expressions/variable.cc.s
 
 parser.o: parser.cpp.o
 .PHONY : parser.o
@@ -390,23 +257,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... expressions"
 	@echo "... projet"
-	@echo "... expressions/constante.o"
-	@echo "... expressions/constante.i"
-	@echo "... expressions/constante.s"
-	@echo "... expressions/contexte.o"
-	@echo "... expressions/contexte.i"
-	@echo "... expressions/contexte.s"
-	@echo "... expressions/expressionBinaire.o"
-	@echo "... expressions/expressionBinaire.i"
-	@echo "... expressions/expressionBinaire.s"
-	@echo "... expressions/expressionUnaire.o"
-	@echo "... expressions/expressionUnaire.i"
-	@echo "... expressions/expressionUnaire.s"
-	@echo "... expressions/variable.o"
-	@echo "... expressions/variable.i"
-	@echo "... expressions/variable.s"
 	@echo "... parser.o"
 	@echo "... parser.i"
 	@echo "... parser.s"

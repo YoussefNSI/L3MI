@@ -261,13 +261,13 @@ variable:
 
 selecteur : 
     PARAGRAPHE index_expression { $$ = std::make_pair("p", $2); }
-    | TITRE index_expression      { $$ = std::make_pair("h", $2); }
+    | TITRE index_expression      { $$ = std::make_pair("t", $2); }
     | IMAGE index_expression      { $$ = std::make_pair("img", $2); }
 ;
 
 selecteur2 :
     TITRE_INDICE POINT nomattribut EGAL valeur 
-    { std::shared_ptr<Bloc> b = doc->getNBloc("h", $1); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("t", $1); 
         if (b != nullptr) {
             b->setPropriete($3, $5);
         }
@@ -288,12 +288,12 @@ selecteur2 :
 
 selecteur_condition:
     PARAGRAPHE_INDICE    { $$ = std::make_pair("p", $1); }
-    | TITRE_INDICE      { $$ = std::make_pair("h", $1); }
+    | TITRE_INDICE      { $$ = std::make_pair("t", $1); }
 ;
 
 selecteur_variable:
     PARAGRAPHE_INDICE    { std::shared_ptr<Bloc> b = doc->getNBloc("p", $1); if (b != nullptr) { $$ = b; } }
-    | TITRE_INDICE      { std::shared_ptr<Bloc> b = doc->getNBloc("h", $1); if (b != nullptr) { $$ = b; } }
+    | TITRE_INDICE      { std::shared_ptr<Bloc> b = doc->getNBloc("t", $1); if (b != nullptr) { $$ = b; } }
 
 index_expression:
     CROCHET_OUVRANT expr CROCHET_FERMANT { $$ = $2; }

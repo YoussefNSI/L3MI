@@ -3,7 +3,7 @@
 !T[0].couleurFond = #000000
 
 SI (!T[0].couleurFond == #000000) :
-!T[0].couleurTexte = #FF0000
+!T[2].couleurTexte = #FF0000
 FINSI
 
 monTitre = !T[0]

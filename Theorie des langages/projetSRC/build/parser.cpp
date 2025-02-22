@@ -1371,7 +1371,7 @@ namespace yy {
 
   case 49: // selecteur: TITRE index_expression
 #line 264 "parser/parser.yy"
-                                  { yylhs.value.as < std::pair<std::string, int> > () = std::make_pair("h", yystack_[0].value.as < int > ()); }
+                                  { yylhs.value.as < std::pair<std::string, int> > () = std::make_pair("t", yystack_[0].value.as < int > ()); }
 #line 1376 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
@@ -1383,7 +1383,7 @@ namespace yy {
 
   case 51: // selecteur2: TITRE_INDICE POINT nomattribut EGAL valeur
 #line 270 "parser/parser.yy"
-    { std::shared_ptr<Bloc> b = doc->getNBloc("h", yystack_[4].value.as < int > ()); 
+    { std::shared_ptr<Bloc> b = doc->getNBloc("t", yystack_[4].value.as < int > ()); 
         if (b != nullptr) {
             b->setPropriete(yystack_[2].value.as < std::string > (), yystack_[0].value.as < std::string > ());
         }
@@ -1419,7 +1419,7 @@ namespace yy {
 
   case 55: // selecteur_condition: TITRE_INDICE
 #line 291 "parser/parser.yy"
-                        { yylhs.value.as < std::pair<std::string, int> > () = std::make_pair("h", yystack_[0].value.as < int > ()); }
+                        { yylhs.value.as < std::pair<std::string, int> > () = std::make_pair("t", yystack_[0].value.as < int > ()); }
 #line 1424 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
@@ -1431,7 +1431,7 @@ namespace yy {
 
   case 57: // selecteur_variable: TITRE_INDICE
 #line 296 "parser/parser.yy"
-                        { std::shared_ptr<Bloc> b = doc->getNBloc("h", yystack_[0].value.as < int > ()); if (b != nullptr) { yylhs.value.as < std::shared_ptr<Bloc> > () = b; } }
+                        { std::shared_ptr<Bloc> b = doc->getNBloc("t", yystack_[0].value.as < int > ()); if (b != nullptr) { yylhs.value.as < std::shared_ptr<Bloc> > () = b; } }
 #line 1436 "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
     break;
 
