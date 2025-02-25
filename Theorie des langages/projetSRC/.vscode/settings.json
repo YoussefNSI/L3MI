@@ -60,6 +60,8 @@
     "variant": "cpp",
     "sstream": "cpp",
     "bitset": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "set": "cpp",
+    "stack": "cpp"
   }
 }

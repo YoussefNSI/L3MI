@@ -28,6 +28,8 @@ add_executable(${PROJECT_NAME}
     parser/parser.yy
     parser/bloc.h
     parser/bloc.cc
+    parser/Document.h
+    parser/Document.cc
     ${BISON_parser_OUTPUTS}
     ${FLEX_scanner_OUTPUTS}
 )

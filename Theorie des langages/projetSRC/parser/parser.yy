@@ -11,7 +11,7 @@
 %locations
 
 %code requires{
-    #include "bloc.h"
+    #include "Document.h"
 
     class Scanner;
     class Driver;

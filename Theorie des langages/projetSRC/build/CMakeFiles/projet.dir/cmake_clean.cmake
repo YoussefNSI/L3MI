@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/projet.dir/parser.cpp.o"
   "CMakeFiles/projet.dir/parser.cpp.o.d"
+  "CMakeFiles/projet.dir/parser/Document.cc.o"
+  "CMakeFiles/projet.dir/parser/Document.cc.o.d"
   "CMakeFiles/projet.dir/parser/bloc.cc.o"
   "CMakeFiles/projet.dir/parser/bloc.cc.o.d"
   "CMakeFiles/projet.dir/parser/driver.cc.o"

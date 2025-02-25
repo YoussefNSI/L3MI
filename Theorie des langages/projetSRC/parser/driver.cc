@@ -1,12 +1,18 @@
+#include <functional>
+#include <stack>
 #include "driver.hh"
-#include <iostream>
-
-Driver::Driver(std::shared_ptr<Document> document) : document(document) {}
-Driver::~Driver() {}
-
-std::shared_ptr<Document> Driver::getDocument() {
-    return document;
+void Driver::pushCondition(bool cond) {
+    conditionStack.push(cond);
 }
 
+Driver::~Driver() {
+    while (!conditionStack.empty()) {
+        conditionStack.pop();
+    }
+}
 
-
+bool Driver::popCondition() {
+    bool cond = conditionStack.top();
+    conditionStack.pop();
+    return cond;
+}

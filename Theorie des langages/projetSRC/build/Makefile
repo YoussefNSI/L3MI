@@ -153,6 +153,30 @@ parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projet.dir/build.make CMakeFiles/projet.dir/parser.cpp.s
 .PHONY : parser.cpp.s
 
+parser/Document.o: parser/Document.cc.o
+.PHONY : parser/Document.o
+
+# target to build an object file
+parser/Document.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projet.dir/build.make CMakeFiles/projet.dir/parser/Document.cc.o
+.PHONY : parser/Document.cc.o
+
+parser/Document.i: parser/Document.cc.i
+.PHONY : parser/Document.i
+
+# target to preprocess a source file
+parser/Document.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projet.dir/build.make CMakeFiles/projet.dir/parser/Document.cc.i
+.PHONY : parser/Document.cc.i
+
+parser/Document.s: parser/Document.cc.s
+.PHONY : parser/Document.s
+
+# target to generate assembly for a file
+parser/Document.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projet.dir/build.make CMakeFiles/projet.dir/parser/Document.cc.s
+.PHONY : parser/Document.cc.s
+
 parser/bloc.o: parser/bloc.cc.o
 .PHONY : parser/bloc.o
 
@@ -261,6 +285,9 @@ help:
 	@echo "... parser.o"
 	@echo "... parser.i"
 	@echo "... parser.s"
+	@echo "... parser/Document.o"
+	@echo "... parser/Document.i"
+	@echo "... parser/Document.s"
 	@echo "... parser/bloc.o"
 	@echo "... parser/bloc.i"
 	@echo "... parser/bloc.s"

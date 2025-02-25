@@ -141,6 +141,7 @@ CMakeFiles/projet.dir/parser/main.cc.o: \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
  C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/build/parser.hpp \
+ C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/Document.h \
  C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/bloc.h \
  C:/msys64/mingw64/include/c++/14.2.0/map \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \

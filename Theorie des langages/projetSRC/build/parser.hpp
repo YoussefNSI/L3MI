@@ -47,7 +47,7 @@
 // "%code requires" blocks.
 #line 13 "parser/parser.yy"
 
-    #include "bloc.h"
+    #include "Document.h"
 
     class Scanner;
     class Driver;

@@ -132,10 +132,24 @@ CMakeFiles/projet.dir/parser/bloc.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/projet.dir/parser/bloc.cc.s"
 	/mingw64/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/parser/bloc.cc" -o CMakeFiles/projet.dir/parser/bloc.cc.s
 
+CMakeFiles/projet.dir/parser/Document.cc.o: CMakeFiles/projet.dir/flags.make
+CMakeFiles/projet.dir/parser/Document.cc.o: /c/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/Document.cc
+CMakeFiles/projet.dir/parser/Document.cc.o: CMakeFiles/projet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/projet.dir/parser/Document.cc.o"
+	/mingw64/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projet.dir/parser/Document.cc.o -MF CMakeFiles/projet.dir/parser/Document.cc.o.d -o CMakeFiles/projet.dir/parser/Document.cc.o -c "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/parser/Document.cc"
+
+CMakeFiles/projet.dir/parser/Document.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/projet.dir/parser/Document.cc.i"
+	/mingw64/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/parser/Document.cc" > CMakeFiles/projet.dir/parser/Document.cc.i
+
+CMakeFiles/projet.dir/parser/Document.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/projet.dir/parser/Document.cc.s"
+	/mingw64/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/parser/Document.cc" -o CMakeFiles/projet.dir/parser/Document.cc.s
+
 CMakeFiles/projet.dir/parser.cpp.o: CMakeFiles/projet.dir/flags.make
 CMakeFiles/projet.dir/parser.cpp.o: parser.cpp
 CMakeFiles/projet.dir/parser.cpp.o: CMakeFiles/projet.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/projet.dir/parser.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/projet.dir/parser.cpp.o"
 	/mingw64/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projet.dir/parser.cpp.o -MF CMakeFiles/projet.dir/parser.cpp.o.d -o CMakeFiles/projet.dir/parser.cpp.o -c "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/parser.cpp"
 
 CMakeFiles/projet.dir/parser.cpp.i: cmake_force
@@ -150,7 +164,7 @@ CMakeFiles/projet.dir/scanner.cpp.o: CMakeFiles/projet.dir/flags.make
 CMakeFiles/projet.dir/scanner.cpp.o: scanner.cpp
 CMakeFiles/projet.dir/scanner.cpp.o: parser.hpp
 CMakeFiles/projet.dir/scanner.cpp.o: CMakeFiles/projet.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/projet.dir/scanner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/projet.dir/scanner.cpp.o"
 	/mingw64/bin/c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/projet.dir/scanner.cpp.o -MF CMakeFiles/projet.dir/scanner.cpp.o.d -o CMakeFiles/projet.dir/scanner.cpp.o -c "/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/scanner.cpp"
 
 CMakeFiles/projet.dir/scanner.cpp.i: cmake_force
@@ -166,6 +180,7 @@ projet_OBJECTS = \
 "CMakeFiles/projet.dir/parser/main.cc.o" \
 "CMakeFiles/projet.dir/parser/driver.cc.o" \
 "CMakeFiles/projet.dir/parser/bloc.cc.o" \
+"CMakeFiles/projet.dir/parser/Document.cc.o" \
 "CMakeFiles/projet.dir/parser.cpp.o" \
 "CMakeFiles/projet.dir/scanner.cpp.o"
 
@@ -175,11 +190,12 @@ projet_EXTERNAL_OBJECTS =
 projet.exe: CMakeFiles/projet.dir/parser/main.cc.o
 projet.exe: CMakeFiles/projet.dir/parser/driver.cc.o
 projet.exe: CMakeFiles/projet.dir/parser/bloc.cc.o
+projet.exe: CMakeFiles/projet.dir/parser/Document.cc.o
 projet.exe: CMakeFiles/projet.dir/parser.cpp.o
 projet.exe: CMakeFiles/projet.dir/scanner.cpp.o
 projet.exe: CMakeFiles/projet.dir/build.make
 projet.exe: CMakeFiles/projet.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable projet.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/c/Users/radou/Documents/GitHub/L3MI/Theorie des langages/projetSRC/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable projet.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/projet.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

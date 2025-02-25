@@ -1,6 +1,7 @@
 CMakeFiles/projet.dir/parser.cpp.o: \
  C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/build/parser.cpp \
  C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/build/parser.hpp \
+ C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/Document.h \
  C:/Users/radou/Documents/GitHub/L3MI/Theorie\ des\ langages/projetSRC/parser/bloc.h \
  C:/msys64/mingw64/include/c++/14.2.0/string \
  C:/msys64/mingw64/include/c++/14.2.0/bits/requires_hosted.h \
