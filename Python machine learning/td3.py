@@ -99,7 +99,7 @@ def euclidian_distance(v1,v2):
 
     distance = 0
     for i in range(v1.shape[0]):
-        distance += (v1[i] - v2[i])**2
+        distance += (v1.iloc[i] - v2.iloc[i])**2
 
     return np.sqrt(distance)
 
