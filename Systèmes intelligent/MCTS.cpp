@@ -49,7 +49,7 @@ private:
 
     TreeNode* select(TreeNode* node) {
         while(!is_terminal(node)) {
-            if(node->is_fully_expanded())) {
+            if(node->is_fully_expanded()) {
                 node = best_ucb_child(node);
             } else {
                 return expand(node);
