@@ -40,4 +40,5 @@ public:
     MCTS();
     void effectuer_recherche(int iterations);
     int meilleur_coup();
+    std::shared_ptr<Noeud> get_root() { return racine; }
 };

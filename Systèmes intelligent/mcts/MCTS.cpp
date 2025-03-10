@@ -57,7 +57,6 @@ std::shared_ptr<Noeud> MCTS::expansion(std::shared_ptr<Noeud> noeud) {
     }
     
     // Créer un nouvel enfant
-    // Créer un nouvel enfant
     if (!noeud->coups_possibles.empty())
     {
         int nouveau_state = noeud->state_val * 10 + noeud->coups_possibles[0];
