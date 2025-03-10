@@ -1,6 +1,6 @@
 #include "jeu.h"
 
-int Jeu::nb_coups() {
+int Jeu::nb_coups() const { // nb_branches 
   switch(_etat._val) {
   case RACINE : return 2; // e
   case 1 : // a
@@ -20,7 +20,7 @@ int Jeu::nb_coups() {
   case 23 : // bc
     return 3;
   default :
-    return -1;
+    return -1; // -1 si c'est une feuille
   }
 };
 
@@ -39,7 +39,7 @@ bool Jeu::victoire() {
 	  (_etat._val == 1113) );
 };
 
-bool Jeu::terminal() {
+bool Jeu::terminal() const {
   return (
 	  (_etat._val == 1121) || 
 	  (_etat._val == 1122) || 
@@ -106,4 +106,15 @@ bool Jeu::pat() {
 	  (_etat._val == 223) ||
 	  (_etat._val == 1111) ||
 	  (_etat._val == 1112) );
+}
+
+// ajouté :
+
+int Jeu::random(int n) // entre 1 et n inclus
+{
+    std::srand(std::time({}));
+    int lowest=1;
+    int range=(n-lowest)+1;
+
+    return lowest + rand() % range;
 }
