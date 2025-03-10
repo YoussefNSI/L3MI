@@ -93,8 +93,8 @@ class ReseauNeurones(nn.Module):
     
 # Question 9
 
-model = ReseauNeurones(d=4096, h=50, k=40)
-optimizer = th.optim.Adam(model.parameters(), lr=0.001)
+model_nn = ReseauNeurones(d=4096, h=50, k=40)
+optimizer = th.optim.Adam(model_nn.parameters(), lr=0.001)
 
 # Question 11
 
@@ -102,8 +102,8 @@ hidden_sizes = [1, 5, 10, 50, 100]
 val_errors = []
 
 for h in hidden_sizes:
-    model = ReseauNeurones(4096, h, 40)
-    val_preds = model(X_val_t).argmax(1)
+    model_h = ReseauNeurones(4096, h, 40)
+    val_preds = model_h(X_val_t).argmax(1)
     val_error = 1 - (val_preds == y_val_t).float().mean().item()
     val_errors.append(val_error)
 
