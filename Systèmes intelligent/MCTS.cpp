@@ -59,10 +59,10 @@ std::shared_ptr<Noeud> MCTS::selection(std::shared_ptr<Noeud> noeud)
 std::shared_ptr<Noeud> MCTS::expansion(std::shared_ptr<Noeud> noeud)
 {
     Jeu game_copy;
-    if (noeud) {
+    if (noeud)
+    {
         reconstruire_etat(game_copy, noeud->state_val);
     }
-
 
     // Générer les coups possibles
     int nb = game_copy.nb_coups();
@@ -88,7 +88,8 @@ std::shared_ptr<Noeud> MCTS::expansion(std::shared_ptr<Noeud> noeud)
 double MCTS::simulation(std::shared_ptr<Noeud> noeud)
 {
     Jeu simulation_game;
-    if (noeud) {
+    if (noeud)
+    {
         reconstruire_etat(simulation_game, noeud->state_val);
     }
 

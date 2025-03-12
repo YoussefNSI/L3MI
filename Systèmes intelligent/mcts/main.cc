@@ -7,6 +7,5 @@ int main() {
 
     int meilleur = mcts.meilleur_coup();
     std::cout << "Meilleur coup trouve : " << meilleur << std::endl;
-    std::cout << "Nombre de visites : " << mcts.get_root()->visite_count << std::endl;
     return 0;
 }
