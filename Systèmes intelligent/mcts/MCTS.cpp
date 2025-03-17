@@ -1,9 +1,9 @@
 #include "MCTS.h"
+#include <limits>
 
-// Noeud class implementations
 Noeud::Noeud(int state, std::shared_ptr<Noeud> p, int coup)
-    : state_val(state), parent(p), coup_from_parent(coup), 
-      visite_count(0), total_reward(0.0) {}
+    : state_val(state), visite_count(0), total_reward(0.0),
+      parent(p), coup_from_parent(coup) {}
 
 bool Noeud::est_terminal(const Jeu& game) const {
     return game.terminal();
@@ -19,7 +19,7 @@ double Noeud::calcul_ucb(double exploration_param) const {
            exploration_param * sqrt(log(parent.lock()->visite_count) / visite_count);
 }
 
-// MCTS class implementations
+
 MCTS::MCTS() : racine(std::make_shared<Noeud>(0)) {}
 
 void MCTS::reconstruire_etat(Jeu& game, int state_val) {

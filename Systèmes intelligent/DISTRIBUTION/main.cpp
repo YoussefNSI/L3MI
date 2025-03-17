@@ -3,12 +3,18 @@
 #include <mutex>
 
 #include "arbitre.h"
+#include "MCTS.h"
+#include "Trainer.h"
 
 #define NB_PARTIES 50
 using namespace std;
 
 int main()
 {
+    MCTSTrainer trainer(50000, 100);
+    trainer.train();
+    std::cout << "Entraînement terminé" << std::endl;
+
     //initialise la graine du générateur aléatoire
     std::srand(std::time(nullptr));
 

@@ -15,6 +15,7 @@ set(SRCS
     joueur.cpp
     joueur_random.cpp
     joueur_brutal.cpp
+    joueur_MCTS.cpp
     )
     
 set(HEADERS

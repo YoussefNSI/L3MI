@@ -1,109 +1,129 @@
-#include "jeu.h"
+#include "../DISTRIBUTION/jeu.h"
+#include <iostream>
+#define PARTIE_NON_TERMINEE 2
+#define PARTIE_NULLE 0
+#define ALIGNEMENT 1
 
-int Jeu::nb_coups() {
-  switch(_etat._val) {
-  case RACINE : return 2; // e
-  case 1 : // a
-  case 11 : // aa
-  case 111 : // aaa
-  case 112 : // aab
-  case 113 : // aac
-  case 12 : // ab
-  case 121 : // aba
-  case 13 : // ac
-  case 132 : // acb
-  case 2 :// b
-  case 21 : // ba
-  case 211 : // baa
-  case 212 : // bab
-  case 22 : // bb
-  case 23 : // bc
-    return 3;
-  default :
-    return -1;
-  }
-};
+#include "plateau.h"
+
+int _tab[MAX_LARGEUR];
+int _nombre;
+int _puissance[MAX_LARGEUR];
+int _alignement;
+int _dual_x[MAX_HAUTEUR];
+int _dual_o[MAX_HAUTEUR];
+int _nb_tours;
 
 
-bool Jeu::victoire() {
-  return (
-	  (_etat._val == 1122) ||
-	  (_etat._val == 1123) ||
-	  (_etat._val == 1132) ||
-	  (_etat._val == 1213) ||
-	  (_etat._val == 123) ||
-	  (_etat._val == 2113) ||
-	  (_etat._val == 231) ||
-	  (_etat._val == 232) ||
-	  (_etat._val == 233) ||
-	  (_etat._val == 1113) );
-};
-
-bool Jeu::terminal() {
-  return (
-	  (_etat._val == 1121) || 
-	  (_etat._val == 1122) || 
-	  (_etat._val == 1123) ||
-	  (_etat._val == 1131) ||
-	  (_etat._val == 1132) ||
-	  (_etat._val == 1133) ||
-	  (_etat._val == 1211) ||
-	  (_etat._val == 1212) ||
-	  (_etat._val == 1213) ||
-	  (_etat._val == 122) ||
-	  (_etat._val == 123) ||
-	  (_etat._val == 131) ||
-	  (_etat._val == 1321) ||
-	  (_etat._val == 1322) ||
-	  (_etat._val == 1323)  ||
-	  (_etat._val == 133)  ||
-	  (_etat._val == 2111)  ||
-	  (_etat._val == 2112)  ||
-	  (_etat._val == 2113)  ||
-	  (_etat._val == 2121)  ||
-	  (_etat._val == 2122)  ||
-	  (_etat._val == 2123)  || 
-	  (_etat._val == 213)  ||
-	  (_etat._val == 221)  ||
-	  (_etat._val == 222)  ||
-	  (_etat._val == 223)  ||
-	  (_etat._val == 231)  ||
-	  (_etat._val == 232)  ||
-	  (_etat._val == 233)  ||
-	  (_etat._val == 1111)  ||
-	  (_etat._val == 1112)  ||
-	  (_etat._val == 1113) );
-};
+Plateau _plateau =  Plateau();
 
 Jeu::Jeu() {
-  _etat._val = RACINE;
+  reset();
 }
 
 void Jeu::reset() {
-
-  _etat._val = RACINE;
+  int i = 0;
+  for (i = 0; i < MAX_HAUTEUR; i++) {
+    _dual_o[i] = 0;
+    _dual_x[i] = 0;
+  }
+  for (i = 0; i < MAX_LARGEUR; i++) {
+    _puissance[i] = 1;
+    _plateau._hauteur[i] = 0;
+    _plateau._pions[i] = 0;
+    _tab[i] = i; 
+  }
+  _alignement = false;
+  _nombre = MAX_LARGEUR;
+  _etat._val = PARTIE_NON_TERMINEE;
+  _nb_tours = 0;
 }
 
-bool Jeu::coup_licite(int coup) {
-  return (coup <= nb_coups()); 
+
+
+
+bool Jeu::coup_licite(int coup_relatif) {
+  return((coup_relatif >= 1) && (coup_relatif <= _nombre));
 }
+
   
-void Jeu::joue(int coup) {
-    _etat._val = (_etat._val * 10) + coup;
+void Jeu::joue(int indice_coup) {
+  _nb_tours++;
+  if (_nb_tours%2) {indice_coup = -indice_coup;}
+
+  int indice_relatif =  abs(indice_coup)-1;
+  int indice_absolu = _tab[indice_relatif];
+
+  int hauteur = _plateau._hauteur[indice_absolu];
+  
+  if (hauteur == MAX_HAUTEUR-1) {
+    _nombre--;
+    int i;
+    for (i = indice_relatif ; i < _nombre ; i++) {
+      _tab[i] = _tab[i+1];
+    }
+  }
+  
+
+  if (indice_coup > 0) {
+    _plateau._pions[indice_absolu] += _puissance[indice_absolu];
+
+            _dual_x[hauteur] = _dual_x[hauteur] + (1 << indice_absolu);
+  }
+  else {
+    _dual_o[hauteur] = _dual_o[hauteur] + (1 << indice_absolu);
+  }
+  _puissance[indice_absolu] = _puissance[indice_absolu] << 1;
+  _plateau._hauteur[indice_absolu]++;
+
+
+  int le_coup = _plateau._pions[indice_absolu];
+  if (indice_coup > 0) {
+    if ((hauteur == 3 && le_coup == 15) || // xxxx
+  	(hauteur == 4 && hauteur > 0 && le_coup == 30) || // oxxxx
+  	(hauteur == 5 && ((le_coup == 60) || // ooxxxx
+  			       (le_coup == 61))) // xoxxxx
+  	) { _etat._val = ALIGNEMENT; return;}
+  }
+  else {
+    if ((hauteur == 3  && le_coup == 0) || // oooo
+  	(hauteur == 4  && le_coup == 1) || // xoooo
+  	(hauteur == 5  && (le_coup == 2 || // oxoooo
+  			   le_coup == 3))    // xxoooo
+  	) { _etat._val = ALIGNEMENT; return;}
+  }
+  // horizontal
+  int dual;
+  if (indice_coup > 0) 
+    dual = _dual_x[hauteur];
+  else 
+    dual = _dual_o[hauteur];
+  
+  if ((indice_absolu < 4 && (dual & 1) && (dual & 2) && (dual & 4) && (dual & 8)) || // ????___
+  	((indice_absolu > 0 && indice_absolu < 5) && (dual & 2) && (dual & 4) && (dual & 8) && (dual & 16)) || // _????__
+  	((indice_absolu > 1 && indice_absolu < 6) && (dual & 4) && (dual & 8) && (dual & 16) && (dual & 32)) || // __????_
+  	(indice_absolu > 2 && (dual & 8) && (dual & 16) && (dual & 32) && (dual & 64)) // ___????
+      )
+    { _etat._val = ALIGNEMENT; return;}
+
+  if (_nb_tours == MAX_HAUTEUR * MAX_LARGEUR) {_etat._val = PARTIE_NULLE;}
+  
 }
 
-bool Jeu::pat() { 
-  return (
-	  (_etat._val == 1133) ||
-	  (_etat._val == 1212) ||
-	  (_etat._val == 131) ||
-	  (_etat._val == 1321) ||
-	  (_etat._val == 1323) ||
-	  (_etat._val == 133) ||
-	  (_etat._val == 2122) ||
-	  (_etat._val == 221) ||
-	  (_etat._val == 222) ||
-	  (_etat._val == 223) ||
-	  (_etat._val == 1111) ||
-	  (_etat._val == 1112) );
+
+int Jeu::nb_coups() const {
+  return _nombre;
+}
+
+bool Jeu::terminal() const{
+  return (_etat._val != PARTIE_NON_TERMINEE);
+}
+
+bool Jeu::victoire() {
+  return ((_etat._val != PARTIE_NON_TERMINEE) && (_etat._val == ALIGNEMENT) && (_nb_tours%2)); 
+}
+
+
+bool Jeu::pat() {
+  return ((_etat._val != PARTIE_NON_TERMINEE) && (_etat._val == PARTIE_NULLE));
 }
