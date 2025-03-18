@@ -367,7 +367,7 @@ if test_CNN:
     val_accuracies = []
 
     # Entraînement avec DataLoader et Mixed Precision Training
-    early_stopping_patience = 5
+    early_stopping_patience = 3
     best_val_loss = float('inf')
     patience_counter = 0
 
