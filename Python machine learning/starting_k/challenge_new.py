@@ -306,7 +306,7 @@ if test_CNN:
     ])
 
     train_dataset = TensorDataset(X_train_tensor[:8000], y_train_tensor[:8000])
-    train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, collate_fn=lambda batch: (
+    train_loader = DataLoader(train_dataset, batch_size=512, shuffle=True, collate_fn=lambda batch: (
         th.stack([transform(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
