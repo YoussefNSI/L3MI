@@ -15,7 +15,6 @@ from torchvision.transforms import ToPILImage
 from torchvision.models import resnet18
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.cuda.amp import GradScaler, autocast
-from sklearn.metrics import classification_report
 
 with open("dataset_images_train", 'rb') as fo:
     data = pickle.load(fo, encoding='bytes')
@@ -306,26 +305,12 @@ if test_CNN:
         transforms.ToTensor(),
     ])
 
-    train_dataset = TensorDataset(X_train_tensor[:8000], y_train_tensor[:8000])
-    train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, collate_fn=lambda batch: (
+    train_dataset = TensorDataset(X_train_tensor[:10000], y_train_tensor[:10000])
+    train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True, collate_fn=lambda batch: (
         th.stack([transform(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
-    
-    val_transform = transforms.Compose([
-        ToPILImage(),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
-
-    val_loader = DataLoader(
-        TensorDataset(X_train_tensor[8000:9000], y_train_tensor[8000:9000]), 
-        batch_size=256, 
-        collate_fn=lambda batch: (
-            th.stack([val_transform(img) for img, _ in batch]),  # Images
-            th.stack([label for _, label in batch])               # Labels
-        )
-    )
+    val_loader = DataLoader(TensorDataset(X_train_tensor[9000:10000], y_train_tensor[9000:10000]), batch_size=128, shuffle=True)
 
     class CNN(nn.Module):
         def __init__(self):
@@ -335,17 +320,17 @@ if test_CNN:
                 nn.BatchNorm2d(32),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Dropout(0.5),
+                nn.Dropout(0.25),
                 nn.Conv2d(32, 64, kernel_size=3, padding=1),
                 nn.BatchNorm2d(64),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Dropout(0.5),
+                nn.Dropout(0.25),
                 nn.Conv2d(64, 128, kernel_size=3, padding=1),
                 nn.BatchNorm2d(128),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Dropout(0.5)
+                nn.Dropout(0.25)
             )
             self.fc_layers = nn.Sequential(
                 nn.AdaptiveAvgPool2d((1, 1)),
@@ -370,18 +355,29 @@ if test_CNN:
 
     model = PretrainedCNN().to(device)
     model = nn.DataParallel(model)
-    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-4)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     scaler = GradScaler()
 
+    # Initialisation des listes pour stocker les métriques
+    train_losses = []
+    train_accuracies = []
+    val_losses = []
+    val_accuracies = []
+
     # Entraînement avec DataLoader et Mixed Precision Training
-    early_stopping_patience = 10
+    early_stopping_patience = 5
     best_val_loss = float('inf')
     patience_counter = 0
 
-    for epoch in range(50):
+    for epoch in range(100):
         model.train()
+        train_loss = 0.0
+        train_correct = 0
+        train_total = 0
+        
+        # Phase d'entraînement
         for images, labels in train_loader:
             images = images.view(-1, 3, 32, 32).to(device)
             labels = labels.to(device)
@@ -389,11 +385,24 @@ if test_CNN:
             with autocast():
                 outputs = model(images)
                 loss = criterion(outputs, labels)
+            
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
+            
+            # Accumulation des métriques d'entraînement
+            train_loss += loss.item() * images.size(0)
+            _, predicted = outputs.max(1)
+            train_total += labels.size(0)
+            train_correct += predicted.eq(labels).sum().item()
+        
+        # Calcul des métriques d'entraînement pour l'époque
+        train_loss_epoch = train_loss / train_total
+        train_acc_epoch = train_correct / train_total
+        train_losses.append(train_loss_epoch)
+        train_accuracies.append(train_acc_epoch)
 
-        # Validation step
+        # Phase de validation
         model.eval()
         val_loss = 0.0
         correct = 0
@@ -410,6 +419,10 @@ if test_CNN:
                 correct += predicted.eq(labels).sum().item()
         
         val_loss /= len(val_loader)
+        val_acc = correct / total
+        val_losses.append(val_loss)
+        val_accuracies.append(val_acc)
+        
         scheduler.step(val_loss)
         
         print(f"Epoch {epoch} - Loss: {val_loss:.4f} - Accuracy: {correct / total:.4f}")
@@ -432,33 +445,37 @@ if test_CNN:
     X_test = data['data']
         
     X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0).to(device)
-    y_test_tensor = th.tensor(y_test, dtype=th.long).to(device)
-
-    test_transform = transforms.Compose([
-        ToPILImage(),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
-
-    test_loader = DataLoader(
-        TensorDataset(X_test_tensor, y_test_tensor), 
-        batch_size=256, 
-        collate_fn=lambda batch: (
-            th.stack([test_transform(img) for img, _ in batch]),  # Images
-            th.stack([label for _, label in batch])                # Labels
-        )
-    )
     
     # Prédiction avec le modèle
     model.eval()
-    all_preds = []
-    all_labels = []
-    with th.no_grad():
-        for images, labels in test_loader:
-            outputs = model(images.to(device))
-            preds = th.argmax(outputs, dim=1)
-            all_preds.extend(preds.cpu().numpy())
-            all_labels.extend(labels.cpu().numpy())
+    outputs = model(X_test_tensor)
+    y_pred = prediction(outputs)
+    
+    # Sauvegarde des prédictions
+    
+    df = pd.DataFrame(y_pred.cpu().numpy(), columns=["target"])
+    df["target"] = df["target"].apply(lambda x: f"{x:.18e}")
+    df.to_csv("images_test_predictions.csv", index=False, header=False)
 
-    print(classification_report(all_labels, all_preds))  # Vérifier precision/recall/F1
+    # Affichage du graphique après l'enregistrement du CSV
+    plt.figure(figsize=(12, 6))
+    
+    # Tracé du loss
+    plt.subplot(1, 2, 1)
+    plt.plot(train_losses, label='Train Loss', color='blue')
+    plt.plot(val_losses, label='Val Loss', color='orange', linestyle='--')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+    
+    # Tracé de l'accuracy
+    plt.subplot(1, 2, 2)
+    plt.plot(train_accuracies, label='Train Accuracy', color='green')
+    plt.plot(val_accuracies, label='Val Accuracy', color='red', linestyle='--')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    
+    plt.tight_layout()
+    plt.show()
 
