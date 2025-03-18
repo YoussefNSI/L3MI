@@ -17,3 +17,11 @@ avec 200 epochs j'ai eu 0.56
 
 En baissant la taille du batch et en augmentant le nb d'epoch a 250 le plus grand score que j'ai eu avec le CNN est 0.599
 J'explore plusieurs manières d'améliorer ce score.
+
+Après avoir ajouté plusieurs nouveaux paramètres au CNN, avec moins de 15 epochs, j'arrive a un score de 0.72 avec une accuracy de 0.75 en moyenne
+En changeant le early stopping patience a une valeur plus haute, j'arrive a l'epoch 20 a une accuracy de 0.79
+A partir de là ça stagne entre 0.79 et 0.80. Le early patience sert justement à éviter ça et s'arrêter quand ça n'avance plus.
+Avec un early_stopping_patience reglé à 20, le modèle s'arrête a l'epoch 38 avec une accuracy de 0.80.
+Ca devient très compliqué d'avoir un meilleur résultat et j'arrive à une limite matérielle, mon GPU n'est pas assez puissant
+pour que je puisse augmenter certains paramètres ou utiliser des modèles plus puissant. Il y a sûrement moyen d'augmenter au alentours
+de 0.85 mais ça n'ira pas au dessus avec mon ordinateur.

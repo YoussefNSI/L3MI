@@ -12,6 +12,9 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, TensorDataset
 import torchvision.transforms as transforms
 from torchvision.transforms import ToPILImage
+from torchvision.models import resnet18
+from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch.cuda.amp import GradScaler, autocast
 
 with open("dataset_images_train", 'rb') as fo:
     data = pickle.load(fo, encoding='bytes')
@@ -156,7 +159,7 @@ def plot_decision(X, y, model):
     cmap_bold = ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
 
     plt.figure()
-    plt.pcolormesh(xx, yy, preds, cmap=cmap_light)
+    plt.pcolormesh(xx, yy, preds, cmap=cmap_light, shading='auto')
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
     plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold)
@@ -296,61 +299,84 @@ if test_CNN:
     transform = transforms.Compose([
         ToPILImage(),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomRotation(10),
-        transforms.ToTensor()
+        transforms.RandomRotation(15),
+        transforms.RandomResizedCrop(32, scale=(0.8, 1.0)),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2),
+        transforms.ToTensor(),
     ])
 
-    train_dataset = TensorDataset(X_train_tensor[:3000], y_train_tensor[:3000])
-    train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, collate_fn=lambda batch: (
+    train_dataset = TensorDataset(X_train_tensor[:8000], y_train_tensor[:8000])
+    train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, collate_fn=lambda batch: (
         th.stack([transform(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
-    val_loader = DataLoader(TensorDataset(X_train_tensor[3000:4000], y_train_tensor[3000:4000]), batch_size=64)
+    val_loader = DataLoader(TensorDataset(X_train_tensor[8000:9000], y_train_tensor[8000:9000]), batch_size=256)
 
     class CNN(nn.Module):
         def __init__(self):
             super(CNN, self).__init__()
             self.conv_layers = nn.Sequential(
                 nn.Conv2d(3, 32, kernel_size=3, padding=1),
+                nn.BatchNorm2d(32),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
                 nn.Dropout(0.25),
                 nn.Conv2d(32, 64, kernel_size=3, padding=1),
+                nn.BatchNorm2d(64),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
                 nn.Dropout(0.25),
                 nn.Conv2d(64, 128, kernel_size=3, padding=1),
+                nn.BatchNorm2d(128),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
                 nn.Dropout(0.25)
             )
             self.fc_layers = nn.Sequential(
-                nn.Linear(128*4*4, 256),
-                nn.ReLU(),
-                nn.Dropout(0.5),
-                nn.Linear(256, 10)
+                nn.AdaptiveAvgPool2d((1, 1)),
+                nn.Flatten(),
+                nn.Linear(128, 10)
             )
         
         def forward(self, x):
             x = self.conv_layers(x)
-            x = x.view(x.size(0), -1)
-            return self.fc_layers(x)
-        
-    model = CNN().to(device)
-    optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-4)
-    criterion = nn.CrossEntropyLoss()
+            x = self.fc_layers(x)
+            return x
 
-    # Entraînement avec DataLoader
-    for epoch in range(250):
+    # Utiliser ResNet-18 pré-entraîné
+    class PretrainedCNN(nn.Module):
+        def __init__(self):
+            super(PretrainedCNN, self).__init__()
+            self.model = resnet18(pretrained=True)
+            self.model.fc = nn.Linear(self.model.fc.in_features, 10)
+        
+        def forward(self, x):
+            return self.model(x)
+
+    model = PretrainedCNN().to(device)
+    model = nn.DataParallel(model)
+    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
+    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5)
+    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
+    scaler = GradScaler()
+
+    # Entraînement avec DataLoader et Mixed Precision Training
+    early_stopping_patience = 20
+    best_val_loss = float('inf')
+    patience_counter = 0
+
+    for epoch in range(50):
         model.train()
         for images, labels in train_loader:
-            images = images.view(-1, 3, 32, 32).to(device)  # Reshape to [batch_size, 3, 32, 32]
+            images = images.view(-1, 3, 32, 32).to(device)
             labels = labels.to(device)
-            outputs = model(images)
-            loss = criterion(outputs, labels)
             optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+            with autocast():
+                outputs = model(images)
+                loss = criterion(outputs, labels)
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
 
         # Validation step
         model.eval()
@@ -359,7 +385,7 @@ if test_CNN:
         total = 0
         with th.no_grad():
             for images, labels in val_loader:
-                images = images.view(-1, 3, 32, 32).to(device)  # Reshape to [batch_size, 3, 32, 32]
+                images = images.view(-1, 3, 32, 32).to(device)
                 labels = labels.to(device)
                 outputs = model(images)
                 loss = criterion(outputs, labels)
@@ -368,12 +394,27 @@ if test_CNN:
                 total += labels.size(0)
                 correct += predicted.eq(labels).sum().item()
         
+        val_loss /= len(val_loader)
+        scheduler.step(val_loss)
+        
         print(f"Epoch {epoch} - Loss: {val_loss:.4f} - Accuracy: {correct / total:.4f}")
         
+        # Early Stopping
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            patience_counter = 0
+        else:
+            patience_counter += 1
+            if patience_counter >= early_stopping_patience:
+                if epoch < 20:
+                    continue
+                print("Early stopping")
+                break
+
     # Chargement des données de test
     with open("data_images_test", 'rb') as fo:
         data = pickle.load(fo, encoding='bytes')
-        X_test = data['data']
+    X_test = data['data']
         
     X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0).to(device)
     
