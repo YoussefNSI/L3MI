@@ -306,7 +306,7 @@ if test_CNN:
     ])
 
     train_dataset = TensorDataset(X_train_tensor[:8000], y_train_tensor[:8000])
-    train_loader = DataLoader(train_dataset, batch_size=512, shuffle=True, collate_fn=lambda batch: (
+    train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, collate_fn=lambda batch: (
         th.stack([transform(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
@@ -355,8 +355,8 @@ if test_CNN:
 
     model = PretrainedCNN().to(device)
     model = nn.DataParallel(model)
-    optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-5)
-    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5, factor=0.1, verbose=True)
+    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
+    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     scaler = GradScaler()
 
