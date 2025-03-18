@@ -28,8 +28,8 @@ with open("dataset_images_train", 'rb') as fo:
 X_train_tensor = th.tensor(X_train.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0) 
 y_train_tensor = th.tensor(y_train, dtype=th.long)
 
-mean = X_train_tensor.mean(dim=(0, 2, 3))  # [0.5, 0.5, 0.5] pour CIFAR-like
-std = X_train_tensor.std(dim=(0, 2, 3))    # [0.5, 0.5, 0.5]
+mean = X_train_tensor.mean(dim=(0, 2, 3))  # [moyenne_R, moyenne_G, moyenne_B]
+std = X_train_tensor.std(dim=(0, 2, 3))    # [std_R, std_G, std_B]
 
 def show_image(img_tensor):
     plt.imshow(img_tensor.numpy().transpose(1, 2, 0))
@@ -299,220 +299,329 @@ if test_neurone:
 test_CNN = True
 
 if test_CNN:
-    transform = transforms.Compose([
-    ToPILImage(),
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(10),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+    # Improved data augmentation and normalization
+    transform_train = transforms.Compose([
+        ToPILImage(),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomCrop(32, padding=4),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
+        transforms.RandomRotation(10),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+    ])
+    
+    transform_val = transforms.Compose([
+        ToPILImage(),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=mean.tolist(), std=std.tolist())
     ])
 
-    train_dataset = TensorDataset(X_train_tensor, y_train_tensor)  # Utilisez toutes les données
+    # Using more data for training, dedicated validation set
+    train_dataset = TensorDataset(X_train_tensor[:9000], y_train_tensor[:9000])
     train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True, collate_fn=lambda batch: (
-        th.stack([transform(img) for img, _ in batch]),
+        th.stack([transform_train(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
-    val_loader = DataLoader(TensorDataset(X_train_tensor[9000:10000], y_train_tensor[9000:10000]), batch_size=128, shuffle=True)
-
-    class CNN(nn.Module):
-        def __init__(self):
-            super(CNN, self).__init__()
-            self.conv_layers = nn.Sequential(
-                nn.Conv2d(3, 32, kernel_size=3, padding=1),
-                nn.BatchNorm2d(32),
-                nn.ReLU(),
-                nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Dropout(0.25),
-                nn.Conv2d(32, 64, kernel_size=3, padding=1),
-                nn.BatchNorm2d(64),
-                nn.ReLU(),
-                nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Dropout(0.25),
-                nn.Conv2d(64, 128, kernel_size=3, padding=1),
-                nn.BatchNorm2d(128),
-                nn.ReLU(),
-                nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Dropout(0.25)
-            )
-            self.fc_layers = nn.Sequential(
-                nn.AdaptiveAvgPool2d((1, 1)),
-                nn.Flatten(),
-                nn.Linear(128, 10)
-            )
-        
-        def forward(self, x):
-            x = self.conv_layers(x)
-            x = self.fc_layers(x)
-            return x
-
-    # Utiliser ResNet-18 pré-entraîné
-    class PretrainedCNN(nn.Module):
-        def __init__(self):
-            super(PretrainedCNN, self).__init__()
-            self.model = resnet18(pretrained=True)
-            self.model.fc = nn.Linear(self.model.fc.in_features, 10)
-        
-        def forward(self, x):
-            return self.model(x)
-
     
-    class SimpleCNN(nn.Module):
-        def __init__(self):
-            super(SimpleCNN, self).__init__()
-            self.conv_layers = nn.Sequential(
-                nn.Conv2d(3, 32, kernel_size=3, padding=1),
-                nn.BatchNorm2d(32),
-                nn.ReLU(),
-                nn.MaxPool2d(2),
-                nn.Dropout(0.25),
-                nn.Conv2d(32, 64, kernel_size=3, padding=1),
-                nn.BatchNorm2d(64),
-                nn.ReLU(),
-                nn.MaxPool2d(2),
-                nn.Dropout(0.25)
-            )
-            self.avgpool = nn.AdaptiveAvgPool2d((4, 4))  
-            self.fc = nn.Linear(64 * 4 * 4, 10)         
-        
+    val_dataset = TensorDataset(X_train_tensor[9000:10000], y_train_tensor[9000:10000])
+    val_loader = DataLoader(val_dataset, batch_size=128, shuffle=False, collate_fn=lambda batch: (
+        th.stack([transform_val(img) for img, _ in batch]),
+        th.stack([label for _, label in batch])
+    ))
+
+    # Basic residual block for better gradient flow
+    class ResidualBlock(nn.Module):
+        def __init__(self, in_channels, out_channels, stride=1):
+            super(ResidualBlock, self).__init__()
+            self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False)
+            self.bn1 = nn.BatchNorm2d(out_channels)
+            self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False)
+            self.bn2 = nn.BatchNorm2d(out_channels)
+            
+            # Skip connection with projection if needed
+            self.shortcut = nn.Sequential()
+            if stride != 1 or in_channels != out_channels:
+                self.shortcut = nn.Sequential(
+                    nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
+                    nn.BatchNorm2d(out_channels)
+                )
+            
         def forward(self, x):
-            x = self.conv_layers(x)
-            x = self.avgpool(x)
-            x = x.view(x.size(0), -1)
-            return self.fc(x)
+            out = F.relu(self.bn1(self.conv1(x)))
+            out = self.bn2(self.conv2(out))
+            out += self.shortcut(x)
+            out = F.relu(out)
+            return out
 
-    model = SimpleCNN().to(device)
-    model = nn.DataParallel(model)
-    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-4)
-    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=3, factor=0.5)
-    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
-    scaler = GradScaler()
+    # Improved CNN model with residual connections
+    class ImprovedCNN(nn.Module):
+        def __init__(self, num_classes=10):
+            super(ImprovedCNN, self).__init__()
+            
+            # Initial layers
+            self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+            self.bn1 = nn.BatchNorm2d(64)
+            
+            # Residual layers
+            self.layer1 = self._make_layer(64, 64, 2)
+            self.layer2 = self._make_layer(64, 128, 2, stride=2)
+            self.layer3 = self._make_layer(128, 256, 2, stride=2)
+            
+            # Final classifier
+            self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
+            self.fc = nn.Linear(256, num_classes)
+            
+            # Dropout for regularization
+            self.dropout = nn.Dropout(0.2)
+            
+        def _make_layer(self, in_channels, out_channels, num_blocks, stride=1):
+            layers = []
+            layers.append(ResidualBlock(in_channels, out_channels, stride))
+            for _ in range(1, num_blocks):
+                layers.append(ResidualBlock(out_channels, out_channels))
+            return nn.Sequential(*layers)
+            
+        def forward(self, x):
+            out = F.relu(self.bn1(self.conv1(x)))
+            
+            out = self.layer1(out)
+            out = self.layer2(out)
+            out = self.layer3(out)
+            
+            out = self.avg_pool(out)
+            out = out.view(out.size(0), -1)
+            out = self.dropout(out)
+            out = self.fc(out)
+            
+            return out
 
-    # Initialisation des listes pour stocker les métriques
-    train_losses = []
-    train_accuracies = []
-    val_losses = []
-    val_accuracies = []
-
-    # Entraînement avec DataLoader et Mixed Precision Training
-    early_stopping_patience = 5
-    best_val_loss = float('inf')
-    patience_counter = 0
+    # Initialize model, optimizer, and loss function
+    model = ImprovedCNN().to(device)
+    if th.cuda.device_count() > 1:
+        model = nn.DataParallel(model)
     
+    # Weight initialization
     def init_weights(m):
         if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
             nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
             if m.bias is not None:
                 nn.init.constant_(m.bias, 0)
-
+    
     model.apply(init_weights)
+    
+    # Using One Cycle Learning Rate policy
+    optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-4)
+    scheduler = optim.lr_scheduler.OneCycleLR(
+        optimizer, 
+        max_lr=0.01, 
+        steps_per_epoch=len(train_loader), 
+        epochs=50,
+        pct_start=0.1
+    )
+    
+    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
+    scaler = GradScaler()
 
-    for epoch in range(100):
+    # Training metrics
+    train_losses = []
+    train_accuracies = []
+    val_losses = []
+    val_accuracies = []
+
+    # Early stopping parameters
+    best_val_loss = float('inf')
+    best_model = None
+    patience = 10
+    patience_counter = 0
+    max_epochs = 50
+
+    for epoch in range(max_epochs):
+        # Training phase
         model.train()
         train_loss = 0.0
         train_correct = 0
         train_total = 0
         
-        # Phase d'entraînement
-        for images, labels in train_loader:
-            images = images.to(device)  # Pas de .view(...)
-            labels = labels.to(device)
+        for images, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{max_epochs}"):
+            images, labels = images.to(device), labels.to(device)
+            
             optimizer.zero_grad()
+            
             with autocast():
                 outputs = model(images)
                 loss = criterion(outputs, labels)
             
             scaler.scale(loss).backward()
+            scaler.unscale_(optimizer)
+            th.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             scaler.step(optimizer)
             scaler.update()
+            scheduler.step()
             
-            # Accumulation des métriques d'entraînement
             train_loss += loss.item() * images.size(0)
             _, predicted = outputs.max(1)
             train_total += labels.size(0)
             train_correct += predicted.eq(labels).sum().item()
         
-        # Calcul des métriques d'entraînement pour l'époque
         train_loss_epoch = train_loss / train_total
         train_acc_epoch = train_correct / train_total
         train_losses.append(train_loss_epoch)
         train_accuracies.append(train_acc_epoch)
 
-        # Phase de validation
+        # Validation phase
         model.eval()
         val_loss = 0.0
-        correct = 0
-        total = 0
+        val_correct = 0
+        val_total = 0
+        
         with th.no_grad():
             for images, labels in val_loader:
-                images = images.to(device)  # Pas de .view(...)
-                labels = labels.to(device)
+                images, labels = images.to(device), labels.to(device)
                 outputs = model(images)
                 loss = criterion(outputs, labels)
-                val_loss += loss.item()
+                
+                val_loss += loss.item() * images.size(0)
                 _, predicted = outputs.max(1)
-                total += labels.size(0)
-                correct += predicted.eq(labels).sum().item()
+                val_total += labels.size(0)
+                val_correct += predicted.eq(labels).sum().item()
         
-        val_loss /= len(val_loader)
-        val_acc = correct / total
-        val_losses.append(val_loss)
-        val_accuracies.append(val_acc)
+        val_loss_epoch = val_loss / val_total
+        val_acc_epoch = val_correct / val_total
+        val_losses.append(val_loss_epoch)
+        val_accuracies.append(val_acc_epoch)
         
-        scheduler.step(val_loss)
+        print(f"Epoch {epoch+1}/{max_epochs} - Train Loss: {train_loss_epoch:.4f}, Train Acc: {train_acc_epoch:.4f}, Val Loss: {val_loss_epoch:.4f}, Val Acc: {val_acc_epoch:.4f}")
         
-        print(f"Epoch {epoch} - Loss: {val_loss:.4f} - Accuracy: {correct / total:.4f}")
-        
-        # Early Stopping
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
+        # Save the best model
+        if val_loss_epoch < best_val_loss:
+            best_val_loss = val_loss_epoch
+            best_model = model.state_dict().copy()
             patience_counter = 0
+            print(f"New best model saved! Validation loss: {val_loss_epoch:.4f}")
         else:
             patience_counter += 1
-            if patience_counter >= early_stopping_patience:
-                if epoch < 20:
-                    continue
-                print("Early stopping")
-                break
-
-    # Chargement des données de test
+            print(f"Validation loss did not improve. Patience: {patience_counter}/{patience}")
+            
+        # Early stopping
+        if patience_counter >= patience and epoch > 20:
+            print("Early stopping triggered")
+            break
+    
+    # Load best model for testing
+    model.load_state_dict(best_model)
+    
+    # Test predictions
     with open("data_images_test", 'rb') as fo:
         data = pickle.load(fo, encoding='bytes')
     X_test = data['data']
         
-    X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0).to(device)
-    X_test_tensor = transforms.Resize(224)(X_test_tensor)
-    X_test_tensor = transforms.Normalize(mean=mean.tolist(), std=std.tolist())(X_test_tensor)
+    # Process test data with the same normalization
+    X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0)
+    test_dataset = TensorDataset(X_test_tensor)
+    test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False, collate_fn=lambda batch: (
+        th.stack([transform_val(img[0]) for img in batch]),
+    ))
     
-    # Prédiction avec le modèle
+    # Make predictions
     model.eval()
-    outputs = model(X_test_tensor)
-    y_pred = prediction(outputs)
+    all_predictions = []
     
-    # Sauvegarde des prédictions
+    with th.no_grad():
+        for images in test_loader:
+            images = images.to(device)
+            outputs = model(images)
+            _, predicted = outputs.max(1)
+            all_predictions.extend(predicted.cpu().numpy())
     
-    df = pd.DataFrame(y_pred.cpu().numpy(), columns=["target"])
+    # Save predictions to CSV
+    df = pd.DataFrame(all_predictions, columns=["target"])
     df["target"] = df["target"].apply(lambda x: f"{x:.18e}")
     df.to_csv("images_test_predictions.csv", index=False, header=False)
 
-    # Affichage du graphique après l'enregistrement du CSV
-    plt.figure(figsize=(12, 6))
+    # Plot training metrics
+    plt.figure(figsize=(12, 5))
     
-    # Tracé du loss
     plt.subplot(1, 2, 1)
-    plt.plot(train_losses, label='Train Loss', color='blue')
-    plt.plot(val_losses, label='Val Loss', color='orange', linestyle='--')
-    plt.xlabel('Epoch')
+    plt.plot(train_losses, label='Training Loss')
+    plt.plot(val_losses, label='Validation Loss')
+    plt.title('Training and Validation Loss')
+    plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
     
-    # Tracé de l'accuracy
     plt.subplot(1, 2, 2)
-    plt.plot(train_accuracies, label='Train Accuracy', color='green')
-    plt.plot(val_accuracies, label='Val Accuracy', color='red', linestyle='--')
-    plt.xlabel('Epoch')
+    plt.plot(train_accuracies, label='Training Accuracy')
+    plt.plot(val_accuracies, label='Validation Accuracy')
+    plt.title('Training and Validation Accuracy')
+    plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
     
     plt.tight_layout()
     plt.show()
+
+# Vérification des données
+def show_sample(image_tensor, label):
+    plt.imshow(image_tensor.numpy().transpose(1, 2, 0))
+    plt.title(f"Label: {label}")
+    plt.axis('off')
+    plt.show()
+
+# Exemple pour la première image
+show_sample(X_train_tensor[0], y_train_tensor[0].item())
+
+print("Valeurs des pixels (min, max) :", X_train_tensor.min(), X_train_tensor.max())
+
+# Distribution des classes
+unique, counts = np.unique(y_train_tensor.numpy(), return_counts=True)
+print("Distribution des classes :", dict(zip(unique, counts)))
+
+# Simplification du modèle pour debugging
+class DebugModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 16, 3, padding=1)
+        self.fc = nn.Linear(16 * 32 * 32, 10)  # 32x32 images
+    
+    def forward(self, x):
+        x = F.relu(self.conv1(x))
+        x = x.view(x.size(0), -1)
+        return self.fc(x)
+
+model = DebugModel().to(device)
+
+# Entraînement sur un sous-ensemble de 100 échantillons
+small_train = TensorDataset(X_train_tensor[:100], y_train_tensor[:100])
+small_loader = DataLoader(small_train, batch_size=10, shuffle=True)
+
+# Réinitialisation des poids
+def reset_weights(m):
+    if hasattr(m, 'reset_parameters'):
+        m.reset_parameters()
+
+model.apply(reset_weights)
+
+# Désactivation de l'augmentation de données
+transform = transforms.Compose([
+    ToPILImage(),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+])
+
+# Utilisation d'un Learning Rate Finder
+# lr_finder = torch_lr_finder.LRFinder(model, optimizer, criterion, device="cuda")
+# lr_finder.range_test(train_loader, end_lr=1, num_iter=100)
+# lr_finder.plot()
+
+# Vérification matérielle
+print("Device utilisé :", device)
+print("Mémoire GPU allouée :", th.cuda.memory_allocated() / 1e9, "Go")
+
+# Test avec un jeu de données public (CIFAR-10)
+# transform = transforms.Compose([
+#     transforms.ToTensor(),
+#     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+# ])
+# trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
+# train_loader = DataLoader(trainset, batch_size=128, shuffle=True)
 
