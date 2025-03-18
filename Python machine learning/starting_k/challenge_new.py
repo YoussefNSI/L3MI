@@ -305,12 +305,12 @@ if test_CNN:
         transforms.ToTensor(),
     ])
 
-    train_dataset = TensorDataset(X_train_tensor[:3000], y_train_tensor[:3000])
+    train_dataset = TensorDataset(X_train_tensor[:10000], y_train_tensor[:10000])
     train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, collate_fn=lambda batch: (
         th.stack([transform(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
-    val_loader = DataLoader(TensorDataset(X_train_tensor[3000:4000], y_train_tensor[3000:4000]), batch_size=256)
+    val_loader = DataLoader(TensorDataset(X_train_tensor[9000:10000], y_train_tensor[9000:10000]), batch_size=128, shuffle=True)
 
     class CNN(nn.Module):
         def __init__(self):
@@ -355,10 +355,11 @@ if test_CNN:
 
     model = PretrainedCNN().to(device)
     model = nn.DataParallel(model)
-    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
+    optimizer = optim.Adam(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-5)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     scaler = GradScaler()
+    nn.Dropout(0.5)
 
     # Initialisation des listes pour stocker les métriques
     train_losses = []
@@ -367,7 +368,7 @@ if test_CNN:
     val_accuracies = []
 
     # Entraînement avec DataLoader et Mixed Precision Training
-    early_stopping_patience = 5
+    early_stopping_patience = 10
     best_val_loss = float('inf')
     patience_counter = 0
 
