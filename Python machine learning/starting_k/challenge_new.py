@@ -360,6 +360,12 @@ if test_CNN:
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     scaler = GradScaler()
 
+    # Initialisation des listes pour stocker les métriques
+    train_losses = []
+    train_accuracies = []
+    val_losses = []
+    val_accuracies = []
+
     # Entraînement avec DataLoader et Mixed Precision Training
     early_stopping_patience = 10
     best_val_loss = float('inf')
@@ -367,6 +373,11 @@ if test_CNN:
 
     for epoch in range(50):
         model.train()
+        train_loss = 0.0
+        train_correct = 0
+        train_total = 0
+        
+        # Phase d'entraînement
         for images, labels in train_loader:
             images = images.view(-1, 3, 32, 32).to(device)
             labels = labels.to(device)
@@ -374,11 +385,24 @@ if test_CNN:
             with autocast():
                 outputs = model(images)
                 loss = criterion(outputs, labels)
+            
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
+            
+            # Accumulation des métriques d'entraînement
+            train_loss += loss.item() * images.size(0)
+            _, predicted = outputs.max(1)
+            train_total += labels.size(0)
+            train_correct += predicted.eq(labels).sum().item()
+        
+        # Calcul des métriques d'entraînement pour l'époque
+        train_loss_epoch = train_loss / train_total
+        train_acc_epoch = train_correct / train_total
+        train_losses.append(train_loss_epoch)
+        train_accuracies.append(train_acc_epoch)
 
-        # Validation step
+        # Phase de validation
         model.eval()
         val_loss = 0.0
         correct = 0
@@ -395,6 +419,10 @@ if test_CNN:
                 correct += predicted.eq(labels).sum().item()
         
         val_loss /= len(val_loader)
+        val_acc = correct / total
+        val_losses.append(val_loss)
+        val_accuracies.append(val_acc)
+        
         scheduler.step(val_loss)
         
         print(f"Epoch {epoch} - Loss: {val_loss:.4f} - Accuracy: {correct / total:.4f}")
@@ -428,4 +456,26 @@ if test_CNN:
     df = pd.DataFrame(y_pred.cpu().numpy(), columns=["target"])
     df["target"] = df["target"].apply(lambda x: f"{x:.18e}")
     df.to_csv("images_test_predictions.csv", index=False, header=False)
+
+    # Affichage du graphique après l'enregistrement du CSV
+    plt.figure(figsize=(12, 6))
+    
+    # Tracé du loss
+    plt.subplot(1, 2, 1)
+    plt.plot(train_losses, label='Train Loss', color='blue')
+    plt.plot(val_losses, label='Val Loss', color='orange', linestyle='--')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+    
+    # Tracé de l'accuracy
+    plt.subplot(1, 2, 2)
+    plt.plot(train_accuracies, label='Train Accuracy', color='green')
+    plt.plot(val_accuracies, label='Val Accuracy', color='red', linestyle='--')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    
+    plt.tight_layout()
+    plt.show()
 

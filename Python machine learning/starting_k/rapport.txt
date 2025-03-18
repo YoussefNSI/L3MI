@@ -28,3 +28,4 @@ de 0.85 mais ça n'ira pas au dessus avec mon ordinateur.
 
 Je viens d'essayer le même programme sur mon ordinateur de bureau en activant cuda sur ma carte graphique, j'ai réussi à atteindre une accuracy de 0.97 a la 49ème epoch. 
 
+Je génère à la fin du CNN un graphique qui montre l'évolution de l'accuracy et les pertes. Je vais l'inclure dans mon dépot.
