@@ -355,13 +355,13 @@ if test_CNN:
 
     model = PretrainedCNN().to(device)
     model = nn.DataParallel(model)
-    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
-    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-5)
+    scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5, factor=0.1, verbose=True)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     scaler = GradScaler()
 
     # Entraînement avec DataLoader et Mixed Precision Training
-    early_stopping_patience = 20
+    early_stopping_patience = 10
     best_val_loss = float('inf')
     patience_counter = 0
 
