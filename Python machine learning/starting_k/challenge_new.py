@@ -305,12 +305,12 @@ if test_CNN:
         transforms.ToTensor(),
     ])
 
-    train_dataset = TensorDataset(X_train_tensor[:8000], y_train_tensor[:8000])
+    train_dataset = TensorDataset(X_train_tensor[:10000], y_train_tensor[:10000])
     train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, collate_fn=lambda batch: (
         th.stack([transform(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
-    val_loader = DataLoader(TensorDataset(X_train_tensor[8000:9000], y_train_tensor[8000:9000]), batch_size=256)
+    val_loader = DataLoader(TensorDataset(X_train_tensor[9000:10000], y_train_tensor[9000:10000]), batch_size=128, shuffle=True)
 
     class CNN(nn.Module):
         def __init__(self):

@@ -25,3 +25,6 @@ Avec un early_stopping_patience reglé à 20, le modèle s'arrête a l'epoch 38 
 Ca devient très compliqué d'avoir un meilleur résultat et j'arrive à une limite matérielle, mon GPU n'est pas assez puissant
 pour que je puisse augmenter certains paramètres ou utiliser des modèles plus puissant. Il y a sûrement moyen d'augmenter au alentours
 de 0.85 mais ça n'ira pas au dessus avec mon ordinateur.
+
+Je viens d'essayer le même programme sur mon ordinateur de bureau en activant cuda sur ma carte graphique, j'ai réussi à atteindre une accuracy de 0.97 a la 49ème epoch. 
+
