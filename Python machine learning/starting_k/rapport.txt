@@ -2,3 +2,18 @@ Question 1 :
 
 J'ai eu 0.1014 dans le classement en mettant le fichier fourni.
 
+0.3177 en utilisant le KNN avec k=1 
+
+Avec 500 epoch j'avais eu 0.346 avec le modèle de régression logistique multiclasses
+mais en augmentant a 10.000 j'ai eu 0.2699 puis 0.2808 avec 30.000
+
+Avec le reseau de neurone la première version me donne 0.3609 avec 500 epoch
+
+Avec le CNN et 20 epochs, j'ai eu un score de 0.5267 qui est actuellement le meilleur
+
+Je vais essayer plus d'epoch
+avec 100 epochs j'ai eu 0.54. L'accuracy stagne a partir d'environ 50 epochs 
+avec 200 epochs j'ai eu 0.56
+
+En baissant la taille du batch et en augmentant le nb d'epoch a 250 le plus grand score que j'ai eu avec le CNN est 0.599
+J'explore plusieurs manières d'améliorer ce score.
