@@ -306,7 +306,7 @@ if test_CNN:
     ])
 
     train_dataset = TensorDataset(X_train_tensor[:10000], y_train_tensor[:10000])
-    train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, collate_fn=lambda batch: (
+    train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True, collate_fn=lambda batch: (
         th.stack([transform(img) for img, _ in batch]),
         th.stack([label for _, label in batch])
     ))
@@ -355,7 +355,7 @@ if test_CNN:
 
     model = PretrainedCNN().to(device)
     model = nn.DataParallel(model)
-    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-4)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
     scaler = GradScaler()
@@ -367,11 +367,11 @@ if test_CNN:
     val_accuracies = []
 
     # Entraînement avec DataLoader et Mixed Precision Training
-    early_stopping_patience = 10
+    early_stopping_patience = 5
     best_val_loss = float('inf')
     patience_counter = 0
 
-    for epoch in range(50):
+    for epoch in range(100):
         model.train()
         train_loss = 0.0
         train_correct = 0
