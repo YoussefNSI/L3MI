@@ -329,31 +329,7 @@ if test_CNN:
         th.stack([label for _, label in batch])
     ))
 
-    # Basic residual block for better gradient flow
-    class ResidualBlock(nn.Module):
-        def __init__(self, in_channels, out_channels, stride=1):
-            super(ResidualBlock, self).__init__()
-            self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size=3, stride=stride, padding=1, bias=False)
-            self.bn1 = nn.BatchNorm2d(out_channels)
-            self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False)
-            self.bn2 = nn.BatchNorm2d(out_channels)
-            
-            # Skip connection with projection if needed
-            self.shortcut = nn.Sequential()
-            if stride != 1 or in_channels != out_channels:
-                self.shortcut = nn.Sequential(
-                    nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
-                    nn.BatchNorm2d(out_channels)
-                )
-            
-        def forward(self, x):
-            out = F.relu(self.bn1(self.conv1(x)))
-            out = self.bn2(self.conv2(out))
-            out += self.shortcut(x)
-            out = F.relu(out)
-            return out
-
-    # Improved CNN model with residual connections
+    # Simplified CNN with residual connections
     class ImprovedCNN(nn.Module):
         def __init__(self, num_classes=10):
             super(ImprovedCNN, self).__init__()
@@ -362,10 +338,19 @@ if test_CNN:
             self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
             self.bn1 = nn.BatchNorm2d(64)
             
-            # Residual layers
-            self.layer1 = self._make_layer(64, 64, 2)
-            self.layer2 = self._make_layer(64, 128, 2, stride=2)
-            self.layer3 = self._make_layer(128, 256, 2, stride=2)
+            # Convolutional layers with residual connections
+            self.conv2 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1)
+            self.bn2 = nn.BatchNorm2d(128)
+            self.conv3 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
+            self.bn3 = nn.BatchNorm2d(128)
+            
+            self.conv4 = nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1)
+            self.bn4 = nn.BatchNorm2d(256)
+            self.conv5 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
+            self.bn5 = nn.BatchNorm2d(256)
+            
+            # Pooling
+            self.pool = nn.MaxPool2d(2, 2)
             
             # Final classifier
             self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
@@ -374,20 +359,28 @@ if test_CNN:
             # Dropout for regularization
             self.dropout = nn.Dropout(0.2)
             
-        def _make_layer(self, in_channels, out_channels, num_blocks, stride=1):
-            layers = []
-            layers.append(ResidualBlock(in_channels, out_channels, stride))
-            for _ in range(1, num_blocks):
-                layers.append(ResidualBlock(out_channels, out_channels))
-            return nn.Sequential(*layers)
-            
         def forward(self, x):
+            # Initial block
             out = F.relu(self.bn1(self.conv1(x)))
+            out = self.pool(out)
             
-            out = self.layer1(out)
-            out = self.layer2(out)
-            out = self.layer3(out)
+            # First residual block
+            residual = out
+            out = F.relu(self.bn2(self.conv2(out)))
+            out = self.bn3(self.conv3(out))
+            out += residual
+            out = F.relu(out)
+            out = self.pool(out)
             
+            # Second residual block
+            residual = F.pad(out, (0, 0, 0, 0, 0, 128), "constant", 0)  # Pad channels
+            out = F.relu(self.bn4(self.conv4(out)))
+            out = self.bn5(self.conv5(out))
+            out += residual
+            out = F.relu(out)
+            out = self.pool(out)
+            
+            # Classifier
             out = self.avg_pool(out)
             out = out.view(out.size(0), -1)
             out = self.dropout(out)
@@ -400,14 +393,16 @@ if test_CNN:
     if th.cuda.device_count() > 1:
         model = nn.DataParallel(model)
     
-    # Weight initialization
-    def init_weights(m):
-        if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
+    # Weight initialization for better convergence
+    for m in model.modules():
+        if isinstance(m, nn.Conv2d):
             nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-            if m.bias is not None:
-                nn.init.constant_(m.bias, 0)
-    
-    model.apply(init_weights)
+        elif isinstance(m, nn.BatchNorm2d):
+            nn.init.constant_(m.weight, 1)
+            nn.init.constant_(m.bias, 0)
+        elif isinstance(m, nn.Linear):
+            nn.init.normal_(m.weight, 0, 0.01)
+            nn.init.constant_(m.bias, 0)
     
     # Using One Cycle Learning Rate policy
     optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-4)
@@ -518,9 +513,12 @@ if test_CNN:
     # Process test data with the same normalization
     X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0)
     test_dataset = TensorDataset(X_test_tensor)
-    test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False, collate_fn=lambda batch: (
-        th.stack([transform_val(img[0]) for img in batch]),
-    ))
+    test_loader = DataLoader(
+        test_dataset, 
+        batch_size=128, 
+        shuffle=False, 
+        collate_fn=lambda batch: th.stack([transform_val(img) for img in batch[0]])
+    )
     
     # Make predictions
     model.eval()
@@ -528,7 +526,7 @@ if test_CNN:
     
     with th.no_grad():
         for images in test_loader:
-            images = images.to(device)
+            images = images.to(device)  # Fixed - no need for [0] indexing
             outputs = model(images)
             _, predicted = outputs.max(1)
             all_predictions.extend(predicted.cpu().numpy())
@@ -560,68 +558,17 @@ if test_CNN:
     plt.tight_layout()
     plt.show()
 
-# Vérification des données
-def show_sample(image_tensor, label):
-    plt.imshow(image_tensor.numpy().transpose(1, 2, 0))
+# Vérification des données - Premier échantillon seulement
+def show_sample(img_tensor, label):
+    plt.imshow(img_tensor.numpy().transpose(1, 2, 0))
     plt.title(f"Label: {label}")
     plt.axis('off')
     plt.show()
 
-# Exemple pour la première image
 show_sample(X_train_tensor[0], y_train_tensor[0].item())
-
 print("Valeurs des pixels (min, max) :", X_train_tensor.min(), X_train_tensor.max())
 
 # Distribution des classes
 unique, counts = np.unique(y_train_tensor.numpy(), return_counts=True)
 print("Distribution des classes :", dict(zip(unique, counts)))
-
-# Simplification du modèle pour debugging
-class DebugModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.conv1 = nn.Conv2d(3, 16, 3, padding=1)
-        self.fc = nn.Linear(16 * 32 * 32, 10)  # 32x32 images
-    
-    def forward(self, x):
-        x = F.relu(self.conv1(x))
-        x = x.view(x.size(0), -1)
-        return self.fc(x)
-
-model = DebugModel().to(device)
-
-# Entraînement sur un sous-ensemble de 100 échantillons
-small_train = TensorDataset(X_train_tensor[:100], y_train_tensor[:100])
-small_loader = DataLoader(small_train, batch_size=10, shuffle=True)
-
-# Réinitialisation des poids
-def reset_weights(m):
-    if hasattr(m, 'reset_parameters'):
-        m.reset_parameters()
-
-model.apply(reset_weights)
-
-# Désactivation de l'augmentation de données
-transform = transforms.Compose([
-    ToPILImage(),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=mean.tolist(), std=std.tolist())
-])
-
-# Utilisation d'un Learning Rate Finder
-# lr_finder = torch_lr_finder.LRFinder(model, optimizer, criterion, device="cuda")
-# lr_finder.range_test(train_loader, end_lr=1, num_iter=100)
-# lr_finder.plot()
-
-# Vérification matérielle
-print("Device utilisé :", device)
-print("Mémoire GPU allouée :", th.cuda.memory_allocated() / 1e9, "Go")
-
-# Test avec un jeu de données public (CIFAR-10)
-# transform = transforms.Compose([
-#     transforms.ToTensor(),
-#     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-# ])
-# trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
-# train_loader = DataLoader(trainset, batch_size=128, shuffle=True)
 
