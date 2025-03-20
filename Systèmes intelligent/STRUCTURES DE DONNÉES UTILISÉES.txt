@@ -1,0 +1,100 @@
+STRUCTURES DE DONNÉES UTILISÉES
+
+1. **Classe Noeud** :
+   - Attributs :
+     - state_val (int) : Encodage de l'état du jeu (séquence de coups)
+     - visite_count (int) : Nombre de visites du nœud
+     - total_reward (double) : Récompense cumulative
+     - enfants (vector<shared_ptr<Noeud>>) : États enfants accessibles
+     - coups_possibles (vector<int>) : Coups légaux non explorés
+     - parent (weak_ptr<Noeud>) : Lien vers le nœud parent
+     - coup_from_parent (int) : Coup ayant généré ce nœud
+
+   - Méthodes clés :
+     - calcul_ucb() : Calcule le score UCB = (reward/visites) + 2.5√(ln(visites_parent)/visites)
+     - est_terminal() : Vérifie si l'état est terminal via la classe Jeu
+     - est_completement_developpe() : Vérifie si tous les coups légaux ont été explorés
+
+2. **Classe MCTS** :
+   - Composants :
+     - racine (shared_ptr<Noeud>) : Racine de l'arbre de recherche
+     - exploration_param = 2.5 : Paramètre d'équilibre exploration/exploitation
+     - mode_entrainement (bool) : Active les mises à jour de l'arbre
+
+   - Algorithmique :
+     - Sélection → Expansion → Simulation → Rétropropagation
+     - Sauvegarde/chargement JSON de l'arbre via BFS
+
+3. **Classe MCTSTrainer** :
+   - Configuration :
+     - num_games (1000 par défaut) : Nombre de parties d'entraînement
+     - simulations_per_move (100) : Itérations MCTS par coup
+
+ARCHITECTURE DE L'APPLICATION
+
+1. **Workflow Principal** :
+   [Trainer]
+   │
+   ├── Boucle d'entraînement (N parties)
+   │   │
+   │   └── Self-Play :
+   │       ├── Réinitialisation MCTS à l'état courant
+   │       ├── 100 simulations MCTS/coup
+   │       ├── Sélection du meilleur coup (max visites)
+   │       └── Rétropropagation finale (victoire/défaite)
+
+   └── Checkpoints périodiques :
+       ├── Sauvegarde de l'arbre (.tree)
+       └── Logs de progression
+
+2. **Interaction Composants** :
+   Jeu (état) ↔ MCTS (arbre) ↔ Trainer (orchestration)
+   │
+   └── Serialisation JSON :
+       - Stockage récursif des nœuds
+       - Mapping ID unique pour les relations parent-enfant
+
+FONCTIONNEMENT DE L'ESTIMATEUR
+
+1. **Phase de Simulation** :
+   - Rollout aléatoire jusqu'à état terminal
+   - Résultats possibles :
+     • Victoire → 1.0
+     • Match nul → 0.5
+     • Défaite → 0.0
+
+2. **Mécanisme UCB** :
+   - Balance exploration/exploitation :
+     UCB = (Récompense moyenne) + 2.5 × √(ln(Visites parent)/Visites nœud)
+   - Priorise :
+     • Nœuds peu visités (termes élevés de droite)
+     • Nœuds à forte récompense (termes de gauche)
+
+3. **Apprentissage Incrémental** :
+   - Les statistiques (visites/reward) sont mises à jour par :
+     1. Rétropropagation immédiate (résultat de simulation)
+     2. Rétropropagation finale (résultat réel de la partie)
+   - Sélection finale basée sur la robustesse (max visites ≠ max reward)
+
+4. **Optimisations Clés** :
+   - Réutilisation de l'arbre entre coups via reset()
+   - Encodage compact des états (séquence numérique)
+   - Parallelisation implicite via parties indépendantes
+
+
+[DEBUT ENTRAÎNEMENT]
+│
+├── Génération état initial → Jeu
+│
+├── MCTS :
+│   │
+│   ├── Phase 1 : Sélection (parcours UCB)
+│   ├── Phase 2 : Expansion (ajout nœud enfant)
+│   ├── Phase 3 : Simulation (jeu aléatoire)
+│   └── Phase 4 : Rétropropagation (mise à jour stats)
+│
+├── Jeu : Exécution meilleur coup → Nouvel état
+│
+└── [RÉPÉTER] jusqu'à état terminal
+
+[FIN ENTRAÎNEMENT → Arbre optimisé prêt pour l'inférence]

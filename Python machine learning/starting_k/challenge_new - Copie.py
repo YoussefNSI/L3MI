@@ -296,173 +296,293 @@ if test_neurone:
     df["target"] = df["target"].apply(lambda x: f"{x:.18e}")
     df.to_csv("images_test_predictions.csv", index=False, header=False)
 
+def mixup_data(x, y, alpha=1.0):
+    '''Returns mixed inputs, pairs of targets, and lambda'''
+    if alpha > 0:
+        lam = np.random.beta(alpha, alpha)
+    else:
+        lam = 1
+
+    batch_size = x.size()[0]
+    index = th.randperm(batch_size).to(x.device)
+
+    mixed_x = lam * x + (1 - lam) * x[index, :]
+    y_a, y_b = y, y[index]
+    return mixed_x, y_a, y_b, lam
+
+def mixup_criterion(criterion, pred, y_a, y_b, lam):
+    return lam * criterion(pred, y_a) + (1 - lam) * criterion(pred, y_b)
+
 test_CNN = True
 
 if test_CNN:
-    # Improved data augmentation and normalization
+    # Completely remove multiprocessing setup and simplify data loading
+    
+    # Preprocess data before training to avoid DataLoader transform issues
+    print("Preprocessing training data...")
+    
+    # Convert data to PIL images for transformations
+    from PIL import Image
+    import io
+    
+    def tensor_to_pil(tensor):
+        """Convert a tensor to PIL Image."""
+        return ToPILImage()(tensor)
+    
+    def apply_transforms(img_tensor, transform):
+        """Apply transforms to an image tensor and return a tensor."""
+        img_pil = tensor_to_pil(img_tensor)
+        return transform(img_pil)
+    
+    # More balanced data augmentation
     transform_train = transforms.Compose([
-        ToPILImage(),
-        transforms.RandomHorizontalFlip(),
-        transforms.RandomCrop(32, padding=4),
-        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
-        transforms.RandomRotation(10),
+        transforms.RandomHorizontalFlip(p=0.5),
+        # Removed vertical flip as it's less relevant for natural images
+        transforms.RandomCrop(32, padding=4, padding_mode='reflect'),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.05),  # Moderate augmentation
+        transforms.RandomRotation(10),  # Moderate rotation
         transforms.ToTensor(),
-        transforms.Normalize(mean=mean.tolist(), std=std.tolist())
+        transforms.Normalize(mean=mean.tolist(), std=std.tolist()),
+        transforms.RandomErasing(p=0.1, scale=(0.02, 0.15))  # Moderate erasing
     ])
     
     transform_val = transforms.Compose([
-        ToPILImage(),
         transforms.ToTensor(),
         transforms.Normalize(mean=mean.tolist(), std=std.tolist())
     ])
-
-    # Using more data for training, dedicated validation set
-    train_dataset = TensorDataset(X_train_tensor[:9000], y_train_tensor[:9000])
-    train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True, collate_fn=lambda batch: (
-        th.stack([transform_train(img) for img, _ in batch]),
-        th.stack([label for _, label in batch])
-    ))
     
-    val_dataset = TensorDataset(X_train_tensor[9000:10000], y_train_tensor[9000:10000])
-    val_loader = DataLoader(val_dataset, batch_size=128, shuffle=False, collate_fn=lambda batch: (
-        th.stack([transform_val(img) for img, _ in batch]),
-        th.stack([label for _, label in batch])
-    ))
-
-    # Simplified CNN with residual connections
-    class ImprovedCNN(nn.Module):
+    # Pre-transform data (this will take some time but avoid worker issues)
+    train_imgs = []
+    train_labels = []
+    
+    for i in tqdm(range(len(X_train_tensor[:9000])), desc="Preprocessing training data"):
+        img = X_train_tensor[i]
+        label = y_train_tensor[i]
+        img_transformed = apply_transforms(img, transform_train)
+        train_imgs.append(img_transformed)
+        train_labels.append(label)
+    
+    train_imgs = th.stack(train_imgs)
+    train_labels = th.stack(train_labels)
+    
+    val_imgs = []
+    val_labels = []
+    
+    for i in tqdm(range(len(X_train_tensor[9000:10000])), desc="Preprocessing validation data"):
+        img = X_train_tensor[9000 + i]
+        label = y_train_tensor[9000 + i]
+        img_transformed = apply_transforms(img, transform_val)
+        val_imgs.append(img_transformed)
+        val_labels.append(label)
+    
+    val_imgs = th.stack(val_imgs)
+    val_labels = th.stack(val_labels)
+    
+    # Create datasets from pre-transformed data
+    train_dataset = TensorDataset(train_imgs, train_labels)
+    val_dataset = TensorDataset(val_imgs, val_labels)
+    
+    # Create data loaders WITHOUT workers (safe for Windows)
+    train_loader = DataLoader(
+        train_dataset, 
+        batch_size=256,
+        shuffle=True,
+        num_workers=0,  # Disable multiprocessing completely
+        pin_memory=True if th.cuda.is_available() else False
+    )
+    
+    val_loader = DataLoader(
+        val_dataset, 
+        batch_size=256,
+        shuffle=False,
+        num_workers=0,  # Disable multiprocessing completely
+        pin_memory=True if th.cuda.is_available() else False
+    )
+    
+    # Balanced CNN with moderate capacity and regularization
+    class BalancedCNN(nn.Module):
         def __init__(self, num_classes=10):
-            super(ImprovedCNN, self).__init__()
+            super(BalancedCNN, self).__init__()
             
-            # Initial layers
-            self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+            # First convolutional block - light regularization
+            self.conv1 = nn.Conv2d(3, 64, kernel_size=3, padding=1)
             self.bn1 = nn.BatchNorm2d(64)
+            self.pool1 = nn.MaxPool2d(2, 2)
+            self.dropout1 = nn.Dropout2d(0.1)  # Light dropout
             
-            # Convolutional layers with residual connections
-            self.conv2 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1)
-            self.bn2 = nn.BatchNorm2d(128)
-            self.conv3 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
-            self.bn3 = nn.BatchNorm2d(128)
+            # Second block - moderate capacity
+            self.conv2a = nn.Conv2d(64, 128, kernel_size=3, padding=1)
+            self.bn2a = nn.BatchNorm2d(128)
+            self.conv2b = nn.Conv2d(128, 128, kernel_size=3, padding=1)
+            self.bn2b = nn.BatchNorm2d(128)
+            self.pool2 = nn.MaxPool2d(2, 2)
+            self.dropout2 = nn.Dropout2d(0.2)  # Moderate dropout
             
-            self.conv4 = nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1)
-            self.bn4 = nn.BatchNorm2d(256)
-            self.conv5 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
-            self.bn5 = nn.BatchNorm2d(256)
+            # Third block - slightly higher capacity
+            self.conv3a = nn.Conv2d(128, 256, kernel_size=3, padding=1)
+            self.bn3a = nn.BatchNorm2d(256)
+            self.conv3b = nn.Conv2d(256, 256, kernel_size=3, padding=1)
+            self.bn3b = nn.BatchNorm2d(256)
+            self.pool3 = nn.MaxPool2d(2, 2)
+            self.dropout3 = nn.Dropout2d(0.25)  # Moderate dropout
             
-            # Pooling
-            self.pool = nn.MaxPool2d(2, 2)
-            
-            # Final classifier
-            self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
-            self.fc = nn.Linear(256, num_classes)
-            
-            # Dropout for regularization
-            self.dropout = nn.Dropout(0.2)
+            # Global pooling and classifier with moderate regularization
+            self.global_pool = nn.AdaptiveAvgPool2d(1)
+            self.fc1 = nn.Linear(256, 256)
+            self.bn_fc = nn.BatchNorm1d(256)
+            self.fc2 = nn.Linear(256, num_classes)
+            self.dropout_fc = nn.Dropout(0.3)  # Moderate dropout
             
         def forward(self, x):
-            # Initial block
-            out = F.relu(self.bn1(self.conv1(x)))
-            out = self.pool(out)
+            # Block 1
+            x = F.relu(self.bn1(self.conv1(x)))
+            x = self.pool1(x)
+            x = self.dropout1(x)
             
-            # First residual block
-            residual = out
-            out = F.relu(self.bn2(self.conv2(out)))
-            out = self.bn3(self.conv3(out))
-            out += residual
-            out = F.relu(out)
-            out = self.pool(out)
+            # Block 2 with residual-like connection
+            identity = x
+            x = F.relu(self.bn2a(self.conv2a(x)))
+            x = self.bn2b(self.conv2b(x))
+            if hasattr(self, 'downsample2'):
+                identity = self.downsample2(identity)
+            x = F.relu(x)
+            x = self.pool2(x)
+            x = self.dropout2(x)
             
-            # Second residual block
-            residual = F.pad(out, (0, 0, 0, 0, 0, 128), "constant", 0)  # Pad channels
-            out = F.relu(self.bn4(self.conv4(out)))
-            out = self.bn5(self.conv5(out))
-            out += residual
-            out = F.relu(out)
-            out = self.pool(out)
+            # Block 3 with residual-like connection
+            x = F.relu(self.bn3a(self.conv3a(x)))
+            x = self.bn3b(self.conv3b(x))
+            x = F.relu(x)
+            x = self.pool3(x)
+            x = self.dropout3(x)
             
-            # Classifier
-            out = self.avg_pool(out)
-            out = out.view(out.size(0), -1)
-            out = self.dropout(out)
-            out = self.fc(out)
+            # Global pooling and classification
+            x = self.global_pool(x)
+            x = x.view(x.size(0), -1)
+            x = F.relu(self.bn_fc(self.fc1(x)))
+            x = self.dropout_fc(x)
+            x = self.fc2(x)
             
-            return out
-
-    # Initialize model, optimizer, and loss function
-    model = ImprovedCNN().to(device)
-    if th.cuda.device_count() > 1:
-        model = nn.DataParallel(model)
+            return x
     
-    # Weight initialization for better convergence
+    # Initialize model
+    model = BalancedCNN().to(device)
+    
+    # Moderate weight initialization
     for m in model.modules():
         if isinstance(m, nn.Conv2d):
             nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-        elif isinstance(m, nn.BatchNorm2d):
-            nn.init.constant_(m.weight, 1)
-            nn.init.constant_(m.bias, 0)
+            if m.bias is not None:
+                nn.init.zeros_(m.bias)
+        elif isinstance(m, nn.BatchNorm2d) or isinstance(m, nn.BatchNorm1d):
+            nn.init.ones_(m.weight)
+            nn.init.zeros_(m.bias)
         elif isinstance(m, nn.Linear):
             nn.init.normal_(m.weight, 0, 0.01)
-            nn.init.constant_(m.bias, 0)
+            nn.init.zeros_(m.bias)
     
-    # Using One Cycle Learning Rate policy
-    optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-4)
-    scheduler = optim.lr_scheduler.OneCycleLR(
-        optimizer, 
-        max_lr=0.01, 
-        steps_per_epoch=len(train_loader), 
-        epochs=50,
-        pct_start=0.1
+    # Moderate regularization with Adam optimizer
+    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-4)  # Moderate weight decay
+    
+    # OneCycle learning rate scheduler
+    from torch.optim.lr_scheduler import OneCycleLR
+    num_epochs = 100
+    
+    scheduler = OneCycleLR(
+        optimizer,
+        max_lr=0.005,  # Peak learning rate
+        steps_per_epoch=len(train_loader),
+        epochs=num_epochs,
+        pct_start=0.2,  # Spend 20% of time warming up
+        div_factor=25.0,  # Initial learning rate = max_lr/div_factor
+        final_div_factor=10000.0,  # Final learning rate = max_lr/final_div_factor
     )
     
-    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
-    scaler = GradScaler()
+    # Moderate label smoothing
+    criterion = nn.CrossEntropyLoss(label_smoothing=0.1)  # Reduced label smoothing
+    
+    # Reduced mixup probability and alpha
+    mixup_prob = 0.3  # Only 30% of batches use mixup
+    
+    def mixup_data(x, y, alpha=0.2):  # Lower alpha for less aggressive mixing
+        if alpha > 0:
+            lam = np.random.beta(alpha, alpha)
+        else:
+            lam = 1
 
-    # Training metrics
+        batch_size = x.size()[0]
+        index = th.randperm(batch_size).to(x.device)
+
+        mixed_x = lam * x + (1 - lam) * x[index, :]
+        y_a, y_b = y, y[index]
+        return mixed_x, y_a, y_b, lam
+    
+    # Tracking metrics
     train_losses = []
     train_accuracies = []
     val_losses = []
     val_accuracies = []
-
+    
     # Early stopping parameters
     best_val_loss = float('inf')
+    best_val_acc = 0.0  # Also track best validation accuracy
     best_model = None
-    patience = 10
+    patience = 15  # Increased patience
     patience_counter = 0
-    max_epochs = 50
-
-    for epoch in range(max_epochs):
+    
+    # Training loop
+    for epoch in range(num_epochs):
         # Training phase
         model.train()
         train_loss = 0.0
         train_correct = 0
         train_total = 0
-        
-        for images, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{max_epochs}"):
-            images, labels = images.to(device), labels.to(device)
+
+        for images, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{num_epochs}"):
+            images = images.to(device)
+            labels = labels.to(device)
             
+            # Reduced mixup probability
+            use_mixup = np.random.random() < mixup_prob
+            if use_mixup:
+                images, labels_a, labels_b, lam = mixup_data(images, labels)
+            
+            # Forward pass
             optimizer.zero_grad()
+            outputs = model(images)
             
-            with autocast():
-                outputs = model(images)
+            # Apply loss with mixup if used
+            if use_mixup:
+                loss = mixup_criterion(criterion, outputs, labels_a, labels_b, lam)
+            else:
                 loss = criterion(outputs, labels)
             
-            scaler.scale(loss).backward()
-            scaler.unscale_(optimizer)
-            th.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-            scaler.step(optimizer)
-            scaler.update()
-            scheduler.step()
+            # Backward pass
+            loss.backward()
             
+            # Gradient clipping to prevent exploding gradients
+            th.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            
+            optimizer.step()
+            
+            # Statistics
             train_loss += loss.item() * images.size(0)
-            _, predicted = outputs.max(1)
-            train_total += labels.size(0)
-            train_correct += predicted.eq(labels).sum().item()
+            
+            # For accuracy calculation, only consider non-mixup batches
+            if not use_mixup:
+                _, predicted = outputs.max(1)
+                train_total += labels.size(0)
+                train_correct += predicted.eq(labels).sum().item()
         
-        train_loss_epoch = train_loss / train_total
+        # Step the learning rate scheduler
+        scheduler.step()
+        
+        # Calculate training metrics
+        train_loss_epoch = train_loss / len(train_loader.dataset)
         train_acc_epoch = train_correct / train_total
         train_losses.append(train_loss_epoch)
         train_accuracies.append(train_acc_epoch)
-
+        
         # Validation phase
         model.eval()
         val_loss = 0.0
@@ -471,7 +591,9 @@ if test_CNN:
         
         with th.no_grad():
             for images, labels in val_loader:
-                images, labels = images.to(device), labels.to(device)
+                images = images.to(device)
+                labels = labels.to(device)
+                
                 outputs = model(images)
                 loss = criterion(outputs, labels)
                 
@@ -480,95 +602,198 @@ if test_CNN:
                 val_total += labels.size(0)
                 val_correct += predicted.eq(labels).sum().item()
         
-        val_loss_epoch = val_loss / val_total
+        val_loss_epoch = val_loss / len(val_loader.dataset)
         val_acc_epoch = val_correct / val_total
         val_losses.append(val_loss_epoch)
         val_accuracies.append(val_acc_epoch)
         
-        print(f"Epoch {epoch+1}/{max_epochs} - Train Loss: {train_loss_epoch:.4f}, Train Acc: {train_acc_epoch:.4f}, Val Loss: {val_loss_epoch:.4f}, Val Acc: {val_acc_epoch:.4f}")
+        # Update learning rate
+        scheduler.step(val_loss_epoch)
         
-        # Save the best model
-        if val_loss_epoch < best_val_loss:
-            best_val_loss = val_loss_epoch
+        # Print statistics
+        print(f"Epoch {epoch+1}/{num_epochs} - Train Loss: {train_loss_epoch:.4f}, Train Acc: {train_acc_epoch:.4f}, Val Loss: {val_loss_epoch:.4f}, Val Acc: {val_acc_epoch:.4f}")
+        
+        # Save best model based on validation accuracy instead of loss
+        if val_acc_epoch > best_val_acc:
+            best_val_acc = val_acc_epoch
             best_model = model.state_dict().copy()
             patience_counter = 0
-            print(f"New best model saved! Validation loss: {val_loss_epoch:.4f}")
+            print(f"New best model saved! Validation accuracy: {val_acc_epoch:.4f}")
         else:
             patience_counter += 1
-            print(f"Validation loss did not improve. Patience: {patience_counter}/{patience}")
-            
+            print(f"Validation accuracy did not improve. Patience: {patience_counter}/{patience}")
+        
+        # Print learning rate
+        current_lr = optimizer.param_groups[0]['lr']
+        print(f"Current LR: {current_lr:.6f}")
+        
         # Early stopping
-        if patience_counter >= patience and epoch > 20:
+        if patience_counter >= patience:
             print("Early stopping triggered")
             break
     
-    # Load best model for testing
-    model.load_state_dict(best_model)
+    # Load the best model for testing
+    if best_model is not None:
+        model.load_state_dict(best_model)
     
-    # Test predictions
+    # Load test data
     with open("data_images_test", 'rb') as fo:
         data = pickle.load(fo, encoding='bytes')
     X_test = data['data']
         
-    # Process test data with the same normalization
-    X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0)
-    test_dataset = TensorDataset(X_test_tensor)
-    test_loader = DataLoader(
-        test_dataset, 
-        batch_size=128, 
-        shuffle=False, 
-        collate_fn=lambda batch: th.stack([transform_val(img) for img in batch[0]])
-    )
+    X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0).to(device)
     
-    # Make predictions
+    # Predict
     model.eval()
-    all_predictions = []
-    
     with th.no_grad():
-        for images in test_loader:
-            images = images.to(device)  # Fixed - no need for [0] indexing
-            outputs = model(images)
-            _, predicted = outputs.max(1)
-            all_predictions.extend(predicted.cpu().numpy())
+        outputs = model(X_test_tensor)
+        y_pred = prediction(outputs)
     
-    # Save predictions to CSV
-    df = pd.DataFrame(all_predictions, columns=["target"])
+    # Save predictions
+    df = pd.DataFrame(y_pred.cpu().numpy(), columns=["target"])
     df["target"] = df["target"].apply(lambda x: f"{x:.18e}")
     df.to_csv("images_test_predictions.csv", index=False, header=False)
-
-    # Plot training metrics
-    plt.figure(figsize=(12, 5))
     
+    # Plot the training curves
+    plt.figure(figsize=(12, 6))
+    
+    # Loss plot
     plt.subplot(1, 2, 1)
-    plt.plot(train_losses, label='Training Loss')
-    plt.plot(val_losses, label='Validation Loss')
-    plt.title('Training and Validation Loss')
-    plt.xlabel('Epochs')
+    plt.plot(train_losses, label='Train Loss', color='blue')
+    plt.plot(val_losses, label='Val Loss', color='orange', linestyle='--')
+    plt.xlabel('Epoch')
     plt.ylabel('Loss')
     plt.legend()
     
+    # Accuracy plot
     plt.subplot(1, 2, 2)
-    plt.plot(train_accuracies, label='Training Accuracy')
-    plt.plot(val_accuracies, label='Validation Accuracy')
-    plt.title('Training and Validation Accuracy')
-    plt.xlabel('Epochs')
+    plt.plot(train_accuracies, label='Train Accuracy', color='green')
+    plt.plot(val_accuracies, label='Val Accuracy', color='red', linestyle='--')
+    plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
     plt.legend()
     
     plt.tight_layout()
     plt.show()
-
-# Vérification des données - Premier échantillon seulement
-def show_sample(img_tensor, label):
-    plt.imshow(img_tensor.numpy().transpose(1, 2, 0))
-    plt.title(f"Label: {label}")
-    plt.axis('off')
+    
+    # After model training and loading best weights, add test-time augmentation
+    def test_time_augmentation(model, image, n_aug=10):
+        """Apply test-time augmentation to improve predictions"""
+        model.eval()
+        
+        # Get base prediction
+        with th.no_grad():
+            base_pred = model(image.unsqueeze(0))
+            probs = F.softmax(base_pred, dim=1)
+        
+        # Apply horizontal flip
+        flipped = th.flip(image, dims=[2])
+        with th.no_grad():
+            flip_pred = model(flipped.unsqueeze(0))
+            probs += F.softmax(flip_pred, dim=1)
+        
+        # Apply small shifts
+        transforms_list = []
+        # Shift right
+        shifted = F.pad(image[:, :, :-1], (1, 0, 0, 0), mode='replicate')
+        transforms_list.append(shifted)
+        
+        # Shift left
+        shifted = F.pad(image[:, :, 1:], (0, 1, 0, 0), mode='replicate')
+        transforms_list.append(shifted)
+        
+        # Shift down
+        shifted = F.pad(image[:, :-1, :], (0, 0, 1, 0), mode='replicate')
+        transforms_list.append(shifted)
+        
+        # Shift up
+        shifted = F.pad(image[:, 1:, :], (0, 0, 0, 1), mode='replicate')
+        transforms_list.append(shifted)
+        
+        # Apply minor brightness variations
+        brighten = image * 1.1
+        brighten = th.clamp(brighten, 0, 1)
+        transforms_list.append(brighten)
+        
+        darken = image * 0.9
+        transforms_list.append(darken)
+        
+        # Process all transformations
+        for aug in transforms_list:
+            with th.no_grad():
+                aug_pred = model(aug.unsqueeze(0))
+                probs += F.softmax(aug_pred, dim=1)
+        
+        # Average predictions (1 original + 1 flip + 6 transforms)
+        probs /= (8)
+        return probs.argmax(dim=1).item()
+    
+    # Replace the test prediction code with TTA
+    # Load test data
+    with open("data_images_test", 'rb') as fo:
+        data = pickle.load(fo, encoding='bytes')
+    X_test = data['data']
+        
+    X_test_tensor = th.tensor(X_test.reshape(-1, 3, 32, 32), dtype=th.float32).div_(255.0)
+    
+    # Normalize test data
+    X_test_normalized = []
+    for img in X_test_tensor:
+        normalized = transforms.Normalize(mean=mean.tolist(), std=std.tolist())(img)
+        X_test_normalized.append(normalized)
+    X_test_normalized = th.stack(X_test_normalized).to(device)
+    
+    # Apply test-time augmentation to each test sample
+    model.eval()
+    y_pred = []
+    for i in tqdm(range(len(X_test_normalized)), desc="Predicting with test-time augmentation"):
+        # Batch prediction for efficiency
+        if i % 100 == 0:
+            print(f"Processing test images {i}-{min(i+100, len(X_test_normalized))} of {len(X_test_normalized)}")
+            
+        # Apply TTA to each image
+        pred = test_time_augmentation(model, X_test_normalized[i])
+        y_pred.append(pred)
+    
+    # Save predictions
+    df = pd.DataFrame(y_pred, columns=["target"])
+    df["target"] = df["target"].apply(lambda x: f"{x:.18e}")
+    df.to_csv("images_test_predictions.csv", index=False, header=False)
+    
+    # Plot final training curves
+    plt.figure(figsize=(15, 5))
+    
+    # Plot training and validation loss
+    plt.subplot(1, 3, 1)
+    plt.plot(train_losses, label='Train Loss')
+    plt.plot(val_losses, label='Val Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.title('Loss Curves')
+    
+    # Plot training and validation accuracy
+    plt.subplot(1, 3, 2)
+    plt.plot(train_accuracies, label='Train Accuracy')
+    plt.plot(val_accuracies, label='Val Accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    plt.title('Accuracy Curves')
+    
+    # Plot learning rate
+    lrs = []
+    for i in range(len(train_losses)):
+        optimizer.param_groups[0]['lr'] = 0.001 * (0.9 ** i)  # Approximate LR schedule
+        lrs.append(optimizer.param_groups[0]['lr'])
+    
+    plt.subplot(1, 3, 3)
+    plt.plot(lrs)
+    plt.xlabel('Epoch')
+    plt.ylabel('Learning Rate')
+    plt.title('Learning Rate Schedule')
+    
+    plt.tight_layout()
+    plt.savefig('training_results.png')
     plt.show()
-
-show_sample(X_train_tensor[0], y_train_tensor[0].item())
-print("Valeurs des pixels (min, max) :", X_train_tensor.min(), X_train_tensor.max())
-
-# Distribution des classes
-unique, counts = np.unique(y_train_tensor.numpy(), return_counts=True)
-print("Distribution des classes :", dict(zip(unique, counts)))
 

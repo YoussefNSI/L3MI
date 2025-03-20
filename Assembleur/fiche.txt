@@ -1,0 +1,43 @@
+entrée:       sortie:		section .data: variables	memoire: []
+push ebp	mov esp, ebp	section .text: code
+mov ebp, esp	pop ebp; ret;	global main; extern (ex: printf)
+
+ebp+0: ancien ebp, +4:adr de retour, +8 premier arg...
+retour: eax pour int, st0 pour float
+add esp, X pour nettoyer la pile après appel
+
+instructions float:
+fstp qword [esp]: st0 -> [esp] (store & pop)	fadd: ajout
+fldz : charge 0.0 dans FPU			fcomip : comparaison
+fstp dword [tab + 4] : stocke dans tab[1]	
+faddp	fmulp	fdivp	fsubp	fabs	fsqrt	fchs
+
+vectorisation:
+MOVAPS xmm0, [mem]  ; Charge 4 flottants depuis la mémoire dans xmm0
+MOVAPS [mem], xmm0  ; Stocke 4 flottants de xmm0 en mémoire
+MOVUPS xmm0, [mem]  ; Charge 4 flottants non alignés
+MOVUPS [mem], xmm0  ; Stocke 4 flottants non alignés
+MOVSS xmm0, [mem]  ; Charge un flottant simple précision
+MOVSS [mem], xmm0  ; Stocke un flottant simple précision
+ADDPS xmm0, xmm1  ; xmm0 = xmm0 + xmm1 (4 additions en parallèle)
+SUBPS xmm0, xmm1  ; xmm0 = xmm0 - xmm1
+MULPS xmm0, xmm1  ; xmm0 = xmm0 * xmm1
+DIVPS xmm0, xmm1  ; xmm0 = xmm0 / xmm1
+SQRTPS xmm0, xmm1  ; xmm0 = sqrt(xmm1)
+MAXPS xmm0, xmm1  ; xmm0 = max(xmm0, xmm1)
+MINPS xmm0, xmm1  ; xmm0 = min(xmm0, xmm1)
+CMPPS xmm0, xmm1, 0  ; Compare xmm0 et xmm1 pour l'égalité (0 = égal)
+CMPSS xmm0, xmm1, 0  ; Compare le premier élément de xmm0 et xmm1
+ANDPS xmm0, xmm1  ; xmm0 = xmm0 AND xmm1 / ORPS / XORPS
+
+autres instructions:
+LEA eax, [ebx + ecx*4]  ; eax = ebx + ecx * 4 (sans accéder à la mémoire)
+MUL ecx  ; eax = eax * ecx (non signé, résultat dans edx:eax)
+IMUL ebx ; eax = eax * ebx (signé)
+DIV ecx  ; eax = edx:eax / ecx (non signé)
+
+
+
+
+
+
