@@ -42,6 +42,9 @@ fib_int:
     ret
 
 fib_flt:
+    push ebp
+    mov ebp, esp
+    
     ; tab [ 0 ] = 0
     fldz
     fstp dword [tab]
@@ -80,9 +83,9 @@ main:
     push dword [eax + 4]
     call atoi
     add esp, 4
-    mov [n], eax
 
     ;printf("fib(%d)=%d\n", n, fib(n))
+    mov [n], eax
     push eax
     call fib_int
     add esp, 4

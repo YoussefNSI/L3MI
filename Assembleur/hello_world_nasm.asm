@@ -1,4 +1,4 @@
-global main
+g++ -o hello_world_nasm.exe hello_world_nasm.o -m32global main
 extern printf
 
 section .data
