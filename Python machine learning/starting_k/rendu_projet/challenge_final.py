@@ -12,9 +12,9 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, TensorDataset
 import torchvision.transforms as transforms
 from torchvision.transforms import ToPILImage
-from torchvision.models import resnet18
+from torchvision.models import resnet18, ResNet18_Weights
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-from torch.cuda.amp import GradScaler, autocast
+from torch.amp import GradScaler, autocast
 
 with open("dataset_images_train", 'rb') as fo:
     data = pickle.load(fo, encoding='bytes')
@@ -347,7 +347,7 @@ if test_CNN:
     class PretrainedCNN(nn.Module):
         def __init__(self):
             super(PretrainedCNN, self).__init__()
-            self.model = resnet18(pretrained=True)
+            self.model = resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
             self.model.fc = nn.Linear(self.model.fc.in_features, 10)
         
         def forward(self, x):
@@ -358,7 +358,7 @@ if test_CNN:
     optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-4)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=5)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
-    scaler = GradScaler()
+    scaler = GradScaler('cuda' if th.cuda.is_available() else 'cpu')
 
     # Initialisation des listes pour stocker les métriques
     train_losses = []
@@ -367,7 +367,7 @@ if test_CNN:
     val_accuracies = []
 
     # Entraînement avec DataLoader et Mixed Precision Training
-    early_stopping_patience = 3
+    early_stopping_patience = 5
     best_val_loss = float('inf')
     patience_counter = 0
 
@@ -382,7 +382,7 @@ if test_CNN:
             images = images.view(-1, 3, 32, 32).to(device)
             labels = labels.to(device)
             optimizer.zero_grad()
-            with autocast():
+            with autocast('cuda' if th.cuda.is_available() else 'cpu'):
                 outputs = model(images)
                 loss = criterion(outputs, labels)
             

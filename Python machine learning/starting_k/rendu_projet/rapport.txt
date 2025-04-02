@@ -26,6 +26,10 @@ Ca devient très compliqué d'avoir un meilleur résultat et j'arrive à une lim
 pour que je puisse augmenter certains paramètres ou utiliser des modèles plus puissant. Il y a sûrement moyen d'augmenter au alentours
 de 0.85 mais ça n'ira pas au dessus avec mon ordinateur.
 
-Je viens d'essayer le même programme sur mon ordinateur de bureau en activant cuda sur ma carte graphique, j'ai réussi à atteindre une accuracy de 0.97 a la 49ème epoch. 
+Je viens d'essayer le même programme sur mon ordinateur de bureau en activant cuda sur ma carte graphique, j'ai réussi à atteindre une accuracy de 0.97 a la 49ème epoch
+mais un score de 0.82 sur codalabs, c'est surement du au sur-apprentissage
 
 Je génère à la fin du CNN un graphique qui montre l'évolution de l'accuracy et les pertes. Je vais l'inclure dans mon dépot.
+
+Après avoir obtenu ce score, j'ai voulu tester d'autres modèles et j'ai plusieurs fois changé les paramètres mais malheureusement je n'arrive pas à avoir un meilleur résultat
+
