@@ -1,0 +1,20 @@
+{
+  "target": "http://localhost:3000/index.html",
+  "scan_date": "Wed Apr  9 01:18:23 2025",
+  "vulnerabilities": [
+    {
+      "url": "http://localhost:3000/index.html",
+      "payload": [
+        "<svg/onload=alert(\"XSS\")>",
+        "<img src=x onerror=alert(document.domain)>",
+        "<details open ontoggle=alert(1)>"
+      ],
+      "context": "DOM_XSS",
+      "severity": "Medium"
+    }
+  ],
+  "stats": {
+    "pages_crawled": 1,
+    "forms_tested": 0
+  }
+}
