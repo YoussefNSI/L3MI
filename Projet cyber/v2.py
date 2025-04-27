@@ -25,13 +25,13 @@ class AdvancedXSSScanner:
         self.checked_forms = set()
         self.checked_urls = set()
         self.lock = threading.Lock()
-        self.csrf_tokens = {}  # Nouveau: Stockage des tokens CSRF
+        self.csrf_tokens = {}
 
         # Configuration
         self.scan_depth = 2
         self.timeout = 10
         self.max_threads = 5
-        self.rate_limit = 1.0  # Seconds between requests
+        self.rate_limit = 1.0
 
         # Enhanced payload list with context-specific vectors
         self.payloads = self.load_payloads()
