@@ -8,6 +8,12 @@ import time
 import urllib.parse
 from datetime import datetime
 from queue import Queue, Empty
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import socketserver
+import tempfile
+import shutil
+import urllib.request
+from pathlib import Path
 
 try:
     from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
@@ -30,7 +36,6 @@ except ImportError as e:
     print("Assurez-vous que le fichier v2.py est dans le même répertoire.")
     sys.exit(1)
 
-# Constantes pour les messages d'erreur et textes d'interface
 MESSAGES = {
     "welcome": "Bienvenue dans l'Analyseur de Sites Web",
     "ready": "Sélectionnez une source et lancez une analyse",
@@ -42,11 +47,10 @@ MESSAGES = {
     "results_saved": "Les résultats ont été enregistrés dans {}",
 }
 
-# Palette de couleurs pour les résultats
 COLORS = {
-    "vulnerability": QColor(255, 200, 200),  # Rouge clair
-    "potential": QColor(255, 255, 200),      # Jaune clair
-    "info": QColor(200, 255, 200),           # Vert clair
+    "vulnerability": QColor(255, 200, 200),
+    "potential": QColor(255, 255, 200),
+    "info": QColor(200, 255, 200),
 }
 
 
@@ -64,11 +68,11 @@ class OutputRedirector(QObject):
             self.output_written.emit(text)
         self.buffer.write(text)
 
-    def flush(self):
+    def flush(self): # Ne pas supprimer cette méthode
         pass
 
 
-# Classe de travailleur pour exécuter l'analyse en arrière-plan
+# Classe pour exécuter l'analyse en arrière-plan et éviter que l'UI se fige
 class AnalysisWorker(QThread):
     """Classe de travailleur pour exécuter l'analyse en arrière-plan."""
     progress_updated = pyqtSignal(int)
@@ -120,7 +124,6 @@ class AnalysisWorker(QThread):
     def analyze_url(self):
         """Analyse une URL avec le scanner XSS."""
         try:
-            # Création et configuration du scanner
             scanner = AdvancedXSSScanner(self.url_or_file, self.headless)
 
             # Hook pour recevoir les résultats et mettre à jour la progression
@@ -137,83 +140,107 @@ class AnalysisWorker(QThread):
                 self.results.append(result)
                 return result
 
-            # Remplacer la méthode originale par notre méthode personnalisée
             scanner.log_vulnerability = custom_log_vulnerability
 
-            # Exécuter le scan approprié
             if self.analysis_type == 'static':
                 scanner.scan()
-            else:  # dynamic
+            else:
                 scanner.test_dynamic_analysis(self.url_or_file)
 
-            # Générer et renvoyer le rapport
             return scanner.generate_report()
 
         except Exception as e:
             raise Exception(f"Erreur lors de l'analyse de l'URL: {str(e)}")
 
     def analyze_file(self):
-        """Analyse un fichier HTML local."""
+        """Analyse un fichier HTML local en créant un serveur web temporaire."""
         try:
-            # Lire le contenu du fichier HTML
-            with open(self.url_or_file, 'r', encoding='utf-8') as file:
-                html_content = file.read()
 
-            # Pour l'analyse de fichier local, on peut:
-            # 1. Créer un serveur web local temporaire et y servir le fichier
-            # 2. Analyser directement le contenu HTML
+            temp_dir = tempfile.mkdtemp()
+            self.log_message.emit(f"Dossier temporaire créé: {temp_dir}")
 
-            # Méthode simplifiée: extraction et analyse des éléments à risque
-            # Dans une application réelle, vous voudriez implémenter un serveur web temporaire
+            try:
+                # Copier le fichier HTML dans le dossier temporaire
+                file_path = Path(self.url_or_file)
+                temp_file_path = Path(temp_dir) / file_path.name
+                shutil.copy2(self.url_or_file, temp_file_path)
+                self.log_message.emit(f"Fichier copié vers: {temp_file_path}")
 
-            vulnerabilities = []
+                # Trouver un port disponible
+                with socketserver.TCPServer(("localhost", 0), None) as s:
+                    port = s.server_address[1]
 
-            # Vérifier les scripts potentiellement dangereux
-            script_tags = re.findall(r'<script.*?>(.*?)</script>', html_content, re.DOTALL)
-            total_items = len(script_tags)
-            
-            for i, script in enumerate(script_tags):
-                if 'eval(' in script or 'document.cookie' in script or 'localStorage' in script:
-                    result = {
+                # URL locale à laquelle le fichier sera accessible
+                local_url = f"http://localhost:{port}/{file_path.name}"
+                self.log_message.emit(f"URL locale: {local_url}")
+
+                # Classe de gestionnaire personnalisée pour limiter l'accès au dossier temporaire
+                class TempDirHandler(SimpleHTTPRequestHandler):
+                    def __init__(self, *args, **kwargs):
+                        super().__init__(*args, directory=temp_dir, **kwargs)
+
+                    def log_message(self, format, *args):
+                        # Désactiver les logs HTTP pour éviter de polluer la console
+                        pass
+
+                # Créer et démarrer le serveur web
+                server = HTTPServer(("localhost", port), TempDirHandler)
+                server_thread = threading.Thread(target=server.serve_forever)
+                server_thread.daemon = True  # Pour que le thread se termine lorsque le programme principal se termine
+                server_thread.start()
+                self.log_message.emit("Serveur web local démarré")
+
+                scanner = AdvancedXSSScanner(local_url, self.headless)
+
+                original_log_vulnerability = scanner.log_vulnerability
+                vulnerabilities = []
+
+                def custom_log_vulnerability(context, payload, url=None):
+                    result = original_log_vulnerability(context, payload, url)
+                    display_url = self.url_or_file  # Afficher le chemin du fichier original plutôt que l'URL locale
+                    result_dict = {
                         'type': 'vulnerability',
-                        'context': 'script',
-                        'payload': script[:50] + ('...' if len(script) > 50 else ''),
-                        'url': f"{self.url_or_file}#script-{i}"
+                        'context': context,
+                        'payload': payload,
+                        'url': display_url
                     }
-                    self.result_found.emit(result)
+                    self.result_found.emit(result_dict)
                     vulnerabilities.append(result)
+                    return result
+
+                scanner.log_vulnerability = custom_log_vulnerability
+
+                if self.analysis_type == 'static':
+                    scanner.scan()
+                else:  # dynamic
+                    scanner.test_dynamic_analysis(local_url)
 
                 # Simuler la progression
-                self.progress_updated.emit(int((i + 1) / max(total_items, 1) * 50))
+                for i in range(0, 101, 10):
+                    if self.terminate_flag:
+                        break
+                    self.progress_updated.emit(i)
+                    time.sleep(0.1)
 
-                # Vérifier si l'utilisateur a demandé l'arrêt
-                if self.terminate_flag:
-                    return
+                return vulnerabilities
 
-            # Vérifier les entrées de formulaire
-            input_tags = re.findall(r'<input.*?>', html_content)
-            for i, input_tag in enumerate(input_tags):
-                if 'type="text"' in input_tag or 'type="search"' in input_tag:
-                    result = {
-                        'type': 'potential',
-                        'context': 'input',
-                        'payload': input_tag[:50] + ('...' if len(input_tag) > 50 else ''),
-                        'url': f"{self.url_or_file}#input-{i}"
-                    }
-                    self.result_found.emit(result)
-                    vulnerabilities.append(result)
-                
-                # Mettre à jour la progression (50-100%)
-                progress = 50 + int((i + 1) / max(len(input_tags), 1) * 50)
-                self.progress_updated.emit(progress)
-                
-                if self.terminate_flag:
-                    return
+            finally:
+                # Arrêter le serveur et nettoyer le dossier temporaire
+                if 'server' in locals():
+                    server.shutdown()
+                    server.server_close()
+                    self.log_message.emit("Serveur web local arrêté")
 
-            return vulnerabilities
+                try:
+                    shutil.rmtree(temp_dir)
+                    self.log_message.emit("Dossier temporaire supprimé")
+                except Exception as e:
+                    self.log_message.emit(f"Erreur lors de la suppression du dossier temporaire: {e}")
 
         except Exception as e:
-            raise Exception(f"Erreur lors de l'analyse du fichier: {str(e)}")
+            error_msg = f"Erreur lors de l'analyse du fichier: {str(e)}\n{traceback.format_exc()}"
+            self.log_message.emit(error_msg)
+            raise Exception(error_msg)
 
     def terminate(self):
         """Arrête l'analyse en cours de façon propre."""
@@ -473,7 +500,7 @@ class AnalyseWebApp(QMainWindow):
         """Ouvre une boîte de dialogue pour sélectionner un fichier HTML"""
         try:
             file_path, _ = QFileDialog.getOpenFileName(
-                self, "Sélectionner un fichier HTML", "", "Fichiers HTML (*.html *.htm)"
+                self, "Sélectionner un fichier HTML", "", "Fichiers HTML (*.html *.htm *.php)"
             )
             if file_path:
                 self.file_input.setText(file_path)
@@ -525,7 +552,7 @@ class AnalyseWebApp(QMainWindow):
         if not os.path.isfile(file_path):
             return False, "Le chemin spécifié n'est pas un fichier"
 
-        if not file_path.lower().endswith(('.html', '.htm')):
+        if not file_path.lower().endswith(('.html', '.htm', '.php')):
             return False, "Le fichier doit être au format HTML (.html ou .htm)"
             
         # Vérifier si le fichier est lisible
@@ -680,13 +707,8 @@ class AnalyseWebApp(QMainWindow):
             for col in range(3):
                 self.results_table.item(row, col).setBackground(color)
 
-            # Mettre en surbrillance la ligne
             self.results_table.selectRow(row)
-
-            # Défilement vers le bas du tableau
             self.results_table.scrollToBottom()
-
-            # Mise à jour du log
             self.log(f"Trouvé: {result_data.get('context')} - {result_data.get('payload', '')[:30]}")
 
         except Exception as e:
@@ -723,7 +745,6 @@ class AnalyseWebApp(QMainWindow):
         self.log(f"Analyse terminée. Trouvé {count} résultats, dont {vuln_count} vulnérabilités.")
         self.status_bar.showMessage(MESSAGES["analysis_complete"].format(count), 5000)
 
-        # Mise à jour des détails
         summary = (f"# Résumé de l'analyse\n\n"
                    f"- **Date et heure:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
                    f"- **Type d'analyse:** {'Statique' if self.current_worker.analysis_type == 'static' else 'Dynamique'}\n"
@@ -789,15 +810,11 @@ class AnalyseWebApp(QMainWindow):
         Met à jour périodiquement l'interface utilisateur.
         Cette méthode est appelée régulièrement par le QTimer.
         """
-        # Mettre à jour le chronomètre si l'analyse est en cours
         if self.analysis_running:
-            # Vous pouvez ajouter ici du code pour mettre à jour un chronomètre
-            # ou toute autre information dynamique de l'interface
             pass
 
         # Vérifier si le worker est toujours en cours d'exécution
         if self.current_worker and not self.current_worker.isRunning() and self.analysis_running:
-            # L'analyse s'est terminée ou a été arrêtée sans notification
             self.set_ui_analyzing_state(False)
             self.status_bar.showMessage("Analyse terminée ou interrompue", 3000)
             # Réinitialiser le worker
