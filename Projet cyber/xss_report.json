@@ -1,9 +1,9 @@
 {
-  "target": "https://tutoriels-informatique.fr",
-  "scan_date": "Mon Apr 28 02:05:52 2025",
+  "target": "http://localhost:50789/graphiques.html",
+  "scan_date": "Sun May 18 22:14:57 2025",
   "vulnerabilities": [
     {
-      "url": "https://tutoriels-informatique.fr",
+      "url": "http://localhost:50789/graphiques.html",
       "payload": [
         "<svg/onload=alert(\"XSS\")>",
         "<img src=x onerror=alert(document.domain)>",
@@ -14,7 +14,7 @@
     }
   ],
   "stats": {
-    "pages_crawled": 0,
+    "pages_crawled": 1,
     "forms_tested": 0
   }
 }
