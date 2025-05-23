@@ -1,0 +1,440 @@
+[11:42:52] Erreur lors de l'analyse du fichier: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 293, in analyze_file
+    scanner = AdvancedXSSScanner(local_url, self.headless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 91, in __init__
+    self.driver = self.init_selenium(headless)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 122, in init_selenium
+    return webdriver.Chrome(options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 67, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 260, in __init__
+    self.start_session(capabilities)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 357, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 448, in execute
+    self.error_handler.check_response(response)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+[11:42:52] ERREUR: Erreur lors de l'analyse: Erreur lors de l'analyse du fichier: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 293, in analyze_file
+    scanner = AdvancedXSSScanner(local_url, self.headless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 91, in __init__
+    self.driver = self.init_selenium(headless)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 122, in init_selenium
+    return webdriver.Chrome(options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 67, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 260, in __init__
+    self.start_session(capabilities)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 357, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 448, in execute
+    self.error_handler.check_response(response)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 293, in analyze_file
+    scanner = AdvancedXSSScanner(local_url, self.headless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 91, in __init__
+    self.driver = self.init_selenium(headless)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 122, in init_selenium
+    return webdriver.Chrome(options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 67, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 260, in __init__
+    self.start_session(capabilities)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 357, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 448, in execute
+    self.error_handler.check_response(response)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 210, in run
+    self.analyze_file()
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 343, in analyze_file
+    raise Exception(error_msg)
+Exception: Erreur lors de l'analyse du fichier: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 293, in analyze_file
+    scanner = AdvancedXSSScanner(local_url, self.headless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 91, in __init__
+    self.driver = self.init_selenium(headless)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 122, in init_selenium
+    return webdriver.Chrome(options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 67, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 260, in __init__
+    self.start_session(capabilities)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 357, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 448, in execute
+    self.error_handler.check_response(response)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+[11:42:53] Erreur lors de l'analyse: Erreur lors de l'analyse du fichier: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 293, in analyze_file
+    scanner = AdvancedXSSScanner(local_url, self.headless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 91, in __init__
+    self.driver = self.init_selenium(headless)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 122, in init_selenium
+    return webdriver.Chrome(options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 67, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 260, in __init__
+    self.start_session(capabilities)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 357, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 448, in execute
+    self.error_handler.check_response(response)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 293, in analyze_file
+    scanner = AdvancedXSSScanner(local_url, self.headless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 91, in __init__
+    self.driver = self.init_selenium(headless)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 122, in init_selenium
+    return webdriver.Chrome(options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 67, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 260, in __init__
+    self.start_session(capabilities)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 357, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 448, in execute
+    self.error_handler.check_response(response)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 210, in run
+    self.analyze_file()
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 343, in analyze_file
+    raise Exception(error_msg)
+Exception: Erreur lors de l'analyse du fichier: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
+
+Traceback (most recent call last):
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/analyzer.py", line 293, in analyze_file
+    scanner = AdvancedXSSScanner(local_url, self.headless)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 91, in __init__
+    self.driver = self.init_selenium(headless)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/scanner.py", line 122, in init_selenium
+    return webdriver.Chrome(options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chrome/webdriver.py", line 45, in __init__
+    super().__init__(
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/chromium/webdriver.py", line 67, in __init__
+    super().__init__(command_executor=executor, options=options)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 260, in __init__
+    self.start_session(capabilities)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 357, in start_session
+    response = self.execute(Command.NEW_SESSION, caps)["value"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/webdriver.py", line 448, in execute
+    self.error_handler.check_response(response)
+  File "/home/yradouan/Téléchargements/Projet-L3-main/xss/venv/lib/python3.11/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.SessionNotCreatedException: Message: session not created: Chrome failed to start: exited normally.
+  (session not created: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /usr/bin/chromium is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+Stacktrace:
+#0 0x563ecc677c5a <unknown>
+#1 0x563ecc35ae2c <unknown>
+#2 0x563ecc38fd6a <unknown>
+#3 0x563ecc38c17b <unknown>
+#4 0x563ecc3d6c49 <unknown>
+#5 0x563ecc3ca363 <unknown>
+#6 0x563ecc39a247 <unknown>
+#7 0x563ecc39ab9e <unknown>
+#8 0x563ecc63e22b <unknown>
+#9 0x563ecc6422d1 <unknown>
+#10 0x563ecc629ade <unknown>
+#11 0x563ecc642e32 <unknown>
+#12 0x563ecc60e77f <unknown>
+#13 0x563ecc667618 <unknown>
+#14 0x563ecc6677f0 <unknown>
+#15 0x563ecc676d8c <unknown>
+#16 0x7f62aa338134 <unknown>
