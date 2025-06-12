@@ -1,0 +1,8 @@
+# ninja log v6
+16	537	7714544813882103	CMakeFiles/cc2.dir/taillepos.cc.obj	1bcb4394a7c56155
+8	687	7714544813811160	CMakeFiles/cc2.dir/main.cpp.obj	ac41f2d9d7b5c8b7
+22	819	7714544813948008	CMakeFiles/cc2.dir/jeu.cpp.obj	89ee524bd5476b71
+819	1051	7714544821910488	cc2.exe	f338dda4d73e5bfd
+9	105	7714545666687903	CMakeFiles/cc2.dir/taillepos.cc.obj	1bcb4394a7c56155
+16	658	7714545666758817	CMakeFiles/cc2.dir/jeu.cpp.obj	89ee524bd5476b71
+659	824	7714545673184741	cc2.exe	f338dda4d73e5bfd
