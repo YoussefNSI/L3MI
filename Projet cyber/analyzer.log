@@ -1,0 +1,25 @@
+2025-05-18 22:11:52,641 - analyzer - INFO - AnalysisWorker initialisé: static, file, C:/Users/radou/Documents/GitHub/L3MI/Dev Web/tp-js-4-sujet/graphiques.html
+2025-05-18 22:14:50,244 - analyzer - INFO - AnalysisWorker initialisé: static, file, C:/Users/radou/Documents/GitHub/L3MI/Dev Web/tp-js-4-sujet/graphiques.html
+2025-05-18 22:14:55,139 - root - ERROR - Erreur d'analyse dynamique: Alert Text: localhost
+Message: unexpected alert open: {Alert text : localhost}
+  (Session info: chrome=136.0.7103.94)
+Stacktrace:
+	GetHandleVerifier [0x00007FF6F2C2CF65+75717]
+	GetHandleVerifier [0x00007FF6F2C2CFC0+75808]
+	(No symbol) [0x00007FF6F29F8F9A]
+	(No symbol) [0x00007FF6F2A9FF0C]
+	(No symbol) [0x00007FF6F2A77153]
+	(No symbol) [0x00007FF6F2A40421]
+	(No symbol) [0x00007FF6F2A411B3]
+	GetHandleVerifier [0x00007FF6F2F2D74D+3223469]
+	GetHandleVerifier [0x00007FF6F2F27CF2+3200338]
+	GetHandleVerifier [0x00007FF6F2F45B23+3322755]
+	GetHandleVerifier [0x00007FF6F2C46A3A+180890]
+	GetHandleVerifier [0x00007FF6F2C4E13F+211359]
+	GetHandleVerifier [0x00007FF6F2C352B4+109332]
+	GetHandleVerifier [0x00007FF6F2C35462+109762]
+	GetHandleVerifier [0x00007FF6F2C1BA79+4825]
+	BaseThreadInitThunk [0x00007FF94A52E8D7+23]
+	RtlUserThreadStart [0x00007FF94B47C5DC+44]
+
+2025-05-18 22:14:57,379 - root - INFO - Report generated with 1 vulnerabilities.

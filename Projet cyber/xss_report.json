@@ -1,9 +1,9 @@
 {
-  "target": "http://localhost:3000/index.html",
-  "scan_date": "Wed Apr  9 01:18:23 2025",
+  "target": "http://localhost:50789/graphiques.html",
+  "scan_date": "Sun May 18 22:14:57 2025",
   "vulnerabilities": [
     {
-      "url": "http://localhost:3000/index.html",
+      "url": "http://localhost:50789/graphiques.html",
       "payload": [
         "<svg/onload=alert(\"XSS\")>",
         "<img src=x onerror=alert(document.domain)>",
