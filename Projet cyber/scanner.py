@@ -1,3 +1,22 @@
+"""
+Module de scanner avancé pour la détection de vulnérabilités XSS (Cross-Site Scripting).
+
+Ce module fournit une implémentation d'un scanner automatisé pour détecter les 
+vulnérabilités XSS dans les applications web. Il utilise une combinaison d'analyse 
+statique et dynamique pour identifier plusieurs types de vulnérabilités XSS 
+(réfléchies, stockées et DOM-based).
+
+Le scanner effectue les opérations suivantes:
+- Crawling des pages web à partir d'une URL de départ
+- Analyse des formulaires et de leurs champs
+- Test des paramètres d'URL
+- Injection de payloads dans différents contextes
+- Analyse dynamique avec Selenium pour détecter l'exécution réelle de code malveillant
+
+Classes:
+    AdvancedXSSScanner: Scanner principal pour la détection des vulnérabilités XSS
+"""
+
 import requests
 from bs4 import BeautifulSoup, Comment
 from urllib.parse import urlparse, urljoin, parse_qs
@@ -17,7 +36,39 @@ import logging
 
 
 class AdvancedXSSScanner:
+    """
+    Scanner avancé pour la détection des vulnérabilités XSS dans les applications web.
+    
+    Cette classe implémente un scanner complet qui combine plusieurs techniques
+    pour détecter les vulnérabilités XSS, y compris l'analyse statique et dynamique.
+    Le scanner peut explorer automatiquement un site web, analyser les formulaires,
+    tester les paramètres d'URL et détecter l'exécution de code malveillant.
+    
+    Attributes:
+        target_url (str): URL cible de départ pour l'analyse
+        base_url (str): URL de base extraite de l'URL cible
+        session (requests.Session): Session HTTP pour maintenir les cookies
+        vulnerabilities (list): Liste des vulnérabilités détectées
+        checked_forms (set): Ensemble des formulaires déjà analysés
+        checked_urls (set): Ensemble des URLs déjà visitées
+        lock (threading.Lock): Verrou pour la synchronisation des threads
+        csrf_tokens (dict): Dictionnaire pour stocker les tokens CSRF
+        scan_depth (int): Profondeur maximale d'exploration du site
+        timeout (int): Délai d'attente pour les requêtes HTTP
+        max_threads (int): Nombre maximum de threads parallèles
+        rate_limit (float): Limite de requêtes par seconde
+        payloads (dict): Dictionnaire de payloads XSS selon le contexte
+        driver (webdriver.Chrome): Instance du navigateur Selenium
+    """
+    
     def __init__(self, target_url, headless=True):
+        """
+        Initialise le scanner XSS avec l'URL cible.
+        
+        Args:
+            target_url (str): URL cible à analyser
+            headless (bool, optional): Si True, exécute le navigateur en mode headless. Défaut: True
+        """
         self.target_url = target_url
         self.base_url = f"{urlparse(target_url).scheme}://{urlparse(target_url).netloc}"
         self.session = requests.Session()
@@ -48,6 +99,18 @@ class AdvancedXSSScanner:
         })
 
     def init_selenium(self, headless):
+        """
+        Initialise et configure le navigateur Selenium.
+        
+        Configure les options du navigateur Chrome pour l'analyse de sécurité,
+        notamment en désactivant certaines protections pour permettre les tests.
+        
+        Args:
+            headless (bool): Si True, exécute le navigateur en mode headless
+            
+        Returns:
+            webdriver.Chrome: Instance configurée du navigateur Chrome
+        """
         options = webdriver.ChromeOptions()
         if headless:
             options.add_argument("--headless=new")
@@ -59,6 +122,20 @@ class AdvancedXSSScanner:
         return webdriver.Chrome(options=options)
 
     def load_payloads(self):
+        """
+        Charge les différents payloads XSS selon leur contexte d'utilisation.
+        
+        Retourne un dictionnaire de payloads organisés par contexte:
+        - html: Payloads pour injection dans le contenu HTML
+        - attribute: Payloads pour injection dans les attributs
+        - script: Payloads pour injection dans les contextes JavaScript
+        - polyglot: Payloads polyvalents fonctionnant dans plusieurs contextes
+        - event_handlers: Payloads basés sur les gestionnaires d'événements
+        - svg: Payloads utilisant des éléments SVG
+        
+        Returns:
+            dict: Dictionnaire de payloads XSS organisés par contexte
+        """
         return {
             "html": [
                 '<svg/onload=alert("XSS")>',
@@ -90,6 +167,17 @@ class AdvancedXSSScanner:
         }
 
     def scan(self):
+        """
+        Lance l'analyse complète du site web cible.
+        
+        Cette méthode démarre l'exploration du site et l'analyse des vulnérabilités
+        en utilisant un pool de threads pour paralléliser le travail. Elle s'assure également
+        que les ressources sont correctement libérées à la fin et génère un rapport
+        des vulnérabilités détectées.
+        
+        Returns:
+            None: Les résultats sont écrits dans le fichier xss_report.json
+        """
         try:
             with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
                 executor.submit(self.crawl_and_spider)
@@ -98,6 +186,18 @@ class AdvancedXSSScanner:
             self.generate_report()
 
     def crawl_and_spider(self):
+        """
+        Explore le site web en suivant les liens et analyse chaque page.
+        
+        Cette méthode implémente un algorithme d'exploration basé sur une file d'attente
+        pour parcourir le site jusqu'à la profondeur spécifiée. Pour chaque page découverte,
+        elle effectue des tests de vulnérabilités et explore les formulaires.
+        Elle maintient également une liste des URLs et formulaires déjà analysés pour
+        éviter les duplications.
+        
+        Returns:
+            None: Les vulnérabilités détectées sont stockées dans self.vulnerabilities
+        """
         queue = [(self.target_url, 0)]
         while queue:
             url, depth = queue.pop(0)
@@ -130,12 +230,42 @@ class AdvancedXSSScanner:
                 logging.error(f"Error while processing {url}: {str(e)}\n")
 
     def cleanup_alerts(self):
+        """
+        Nettoie les alertes JavaScript existantes dans le navigateur.
+        
+        Cette méthode permet d'éviter que des alertes préexistantes interfèrent
+        avec la détection de nouvelles alertes lors des tests.
+        
+        Returns:
+            None
+        """
         try:
             Alert(self.driver).dismiss()
         except:
             pass
 
     def test_dynamic_analysis(self, url):
+        """
+        Effectue une analyse dynamique pour détecter les vulnérabilités XSS DOM-based.
+        
+        Cette méthode injecte des payloads XSS directement dans le DOM de la page via
+        JavaScript et surveille l'apparition d'alertes, indicateur que le code injecté
+        a été exécuté avec succès. Chaque payload est injecté séquentiellement dans
+        le contenu HTML de la page.
+        
+        Le processus suit les étapes suivantes:
+        1. Navigation vers l'URL cible
+        2. Nettoyage des alertes existantes
+        3. Injection des payloads dans le DOM via JavaScript
+        4. Attente de l'apparition d'une alerte (indicateur d'une vulnérabilité)
+        5. Enregistrement des vulnérabilités détectées
+        
+        Args:
+            url (str): L'URL de la page à analyser
+            
+        Returns:
+            None: Les vulnérabilités détectées sont stockées dans self.vulnerabilities
+        """
         try:
             for payload in self.payloads.values():
                 self.driver.get(url)
@@ -157,6 +287,23 @@ class AdvancedXSSScanner:
             logging.error(f"Erreur d'analyse dynamique: {str(e)}")
 
     def test_url_parameters(self, url):
+        """
+        Analyse les paramètres d'URL pour détecter les vulnérabilités XSS.
+        
+        Cette méthode extrait les paramètres de l'URL et teste chacun d'eux
+        pour déterminer s'ils peuvent être utilisés pour injecter du code malveillant.
+        Elle vérifie d'abord la validité de l'URL, puis extrait et analyse
+        chaque paramètre individuellement.
+        
+        Args:
+            url (str): L'URL à analyser
+            
+        Raises:
+            ValueError: Si l'URL fournie est invalide ou vide
+            
+        Returns:
+            None: Les vulnérabilités détectées sont stockées dans self.vulnerabilities
+        """
         # Validation de l'entrée
         if not isinstance(url, str) or not url.strip():
             raise ValueError("L'URL fournie est invalide ou vide.")
@@ -178,6 +325,20 @@ class AdvancedXSSScanner:
             print(f"Erreur lors de l'analyse des paramètres pour l'URL {url}: {e}\n")
 
     def test_form(self, form, url):
+        """
+        Teste un formulaire web pour détecter les vulnérabilités XSS.
+        
+        Cette méthode analyse un formulaire HTML, identifie ses champs et
+        injecte des payloads XSS dans chacun d'eux. Elle prend également
+        en compte les tokens CSRF pour maintenir des requêtes valides.
+        
+        Args:
+            form (bs4.element.Tag): L'élément de formulaire à tester
+            url (str): L'URL contenant le formulaire
+            
+        Returns:
+            None: Les vulnérabilités détectées sont stockées dans self.vulnerabilities
+        """
         action = urljoin(url, form.get("action", ""))
         method = form.get("method", "get").lower()
         inputs = form.find_all(["input", "textarea", "select"])
@@ -199,6 +360,23 @@ class AdvancedXSSScanner:
                 self.send_request(action, method, data, payload)
 
     def send_request(self, url, method, data, payload=None):
+        """
+        Envoie une requête HTTP avec des données potentiellement malveillantes.
+        
+        Cette méthode envoie une requête GET ou POST à l'URL spécifiée avec les
+        données fournies, puis analyse la réponse pour détecter d'éventuelles
+        vulnérabilités. Elle utilise également Selenium pour vérifier si le
+        payload a été exécuté dans le navigateur.
+        
+        Args:
+            url (str): L'URL à laquelle envoyer la requête
+            method (str): La méthode HTTP à utiliser ("get" ou "post")
+            data (dict): Les données à envoyer avec la requête
+            payload (str, optional): Le payload XSS à rechercher dans la réponse
+            
+        Returns:
+            None: Les vulnérabilités détectées sont stockées dans self.vulnerabilities
+        """
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         try:
             if method == "post":
@@ -222,6 +400,15 @@ class AdvancedXSSScanner:
             logging.error(f"Error sending request to {url}: {str(e)}\n")
 
     def check_payload_execution(self):
+        """
+        Vérifie si un payload XSS a été exécuté dans le navigateur.
+        
+        Cette méthode attend l'apparition d'une alerte JavaScript dans
+        le navigateur, ce qui indique l'exécution réussie d'un payload XSS.
+        
+        Returns:
+            bool: True si une alerte a été détectée, False sinon
+        """
         try:
             WebDriverWait(self.driver, 2).until(EC.alert_is_present())
             Alert(self.driver).accept()
@@ -230,6 +417,20 @@ class AdvancedXSSScanner:
             return False
 
     def analyze_response(self, response, payload):
+        """
+        Analyse une réponse HTTP pour détecter les reflets de payloads XSS.
+        
+        Cette méthode recherche le payload dans différents contextes de la
+        réponse HTTP (HTML, JavaScript, attributs) pour identifier les
+        vulnérabilités XSS réfléchies.
+        
+        Args:
+            response (requests.Response): La réponse HTTP à analyser
+            payload (str): Le payload XSS à rechercher
+            
+        Returns:
+            None: Les vulnérabilités détectées sont stockées dans self.vulnerabilities
+        """
         # Vérification avancée des contextes
         contexts = {
             "unencoded_html": re.search(re.escape(re.escape(payload)), response.text),
@@ -241,6 +442,21 @@ class AdvancedXSSScanner:
             self.log_vulnerability("REFLECTED", payload, response.url)
 
     def log_vulnerability(self, context, payload, url=None):
+        """
+        Enregistre une vulnérabilité détectée.
+        
+        Cette méthode ajoute une entrée dans la liste des vulnérabilités avec
+        les détails de la vulnérabilité détectée, notamment son contexte,
+        le payload utilisé, l'URL concernée et sa gravité.
+        
+        Args:
+            context (str): Le contexte de la vulnérabilité (DOM_XSS, REFLECTED, EXECUTED)
+            payload (str): Le payload XSS utilisé
+            url (str, optional): L'URL où la vulnérabilité a été détectée
+            
+        Returns:
+            None: La vulnérabilité est ajoutée à self.vulnerabilities
+        """
         with self.lock:
             vuln = {
                 "url": url or self.driver.current_url,
@@ -251,6 +467,16 @@ class AdvancedXSSScanner:
             self.vulnerabilities.append(vuln)
 
     def generate_report(self):
+        """
+        Génère un rapport des vulnérabilités détectées.
+        
+        Cette méthode crée un rapport JSON contenant toutes les vulnérabilités
+        détectées, ainsi que des statistiques sur l'analyse effectuée. Le rapport
+        est enregistré dans un fichier JSON.
+        
+        Returns:
+            None: Le rapport est écrit dans le fichier xss_report.json
+        """
         report = {
             "target": self.target_url,
             "scan_date": time.ctime(),
@@ -265,6 +491,7 @@ class AdvancedXSSScanner:
             json.dump(report, f, indent=2)
 
         logging.info(f"Report generated with {len(self.vulnerabilities)} vulnerabilities.")
+
 
 if __name__ == "__main__":
     target_url = "http://localhost:3000/index.html"
