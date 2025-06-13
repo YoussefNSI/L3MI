@@ -12,6 +12,10 @@ public:
     std::string getDepart() const { return _depart; }
     std::string getArrivee() const { return _arrivee; }
 
+    // Ajouter ces déclarations dans la partie publique
+    double prix_total() const;
+    std::string tostring() const;
+
 
 private:
     std::string _depart, _arrivee;

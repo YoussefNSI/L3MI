@@ -12,3 +12,5 @@ std::string Billet::tostring() const {
            + std::to_string(_nbVoyageurs) + " - "
            + std::to_string(prix_total());
 }
+
+int Billet::compteur = 0;
